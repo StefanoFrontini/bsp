@@ -6,9 +6,31 @@
         Guarda tutti gli eventi passati di <em>Business Speed Dating</em>.
         Iscriviti alla newsletter per ricevere le notifiche dei nuovi eventi!
       </p>
-      <div class="hero-buttons">
-        <a href="#" class="button"
-          >Iscriviti
+      <form
+        name="addMailchimp"
+        method="post"
+        @submit.prevent="handleSubmit"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p hidden>
+          <label> Don’t fill this out: <input name="bot-field"/></label>
+        </p>
+        <div class="mail">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            v-model="formData.email"
+            required
+            autocomplete="off"
+            placeholder="Email"
+          />
+        </div>
+        <button type="submit" class="button">
+          Iscriviti!
+          <!-- <input type="submit" value="Iscriviti!" /> -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -22,9 +44,17 @@
             class="feather feather-arrow-right"
           >
             <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline></svg
-        ></a>
-      </div>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </form>
+
+      <small class="small">
+        Puoi annullare l’iscrizione in qualsiasi momento e non passeremo mai la
+        tua e-mail a terzi.
+      </small>
+      <div ref="iscrittoMail" class="iscritto">{{ iscritto }}</div>
+      <div ref="errorMail" class="error">{{ error }}</div>
     </header>
     <section class="block episodes">
       <EventoCard
@@ -61,11 +91,45 @@ query {
 </page-query>
 
 <script>
+import axios from "axios";
 import EventoCard from "~/components/EventoCard.vue";
 
 export default {
   components: {
     EventoCard,
+  },
+  data() {
+    return {
+      error: "",
+      iscritto: "",
+      formData: {
+        form: "addMailchimp",
+        email: "",
+      },
+    };
+  },
+  methods: {
+    errorMailDisappear() {
+      this.$refs.errorMail.style.display = "none";
+      this.formData.email = "";
+    },
+    iscrittoMailDisappear() {
+      this.$refs.iscrittoMail.style.display = "none";
+      this.formData.email = "";
+    },
+    async handleSubmit(e) {
+      try {
+        const response = await axios.post(
+          "/.netlify/functions/addMailchimp",
+          this.formData
+        );
+        this.iscritto = "Sei iscritto!";
+        setTimeout(() => this.iscrittoMailDisappear(), 3000);
+      } catch (error) {
+        this.error = "Sei già iscritto!";
+        setTimeout(() => this.errorMailDisappear(), 3000);
+      }
+    },
   },
 
   metaInfo() {
@@ -124,16 +188,29 @@ export default {
 }
 
 .button {
+  color: var(--pink);
   border: 2px solid;
   border-radius: 0.25rem;
-  color: var(--pink-dark);
-  display: block;
-  font-weight: 600;
-  margin-bottom: 2.25rem;
-  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.75rem 1rem;
   text-align: center;
   text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+input[type="email"] {
+  border: none;
+  border-radius: 0.25rem;
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  outline: none;
 }
 
 .hero-buttons {
@@ -141,6 +218,30 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 1.5rem;
+}
+
+.small {
+  font-size: 0.8rem;
+  margin-top: 2rem;
+  color: var(--gray-medium);
+  text-align: center;
+}
+
+.error {
+  color: red;
+  margin-top: 2rem;
+}
+
+.iscritto {
+  color: greenyellow;
+  margin-top: 2rem;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input[type="email"],
+  textarea {
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 750px) {
