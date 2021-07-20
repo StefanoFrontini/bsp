@@ -68,9 +68,11 @@ export default {
     EventoCard,
   },
 
-  metaInfo: {
-    title: "Eventi",
-    titleTemplate: "%s",
+  metaInfo() {
+    return {
+      title: "Eventi passati",
+      titleTemplate: "%s",
+    };
   },
 };
 </script>

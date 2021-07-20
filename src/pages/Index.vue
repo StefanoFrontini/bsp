@@ -9,7 +9,8 @@
     </section>
     <section class="block next">
       <h2>
-        Il prossimo evento è il {{ $page.programma.edges[0].node.created_at }}!
+        Il prossimo evento online è il
+        {{ $page.programma.edges[0].node.created_at }}!
       </h2>
 
       <div class="next-episode-wrapper">
@@ -53,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="schedule-links">
+        <div>
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLScf89fvAvIwrLwES39YcvbvytqWm3PwVQllv96QNRrcCOXUSg/viewform"
             class="button"
@@ -87,6 +88,27 @@
               Programma</g-link
             >
           </div>
+        </div>
+      </div>
+    </section>
+    <section class="block">
+      <h2>Il prossimo aperitivo è il 29 luglio ore 18:30!</h2>
+      <div class="next-episode-wrapper">
+        <div class="episode-poster">
+          <g-image
+            class="square"
+            src="~/assets/images/cheers.jpg"
+            alt="cheers"
+          ></g-image>
+        </div>
+        <div class="aperitivo-links">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSft0GMqTVOlFSuFkO_hGiIVQeYtOr8ZZEiFn0GVFv3LpJam9w/viewform?usp=sf_link"
+            target="_blank"
+            rel="noopener"
+            class="button"
+            >Iscriviti all’evento</a
+          >
         </div>
       </div>
     </section>
@@ -220,10 +242,22 @@ query {
 
 </page-query>
 
+<static-query>
+query {
+  metadata {
+    siteName
+
+  }
+}
+</static-query>
+
 <script>
 export default {
-  metaInfo: {
-    title: "Home",
+  metaInfo() {
+    return {
+      title: `${this.$static.metadata.siteName}`,
+      titleTemplate: "%s",
+    };
   },
   data() {
     return {
@@ -405,6 +439,7 @@ export default {
 .episode-poster {
   width: 100%;
   height: 180px;
+  position: relative;
 }
 
 .square {
@@ -524,6 +559,13 @@ article .episode-links {
   max-width: 630px;
 }
 
+.aperitivo-links {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 @media (min-width: 400px) {
   .episode-poster {
     height: 207px;
@@ -559,13 +601,12 @@ article .episode-links {
     justify-content: center;
     background: var(--text-emphasized);
     padding: 2.5rem 5vw;
-    position: relative;
+
     width: 100%;
   }
   .episode-poster {
     width: 450px;
     height: 250px;
-    position: relative;
   }
 }
 </style>

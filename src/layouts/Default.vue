@@ -230,7 +230,7 @@ a {
 
 .host-links {
   gap: 1.5rem;
-  color: var(--pink-dark);
+  color: var(--pink);
   display: flex;
   font-size: 0.625rem;
   font-weight: 600;

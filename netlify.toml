@@ -1,0 +1,11 @@
+[build]
+  publish="dist"
+  command="gridsome build"
+
+
+[[plugins]]
+package = "netlify-plugin-image-optim"
+
+
+[[plugins]]
+  package = "netlify-plugin-gridsome-cache"

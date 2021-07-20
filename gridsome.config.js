@@ -7,6 +7,7 @@
 module.exports = {
   siteName: "Business Speed Dating",
   siteDescription: "Conosci altri professionisti e imprenditori divertendoti!",
+  siteUrl: "https://bsdating.com",
   plugins: [
     {
       use: "@gridsome/vue-remark",

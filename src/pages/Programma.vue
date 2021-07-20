@@ -47,9 +47,11 @@ export default {
     ProgrammaCard,
   },
 
-  metaInfo: {
-    title: "Programma",
-    titleTemplate: "%s",
+  metaInfo() {
+    return {
+      title: "Eventi in programma",
+      titleTemplate: "%s",
+    };
   },
 };
 </script>
