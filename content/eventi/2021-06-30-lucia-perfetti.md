@@ -5,7 +5,7 @@ title: Arteterapia
 
 description: Arteterapia e crescita personale
 
-created_at: 2021-06-30
+created_at: 2021-06-30 18:15:00
 
 sponsor: Lucia Perfetti
 

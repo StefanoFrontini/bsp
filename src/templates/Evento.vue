@@ -52,7 +52,7 @@ query Evento($id: ID!) {
     path
     sponsor_photo
     alt
-    created_at (format: "D MMMM YYYY", locale: "it")
+    created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
     link_video
   }
 }

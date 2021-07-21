@@ -7,7 +7,7 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <section class="block next">
+    <!-- <section class="block next">
       <h2>
         Il prossimo evento online è il
         {{ $page.programma.edges[0].node.created_at }}!
@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="block">
       <h2>Il prossimo aperitivo è il 29 luglio ore 18:30!</h2>
       <div class="next-episode-wrapper">
@@ -198,6 +198,24 @@
       </div>
     </section> -->
   </Layout>
+  <!-- programma: allProgramma( order: ASC, limit: 1) {
+		edges {
+			node {
+				id
+        title
+        sponsor
+        path
+        sponsor_photo
+        alt
+        created_at (format: "D MMMM YYYY", locale: "it")
+        description
+        locandina
+        link_iscrizione
+
+
+			}
+		}
+	} -->
 </template>
 
 <page-query>
@@ -219,24 +237,7 @@ query {
     }
 
   }
-  programma: allProgramma( order: ASC, limit: 1) {
-		edges {
-			node {
-				id
-        title
-        sponsor
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY", locale: "it")
-        description
-        locandina
-        link_iscrizione
 
-
-			}
-		}
-	}
 
 }
 

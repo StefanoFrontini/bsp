@@ -5,7 +5,7 @@ title: Energia elettrica e gas
 
 description: Un viaggio alla scoperta del mondo dell’energia
 
-created_at: 2021-05-27
+created_at: 2021-05-27 18:15:00
 
 sponsor: Stefano Frontini
 
