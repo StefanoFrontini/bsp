@@ -119,10 +119,7 @@ export default {
     },
     async handleSubmit(e) {
       try {
-        const response = await axios.post(
-          "/.netlify/functions/addMailchimp",
-          this.formData
-        );
+        const response = await axios.post("/api/addMailchimp", this.formData);
         this.iscritto = "Sei iscritto!";
         setTimeout(() => this.iscrittoMailDisappear(), 3000);
       } catch (error) {
