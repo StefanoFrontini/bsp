@@ -102,13 +102,9 @@
           ></g-image>
         </div>
         <div class="aperitivo-links">
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSft0GMqTVOlFSuFkO_hGiIVQeYtOr8ZZEiFn0GVFv3LpJam9w/viewform?usp=sf_link"
-            target="_blank"
-            rel="noopener"
-            class="button"
-            >Iscriviti all’evento</a
-          >
+          <h3>GUD Eustachi</h3>
+          <small>Via Eustachi 25 - Milano</small>
+          <g-link class="button" to="/aperitivo">Iscriviti all’evento</g-link>
         </div>
       </div>
     </section>

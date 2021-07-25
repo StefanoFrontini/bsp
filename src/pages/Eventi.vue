@@ -119,12 +119,14 @@ export default {
     },
     async handleSubmit(e) {
       try {
-        const response = await axios.post("/api/addMailchimp", this.formData);
-        this.iscritto = "Sei iscritto!";
-        setTimeout(() => this.iscrittoMailDisappear(), 3000);
+        const { data } = await axios.post("/api/addMailchimp", this.formData);
+        this.iscritto = `Sei iscritto ${data.full_name}!`;
+        setTimeout(() => this.iscrittoMailDisappear(), 5000);
       } catch (error) {
-        this.error = "Sei già iscritto!";
-        setTimeout(() => this.errorMailDisappear(), 3000);
+        this.error = `C'è stato un errore, riprova più tardi: ${
+          error.response.data
+        }`;
+        setTimeout(() => this.errorMailDisappear(), 5000);
       }
     },
   },
