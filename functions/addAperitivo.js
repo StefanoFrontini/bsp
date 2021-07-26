@@ -2,10 +2,10 @@ const axios = require("axios");
 const { URL } = process.env;
 const context = process.env.CONTEXT;
 let STRAPI_ENDPOINT;
-if (context === "production") {
-  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
-} else {
+if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
+} else {
+  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
 }
 
 console.log("context:", context);
