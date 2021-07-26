@@ -60,6 +60,7 @@ exports.handler = async (event) => {
       contatto {
         cognome
         nome
+        email
         eventi {
           titolo
           data
@@ -102,12 +103,19 @@ exports.handler = async (event) => {
           data.data.updateContatto.contatto
         );
 
+        const pingMail = await axios.post(
+          `${URL}/api/sendMail`,
+          data.data.updateContatto.contatto
+        );
+
         return {
           statusCode: 200,
           body: JSON.stringify(
             `Ti sei registrato all’evento ${
               data.data.updateContatto.contatto.nome
-            } ${data.data.updateContatto.contatto.cognome}!`
+            } ${data.data.updateContatto.contatto.cognome}!
+            A breve riceverai una mail di conferma all’indirizzo:
+            ${data.data.updateContatto.contatto.email}`
           ),
         };
       } catch (error) {
@@ -135,6 +143,11 @@ exports.handler = async (event) => {
           data.data.createContatto.contatto
         );
 
+        const pingMail = await axios.post(
+          `${URL}/api/sendMail`,
+          data.data.createContatto.contatto
+        );
+
         const pingMailChimp = await axios.post(
           `${URL}/api/addMailchimp`,
           data.data.createContatto.contatto
@@ -145,7 +158,9 @@ exports.handler = async (event) => {
           body: JSON.stringify(
             `Ti sei registrato all’evento ${
               data.data.createContatto.contatto.nome
-            } ${data.data.createContatto.contatto.cognome}!`
+            } ${data.data.createContatto.contatto.cognome}!
+            A breve riceverai una mail di conferma all’indirizzo:
+            ${data.data.createContatto.contatto.email}`
           ),
         };
       } catch (error) {

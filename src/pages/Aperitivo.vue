@@ -69,8 +69,17 @@
             </svg>
           </button>
         </form>
-        <div ref="iscrittoAperitivo" class="iscritto">{{ iscritto }}</div>
-        <div ref="errorAperitivo" class="error">{{ error }}</div>
+        <div
+          ref="iscrittoAperitivo"
+          v-for="(message, index) in messages"
+          :key="index"
+        >
+          {{ iscritto }}
+          <p class="iscritto">{{ message }}</p>
+        </div>
+        <div ref="errorAperitivo" v-for="(error, index) in errors" :key="index">
+          <p class="error">{{ error }}</p>
+        </div>
       </div>
     </section>
   </Layout>
@@ -96,8 +105,8 @@ export default {
   },
   data() {
     return {
-      error: "",
-      iscritto: "",
+      errors: [],
+      messages: [],
       formData: {
         form: "aperitivo",
         email: "",
@@ -122,11 +131,17 @@ export default {
     async handleSubmit(e) {
       try {
         const { data } = await axios.post("/api/addAperitivo", this.formData);
-        this.iscritto = data;
-        setTimeout(() => this.iscrittoAperitivoDisappear(), 5000);
+        this.messages.push(data);
+        this.formData.email = "";
+        this.formData.nome = "";
+        this.formData.cognome = "";
+        // setTimeout(() => this.iscrittoAperitivoDisappear(), 5000);
       } catch (error) {
-        this.error = error.response.data;
-        setTimeout(() => this.errorAperitivoDisappear(), 5000);
+        this.errors.push(error.response.data);
+        this.formData.email = "";
+        this.formData.nome = "";
+        this.formData.cognome = "";
+        // setTimeout(() => this.errorAperitivoDisappear(), 5000);
       }
     },
   },
@@ -140,6 +155,7 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 4rem 5vw;
+  max-width: min(590px, 60%) min(310px, 35%);
 }
 
 .episode-poster {
@@ -207,13 +223,21 @@ input[type="text"] {
 }
 
 .iscritto {
-  color: var(--pink-dark);
+  color: var(--pink);
   margin-top: 2rem;
+  text-align: center;
+  background: var(--text-emphasized);
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
 }
 
 .error {
-  color: red;
+  padding: 0.75rem 1rem;
   margin-top: 2rem;
+  text-align: center;
+  color: var(--pink-dark);
+  background: var(--primary);
+  border-radius: 0.25rem;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {

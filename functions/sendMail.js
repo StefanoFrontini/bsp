@@ -12,23 +12,24 @@ const transporter = nodemailer.createTransport({
 exports.handler = async (event) => {
   const payload = JSON.parse(event.body);
   console.log(`Payload sendReport: ${JSON.stringify(payload)}`);
-  const { nome, cognome, eventi } = payload;
+  const { nome, cognome, eventi, email } = payload;
   const data_evento = new Date(eventi[0].data);
-  console.log("partecipanti", eventi[0].partecipanti);
+
   try {
     const info = await transporter.sendMail({
       from: '"Stefano e Maurizio" <info@bsdating.com>',
-      to: "stefanofrontini75@gmail.com, mmancini@remax.it",
-      subject: `Iscrizione di ${nome} ${cognome} all’evento del ${new Intl.DateTimeFormat(
+      to: email,
+      subject: `Grazie per esserti iscritta/o all’evento del ${new Intl.DateTimeFormat(
         "it-IT"
       ).format(data_evento)}  `,
-      text: `Attualmente ci sono ${
-        eventi[0].partecipanti.length
-      } partecipanti all’evento del ${new Intl.DateTimeFormat("it-IT").format(
-        data_evento
-      )}:
-      ${JSON.stringify(eventi[0].partecipanti)}
-
+      text: `Ciao ${nome} ${cognome},
+      ti aspettiamo alle ore 18:30 del ${new Intl.DateTimeFormat(
+        "it-IT"
+      ).format(data_evento)} presso il GUD Eustachi, via Eustachi 25 - Milano.
+      Fai iscrivere altri amici!
+      A presto!
+      Stefano e Maurizio
+      Business Speed Dating
       `,
     });
     console.log(
