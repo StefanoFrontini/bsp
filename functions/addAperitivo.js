@@ -1,5 +1,14 @@
 const axios = require("axios");
 const { URL } = process.env;
+const context = process.env.CONTEXT;
+let STRAPI_ENDPOINT;
+if (context === "production") {
+  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
+} else {
+  STRAPI_ENDPOINT = "http://localhost:1337/graphql";
+}
+
+console.log("context:", context);
 
 exports.handler = async (event) => {
   const payload = JSON.parse(event.body);
@@ -66,7 +75,7 @@ exports.handler = async (event) => {
 
   try {
     const { data } = await axios({
-      url: "http://localhost:1337/graphql",
+      url: STRAPI_ENDPOINT,
       method: "POST",
       // headers: {
       //   Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
@@ -81,7 +90,7 @@ exports.handler = async (event) => {
       variables.id = data.data.contattos[0].id;
       try {
         const { data } = await axios({
-          url: "http://localhost:1337/graphql",
+          url: STRAPI_ENDPOINT,
           method: "POST",
           data: {
             query: UPDATE_CONTATTO,
@@ -113,7 +122,7 @@ exports.handler = async (event) => {
     } else {
       try {
         const { data } = await axios({
-          url: "http://localhost:1337/graphql",
+          url: STRAPI_ENDPOINT,
           method: "POST",
           data: {
             query: CREATE_CONTATTO,
