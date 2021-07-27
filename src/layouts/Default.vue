@@ -5,7 +5,7 @@
         <g-link to="/">Home</g-link>
       </strong>
       <nav class="nav">
-        <g-link class="nav__link" to="/eventi">Eventi</g-link>
+        <g-link class="nav__link" to="/eventi/">Eventi</g-link>
         <g-link class="nav__link" to="/programma/">In programma</g-link>
       </nav>
     </header>

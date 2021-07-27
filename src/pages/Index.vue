@@ -104,7 +104,7 @@
         <div class="aperitivo-links">
           <h3>GUD Eustachi</h3>
           <small>Via Eustachi 25 - Milano</small>
-          <g-link class="button" to="/aperitivo">Iscriviti all’evento</g-link>
+          <g-link class="button" to="/aperitivo/">Iscriviti all’evento</g-link>
         </div>
       </div>
     </section>
