@@ -53,8 +53,6 @@
         Puoi annullare l’iscrizione in qualsiasi momento e non passeremo mai la
         tua e-mail a terzi.
       </small>
-      <div ref="iscrittoMail" class="iscritto">{{ iscritto }}</div>
-      <div ref="errorMail" class="error">{{ error }}</div>
     </header>
     <section class="block episodes">
       <EventoCard
@@ -109,24 +107,24 @@ export default {
     };
   },
   methods: {
-    errorMailDisappear() {
-      this.$refs.errorMail.style.display = "none";
-      this.formData.email = "";
-    },
-    iscrittoMailDisappear() {
-      this.$refs.iscrittoMail.style.display = "none";
-      this.formData.email = "";
-    },
     async handleSubmit(e) {
       try {
         const { data } = await axios.post("/api/addMailchimp", this.formData);
-        this.iscritto = `Sei iscritto ${data.full_name}!`;
-        setTimeout(() => this.iscrittoMailDisappear(), 5000);
+        let messageS = `Ti sei iscritto ${data.full_name}!`;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          5000
+        );
       } catch (error) {
-        this.error = `C'è stato un errore, riprova più tardi: ${
-          error.response.data
-        }`;
-        setTimeout(() => this.errorMailDisappear(), 5000);
+        let messageA = "C'è stato un errore riprova più tardi";
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          5000
+        );
       }
     },
   },

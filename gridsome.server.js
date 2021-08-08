@@ -5,12 +5,59 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-module.exports = function (api) {
-  api.loadSource(({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-  })
+const axios = require("axios");
+
+module.exports = function(api) {
+  // api.loadSource(async (actions) => {
+  //   const { data } = await axios.get(
+  //     `https://bsdating.herokuapp.com/contattos`
+  //   );
+
+  //   const collection = actions.addCollection({
+  //     typeName: "Contatto",
+  //     path: "/contatto/:id",
+  //   });
+  //   for (const contatto of data) {
+  //     collection.addNode({
+  //       id: contatto.id,
+  //       path: "/contatto/" + contatto.id,
+  //       nome: contatto.nome,
+  //       cognome: contatto.cognome,
+  //       email: contatto.email,
+  //       cellulare: contatto.cellulare,
+  //       professione: contatto.professione,
+  //       chi_cerca: contatto.chi_cerca,
+  //       foto: contatto.foto ? contatto.foto.url : null,
+  //       partecipanti: contatto.partecipanti,
+  //     });
+  //   }
+  // });
+  // api.loadSource(async (actions) => {
+  //   const { data } = await axios.get(`https://bsdating.herokuapp.com/eventos`);
+
+  //   const collection = actions.addCollection({
+  //     typeName: "Eventos",
+  //     path: "/evento/:id",
+  //   });
+  //   for (const evento of data) {
+  //     console.log("evento", evento);
+  //     collection.addNode({
+  //       id: evento.id,
+  //       path: "/evento/" + evento.id,
+  //       data: evento.data,
+  //       titolo: evento.titolo,
+  //       descrizione: evento.descrizione,
+  //       online_offline: evento.online_offline,
+  //       passato_futuro: evento.passato_futuro,
+  //       location: evento.location,
+  //       location_indirizzo: evento.location_indirizzo,
+  //       sponsor_serata: evento.sponsor_serata,
+  //       partecipanti: evento.partecipanti,
+  //     });
+  //   }
+  // });
 
   api.createPages(({ createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
-  })
-}
+  });
+};

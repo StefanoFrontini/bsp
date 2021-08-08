@@ -1,14 +1,35 @@
 <template>
   <div class="layout">
+    <Notification />
     <header class="header">
-      <strong>
-        <g-link to="/">Home</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/eventi/">Eventi</g-link>
-        <g-link class="nav__link" to="/programma/">In programma</g-link>
+      <div class="mobile-buttons">
+        <strong>
+          <g-link to="/">Home</g-link>
+        </strong>
+        <button class="nav-toggle" @click="toggleMenu">
+          {{ buttonText }}
+        </button>
+      </div>
+      <nav class="nav" :class="{ 'nav-active': isOpen }">
+        <g-link to="/eventi/">Eventi</g-link>
+        <g-link to="/programma/">In programma</g-link>
+        <div v-if="disableNav" class="ul">
+          <g-link to="/partecipazioni/"
+            >I tuoi eventi {{ user.username }}</g-link
+          >
+          <g-link to="/profilo/">Profilo</g-link>
+          <button class="button" @click="logout">Esci</button>
+        </div>
+        <div v-else class="ul">
+          <g-link to="/login">Accedi</g-link>
+          <g-link to="/signup">Registrati</g-link>
+        </div>
       </nav>
     </header>
+    <div v-if="$store.state.loading" class="spin">
+      <Spinner />
+    </div>
+
     <slot />
     <footer class="footer">
       <h2>Chi sono gli organizzatori</h2>
@@ -18,7 +39,7 @@
             class="round"
             src="~/assets/images/maurizio-mancini.jpg"
             alt=""
-          ></g-image>
+          />
         </div>
         <div class="host-details">
           <p>
@@ -55,7 +76,7 @@
             class="round"
             src="~/assets/images/stefano-frontini.png"
             alt=""
-          ></g-image>
+          />
         </div>
         <div class="host-details">
           <p>
@@ -93,6 +114,73 @@
     </footer>
   </div>
 </template>
+
+<script>
+import Spinner from "~/components/Spinner.vue";
+import Notification from "~/components/Notification.vue";
+export default {
+  components: {
+    Spinner,
+    Notification,
+  },
+  data() {
+    return {
+      isOpen: false,
+      user: { username: "", email: "", password: "" },
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isOpen = !this.isOpen;
+    },
+    logout() {
+      this.$store
+        .dispatch("logout")
+        .then(() => {
+          let messageS = "Sei uscito correttamente";
+          this.$store.dispatch("message_success", messageS);
+          this.$store.dispatch("message_success_active", true);
+          setTimeout(
+            () => this.$store.dispatch("message_success_active", false),
+            5000
+          );
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  computed: {
+    buttonText() {
+      if (this.isOpen) {
+        return "chiudi nav";
+      } else {
+        return "apri nav";
+      }
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    authStatus() {
+      return this.$store.getters.authStatus;
+    },
+    disableNav() {
+      if (this.$store.getters.authStatus === "success") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem("user"));
+    if (this.isLoggedIn && this.authStatus === "") {
+      this.logout();
+    }
+  },
+};
+</script>
 
 <style>
 :root {
@@ -146,8 +234,27 @@ h2 {
   padding-right: 20px;
 } */
 
-.header {
+.spin {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  gap: 1rem;
+  align-items: center;
+  background: var(--black);
+  border-bottom: 1px solid var(--text);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 1.5rem 1rem calc(1.5rem + 9px) 2rem;
+  position: relative;
+
+  /* display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: calc(0.25rem + 9px);
@@ -155,7 +262,7 @@ h2 {
   border-bottom: 1px solid var(--text);
   overflow: hidden;
   position: relative;
-  background: var(--black);
+  background: var(--black); */
   /* padding-left: 2rem;
   padding-right: 2rem; */
 }
@@ -169,12 +276,37 @@ h2 {
   position: absolute;
   width: 100%;
 }
+.mobile-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-.nav {
+.mobile-buttons .nav-toggle {
+  background: transparent;
+  border: 2px solid var(--white);
+  border-radius: 0.25rem;
+  color: var(--white);
+  font-weight: 600;
+  width: 120px;
+}
+
+.header nav {
+  gap: 1rem;
+  align-items: center;
+  display: none;
+  flex-direction: column;
+}
+
+.header .nav-active {
+  display: flex;
+}
+
+/* .nav {
   gap: 0rem;
   align-items: center;
   display: flex;
-}
+} */
 
 .header a {
   color: var(--white);
@@ -184,8 +316,37 @@ h2 {
   padding: 1rem;
 }
 
+.nav .ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 a {
   text-decoration: none;
+}
+
+.button {
+  border: 2px solid;
+  border-radius: 0.25rem;
+  color: var(--pink);
+  display: block;
+  font-weight: 600;
+
+  padding: 0.75rem 1rem;
+  text-align: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.ul {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.benvenuto {
+  color: var(--gray-medium);
 }
 
 .footer {
@@ -266,6 +427,7 @@ a {
 .host-details {
   text-align: center;
 }
+
 @media (min-width: 650px) {
   .host-bio {
     gap: 2.5rem;
@@ -282,12 +444,40 @@ a {
   .host-details {
     text-align: left;
   }
-  .nav {
-    gap: 2rem;
-  }
   .header {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+  .header .nav {
+    gap: 2rem;
+  }
+}
+@media (min-width: 980px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+  }
+  .header .nav {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    justify-content: center;
+    gap: 3rem;
+  }
+  .header .nav-active {
+    display: flex;
+  }
+  .nav .ul {
+    flex-direction: row;
+    gap: 3rem;
+  }
+
+  .mobile-buttons {
+    width: auto;
+  }
+
+  .mobile-buttons .nav-toggle {
+    display: none;
   }
 }
 </style>

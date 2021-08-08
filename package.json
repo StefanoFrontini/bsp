@@ -10,9 +10,13 @@
     "@gridsome/vue-remark": "^0.2.6",
     "@mailchimp/mailchimp_marketing": "^3.0.55",
     "axios": "^0.21.1",
+    "busboy": "^0.3.1",
+    "form-data": "^4.0.0",
     "gridsome": "^0.7.0",
     "md5": "^2.3.0",
-    "nodemailer": "^6.6.3"
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.6.3",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {}
 }
