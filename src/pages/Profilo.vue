@@ -276,7 +276,7 @@ export default {
 
       try {
         const { data } = await axios.post(
-          "http://https://bsdating.herokuapp.com/upload",
+          "https://bsdating.herokuapp.com/upload",
           formData
         );
         console.log("data", data);
