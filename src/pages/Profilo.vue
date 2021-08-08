@@ -276,7 +276,7 @@ export default {
 
       try {
         const { data } = await axios.post(
-          "http://localhost:1337/upload",
+          "http://https://bsdating.herokuapp.com/upload",
           formData
         );
         console.log("data", data);
@@ -316,8 +316,10 @@ export default {
     },
   },
   created() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    this.token = JSON.parse(localStorage.getItem("token"));
+    if (process.isClient) {
+      this.user = JSON.parse(localStorage.getItem("user"));
+      this.token = JSON.parse(localStorage.getItem("token"));
+    }
     this.getAnagrafica();
   },
 

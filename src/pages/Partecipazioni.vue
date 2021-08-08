@@ -125,8 +125,10 @@ export default {
   },
 
   created() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    this.token = JSON.parse(localStorage.getItem("token"));
+    if (process.isClient) {
+      this.user = JSON.parse(localStorage.getItem("user"));
+      this.token = JSON.parse(localStorage.getItem("token"));
+    }
     this.getPartecipazioni();
   },
 };

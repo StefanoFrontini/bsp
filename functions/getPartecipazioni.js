@@ -7,7 +7,6 @@ if (context === "dev") {
 } else {
   STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
 }
-STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
 
 exports.handler = async (event) => {
   const payload = JSON.parse(event.body);
