@@ -2,95 +2,74 @@
   <Layout>
     <form
       class="signup"
-      @submit.prevent="login"
+      @submit.prevent="forgot"
       autocomplete="off"
       v-show="!$store.state.loading"
     >
-      <h1>Bentornato</h1>
-      <h2>Non hai un account? <g-link to="/signup">Registrati</g-link></h2>
+      <h1>Cambia password</h1>
+      <h2>Inserisci una nuova email</h2>
 
       <div class="signup__field">
         <input
           class="signup__input"
-          type="text"
-          v-model="user.identifier"
-          name="utente"
+          type="email"
+          v-model="user.email"
+          name="email"
+          id="email"
           required
         />
-        <label class="signup__label" for="utente">Email o Nome Utente</label>
+        <label class="signup__label" for="email">Email</label>
       </div>
 
-      <div class="signup__field">
-        <input
-          class="signup__input"
-          type="password"
-          v-model="user.password"
-          name="password"
-          required
-        />
-        <label class="signup__label" for="password">Password</label>
-      </div>
-
-      <button type="submit" class="button">Accedi</button>
-      <h2>
-        Password dimenticata?
-        <g-link to="/forgotpassword">Richiedi nuova password</g-link>
-      </h2>
+      <button type="submit" class="button">Invia</button>
     </form>
   </Layout>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   metaInfo() {
     return {
-      title: "Login",
+      title: "Forgot Password",
       titleTemplate: "%s",
     };
   },
   data() {
     return {
       user: {
-        identifier: "",
-        password: "",
+        email: "",
       },
     };
   },
   methods: {
-    login() {
-      let reqObj = {
-        identifier: this.user.identifier,
-        password: this.user.password,
-      };
+    async forgot() {
+      let email = this.user.email;
+      try {
+        const { data } = await axios.post(
+          "https://bsdating.herokuapp.com/auth/forgot-password",
+          {
+            email,
+          }
+        );
+        let messageS = `Ok! Riceverai una mail all'indirizzo: ${email}!`;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
 
-      this.$store
-        .dispatch("login", reqObj)
-
-        .then(() => {
-          let messageS = `Benvenuto ${this.$store.getters.username}!`;
-          this.$store.dispatch("message_success", messageS);
-          this.$store.dispatch("message_success_active", true);
-          this.$router.push("/partecipazioni/");
-          setTimeout(
-            () => this.$store.dispatch("message_success_active", false),
-            5000
-          );
-        })
-
-        .catch((error) => {
-          this.user.identifier = "";
-          this.user.password = "";
-
-          let messageA = "Utente inesistente, sei registrato?";
-          this.$store.dispatch("message_alert", messageA);
-          this.$store.dispatch("message_alert_active", true);
-          setTimeout(
-            () => this.$store.dispatch("message_alert_active", false),
-            5000
-          );
-
-          console.error(error);
-        });
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          5000
+        );
+      } catch (error) {
+        console.error(error);
+        let messageA = "Riprova più tardi";
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          5000
+        );
+      }
     },
   },
 };
