@@ -3,7 +3,7 @@ slug: privacy-diritto-lavoro
 
 title: Privacy e diritto sul lavoro
 
-description: Privacy e diritto sul lavoro
+description: Come gestire al meglio i dati dei dipendenti senza commettere violazioni
 
 created_at: 2021-09-09 18:15:00
 
@@ -14,8 +14,6 @@ sponsor_photo: ./images/gabriella-passaro-foto.jpg
 alt: foto di Gabriella Passaro
 
 id_evento: 6
-
-link_iscrizione:
 ---
 
 <p>

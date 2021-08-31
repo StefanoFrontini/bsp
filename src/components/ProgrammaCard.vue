@@ -15,7 +15,9 @@
         {{ programma.created_at }}
       </p>
       <h3>{{ programma.title }}</h3>
-      <p>{{ programma.description }}</p>
+      <p>
+        <small>{{ programma.description }}</small>
+      </p>
       <div class="episode-links">
         <a :href="programma.path"
           ><svg

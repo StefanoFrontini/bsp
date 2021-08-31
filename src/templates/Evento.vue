@@ -17,7 +17,9 @@
             {{ $page.evento.created_at }}
           </p>
           <h1>{{ $page.evento.title }}</h1>
-          <p>{{ $page.evento.description }}</p>
+          <p>
+            <small>{{ $page.evento.description }}</small>
+          </p>
         </div>
       </div>
       <div class="episode-poster">

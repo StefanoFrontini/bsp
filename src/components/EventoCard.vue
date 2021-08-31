@@ -30,7 +30,9 @@
           {{ evento.created_at }}
         </p>
         <h3>{{ evento.title }}</h3>
-        <p>{{ evento.description }}</p>
+        <p>
+          <small>{{ evento.description }}</small>
+        </p>
         <div class="episode-links">
           <a :href="evento.path"
             ><svg

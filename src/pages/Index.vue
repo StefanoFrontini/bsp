@@ -30,10 +30,12 @@
               {{ $page.programma.edges[0].node.created_at }}
             </p>
             <h3>{{ $page.programma.edges[0].node.title }}</h3>
-            <p>{{ $page.programma.edges[0].node.description }}</p>
+            <p>
+              <small>{{ $page.programma.edges[0].node.description }}</small>
+            </p>
             <g-image
               src="~/assets/images/zoomus-ar21.svg"
-              alt="Zoom meetings logo"
+              alt="Zoom meeting logo"
               width="80"
             />
 

@@ -17,7 +17,9 @@
             {{ $page.programma.created_at }}
           </p>
           <h3>{{ $page.programma.title }}</h3>
-          <p>{{ $page.programma.description }}</p>
+          <p>
+            <small>{{ $page.programma.description }}</small>
+          </p>
           <g-image
             src="~/assets/images/zoomus-ar21.svg"
             alt="Zoom meetings logo"
@@ -195,7 +197,7 @@ export default {
           "/api/addPartecipante",
           this.formData
         );
-        console.log("data:", data);
+        // console.log("data:", data);
 
         this.formData.email = "";
         this.formData.nome = "";
@@ -223,7 +225,7 @@ export default {
         this.formData.professione = "";
         this.formData.chi_cerca = "";
         let messageA =
-          "Ops..c'è stato un problema, riprova o contatta: stefano.frontini@con.repower.com";
+          "Ops..c'è stato un problema, riprova tra 10 secondi o contatta: stefano.frontini@con.repower.com";
         this.$store.dispatch("message_alert", messageA);
         this.$store.dispatch("message_alert_active", true);
         setTimeout(
