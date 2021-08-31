@@ -18,8 +18,7 @@ exports.handler = async (event) => {
   try {
     const info = await transporter.sendMail({
       from: '"Stefano e Maurizio" <info@bsdating.com>',
-      to: "stefanofrontini75@gmail.com",
-      // , mmancini@remax.it
+      to: "stefanofrontini75@gmail.com, mmancini@remax.it",
       subject: `Iscrizione di ${nome} ${cognome} all’evento del ${new Intl.DateTimeFormat(
         "it-IT"
       ).format(data_evento)}  `,
