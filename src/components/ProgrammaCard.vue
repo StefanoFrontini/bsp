@@ -34,27 +34,26 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          Dettagli Evento</a
+          Iscriviti all’evento</a
         >
       </div>
     </div>
+
+    <!-- <div class="page">
+      <p class="date">{{ programma.created_at }}</p>
+      <g-image
+        v-if="programma.sponsor_photo"
+        :src="programma.sponsor_photo"
+        style="object-fit: cover; width:100%;"
+        :alt="programma.alt"
+      />
+
+      <p>{{ programma.description }}</p>
+      <div class="continua">
+        <g-link :to="programma.path">Continua...</g-link>
+      </div>
+    </div> -->
   </div>
-
-  <!--
-  <div class="page">
-    <p class="date">{{ programma.created_at }}</p>
-    <g-image
-      v-if="programma.sponsor_photo"
-      :src="programma.sponsor_photo"
-      style="object-fit: cover; width:100%;"
-      :alt="programma.alt"
-    />
-
-    <p>{{ programma.description }}</p>
-    <div class="continua">
-      <g-link :to="programma.path">Continua...</g-link>
-    </div>
-  </div> -->
 </template>
 
 <script>

@@ -7,7 +7,7 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <!-- <section class="block next">
+    <section class="block next">
       <h2>
         Il prossimo evento online è il
         {{ $page.programma.edges[0].node.created_at }}!
@@ -31,7 +31,13 @@
             </p>
             <h3>{{ $page.programma.edges[0].node.title }}</h3>
             <p>{{ $page.programma.edges[0].node.description }}</p>
-            <div class="episode-links">
+            <g-image
+              src="~/assets/images/zoomus-ar21.svg"
+              alt="Zoom meetings logo"
+              width="80"
+            />
+
+            <!-- <div class="episode-links">
               <a :href="$page.programma.edges[0].node.path"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -51,14 +57,13 @@
                 </svg>
                 Dettagli Evento</a
               >
-            </div>
+            </div> -->
           </div>
         </div>
         <div>
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLScf89fvAvIwrLwES39YcvbvytqWm3PwVQllv96QNRrcCOXUSg/viewform"
+            :href="$page.programma.edges[0].node.path"
             class="button"
-            target="_blank"
             rel="noopener"
             >Iscriviti all’evento</a
           >
@@ -90,8 +95,8 @@
           </div>
         </div>
       </div>
-    </section> -->
-    <section class="block">
+    </section>
+    <!-- <section class="block">
       <h2>Il prossimo aperitivo è il 29 luglio ore 18:30!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster">
@@ -107,7 +112,7 @@
           <g-link class="button" to="/aperitivo/">Iscriviti all’evento</g-link>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="block featured">
       <h2>Guarda gli eventi passati</h2>
       <nav class="sponsor-photos">
@@ -194,27 +199,11 @@
       </div>
     </section> -->
   </Layout>
-  <!-- programma: allProgramma( order: ASC, limit: 1) {
-		edges {
-			node {
-				id
-        title
-        sponsor
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY", locale: "it")
-        description
-        locandina
-        link_iscrizione
-
-
-			}
-		}
-	} -->
 </template>
 
 <page-query>
+
+
 
 query {
   eventi: allEvento(sort:{by:"created_at", order: DESC}) {
@@ -234,8 +223,28 @@ query {
 
   }
 
+  programma: allProgramma( order: ASC, limit: 1) {
+		edges {
+			node {
+				id
+        title
+        sponsor
+        path
+        sponsor_photo
+        alt
+        created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
+        description
+
+
+
+			}
+		}
+	}
+
 
 }
+
+
 
 </page-query>
 

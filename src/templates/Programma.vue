@@ -18,16 +18,92 @@
           </p>
           <h3>{{ $page.programma.title }}</h3>
           <p>{{ $page.programma.description }}</p>
-
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLScf89fvAvIwrLwES39YcvbvytqWm3PwVQllv96QNRrcCOXUSg/viewform"
-            class="button"
-            target="_blank"
-            rel="noopener"
-            >Iscriviti all’evento</a
-          >
+          <g-image
+            src="~/assets/images/zoomus-ar21.svg"
+            alt="Zoom meetings logo"
+            width="80"
+          />
         </div>
       </div>
+
+      <form
+        class="signup"
+        @submit.prevent="handleSubmit"
+        autocomplete="off"
+        v-show="!$store.state.loading"
+      >
+        <h1>Registrati all’evento</h1>
+
+        <div class="signup__field">
+          <input
+            class="signup__input"
+            type="email"
+            v-model="formData.email"
+            name="utente"
+            required
+          />
+          <label class="signup__label" for="utente">Email</label>
+        </div>
+
+        <div class="signup__field">
+          <input
+            class="signup__input"
+            type="text"
+            v-model="formData.nome"
+            name="nome"
+            required
+          />
+          <label class="signup__label" for="nome">Nome</label>
+        </div>
+
+        <div class="signup__field">
+          <input
+            class="signup__input"
+            type="text"
+            v-model="formData.cognome"
+            name="cognome"
+            required
+          />
+          <label class="signup__label" for="cognome">Cognome</label>
+        </div>
+
+        <div class="signup__field">
+          <input
+            class="signup__input"
+            type="text"
+            v-model="formData.cellulare"
+            name="cellulare"
+            required
+          />
+          <label class="signup__label" for="cellulare">Cellulare</label>
+        </div>
+
+        <div class="signup__field">
+          <input
+            class="signup__input"
+            type="text"
+            v-model="formData.professione"
+            name="professione"
+            required
+          />
+          <label class="signup__label" for="professione">Professione</label>
+        </div>
+
+        <div class="signup__field">
+          <input
+            class="signup__input cerca"
+            type="text"
+            v-model="formData.chi_cerca"
+            name="chi_cerca"
+            required
+          />
+          <label class="signup__label" for="chi_cerca"
+            >Con chi vorresti essere messo in contatto?</label
+          >
+        </div>
+
+        <button type="submit" class="button">Iscriviti</button>
+      </form>
     </article>
   </Layout>
 </template>
@@ -41,10 +117,9 @@ query Programma($id: ID!) {
     path
     sponsor_photo
     alt
-    created_at (format: "D MMMM YYYY", locale: "it")
+    created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
     description
-    locandina
-    link_iscrizione
+    id_evento
   }
 }
 
@@ -55,18 +130,27 @@ query Programma($id: ID!) {
 query {
   metadata {
     siteName
-
     siteDescription
   }
 }
 </static-query>
 
 <script>
+import axios from "axios";
+
 export default {
   components: {},
   data() {
     return {
-      formData: {},
+      formData: {
+        email: "",
+        nome: "",
+        cognome: "",
+        cellulare: "",
+        professione: "",
+        chi_cerca: "",
+        eventoId: "",
+      },
     };
   },
   metaInfo() {
@@ -104,6 +188,51 @@ export default {
       ],
     };
   },
+  methods: {
+    async handleSubmit(e) {
+      try {
+        const { data } = await axios.post(
+          "/api/addPartecipante",
+          this.formData
+        );
+        console.log("data:", data);
+
+        this.formData.email = "";
+        this.formData.nome = "";
+        this.formData.cognome = "";
+        this.formData.cellulare = "";
+        this.formData.professione = "";
+        this.formData.chi_cerca = "";
+        let messageS = `Ti sei registrato all’evento ${data.nome}!
+        A breve riceverai una mail di conferma all’indirizzo:
+        ${data.email}
+        `;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
+
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          5000
+        );
+      } catch (error) {
+        console.log(error.response.data);
+        this.formData.email = "";
+        this.formData.nome = "";
+        this.formData.cognome = "";
+        this.formData.cellulare = "";
+        this.formData.professione = "";
+        this.formData.chi_cerca = "";
+        let messageA =
+          "Ops..c'è stato un problema, riprova o contatta: stefano.frontini@con.repower.com";
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          5000
+        );
+      }
+    },
+  },
 
   computed: {
     // ogImageUrl() {
@@ -114,6 +243,9 @@ export default {
     //   let postPath = this.$page.episode.path;
     //   return `${siteUrl}${postPath}`;
     // },
+  },
+  mounted() {
+    this.formData.eventoId = this.$page.programma.id_evento.toString();
   },
 };
 </script>
@@ -223,9 +355,92 @@ export default {
   display: block;
   font-weight: 600;
   margin-bottom: 2.25rem;
-  margin-top: 2rem;
+  font-size: 1.2rem;
   padding: 0.75rem 1rem;
   text-align: center;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+button,
+input {
+  border: none;
+  outline: none;
+}
+
+.signup {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  border-radius: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/*  Field */
+.signup__field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.signup__field:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 0px;
+  height: 2px;
+  background: var(--pink-dark);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.4s ease;
+}
+
+.signup__field:hover:before {
+  width: 100%;
+}
+
+/*  Input */
+.signup__input {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+  padding: 10px 2px 0;
+  border-bottom: 2px solid var(--primary);
+}
+
+.signup__input.cerca {
+  padding: 40px 2px 0;
+}
+
+/*  Label */
+.signup__label {
+  color: #bdbdbd;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.signup__input:focus + .signup__label,
+.signup__input:valid + .signup__label {
+  top: 0;
+  font-size: 1rem;
+  background-color: white;
 }
 
 @media (min-width: 600px) {
@@ -233,6 +448,9 @@ export default {
     display: grid;
     grid-template-columns: min(150px, 33%) min(410px, 66%);
     gap: 1.5rem;
+  }
+  .signup__input.cerca {
+    padding: 10px 2px 0;
   }
 }
 </style>

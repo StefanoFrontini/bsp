@@ -4,15 +4,16 @@
       <h1>Prossimi eventi</h1>
       <p>Iscriviti ai prossimi eventi di <em>Business Speed Dating</em>!</p>
     </header>
-    <!-- <section class="block episodes">
+    <section class="block episodes">
       <ProgrammaCard
         v-for="edge in $page.programma.edges"
         :key="edge.node.id"
         :programma="edge.node"
       />
-    </section> -->
+    </section>
   </Layout>
-  <!-- <page-query>
+</template>
+<page-query>
 
 query {
   programma: allProgramma(sort:{by:"created_at", order: DESC}) {
@@ -25,8 +26,8 @@ query {
         path
         sponsor_photo
         alt
-        created_at (format: "D MMMM YYYY", locale: "it")
-        locandina
+        created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
+
       }
     }
 
@@ -35,8 +36,7 @@ query {
 }
 
 
-</page-query> -->
-</template>
+</page-query>
 
 <script>
 import ProgrammaCard from "~/components/ProgrammaCard.vue";

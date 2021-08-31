@@ -187,6 +187,7 @@ h2 {
   left: 2px;
   font-size: 1.2rem;
   transition: all 0.3s ease;
+  pointer-events: none;
 }
 
 .signup__input:focus + .signup__label,
