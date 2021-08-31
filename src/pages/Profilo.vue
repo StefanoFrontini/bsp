@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div v-show="!$store.state.loading">
+    <div v-if="!$store.state.loading">
       <header class="block hero">
         <h1>Il tuo profilo {{ user.username }}</h1>
         <p>

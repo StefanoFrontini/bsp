@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <div v-show="!$store.state.loading">
+    <div v-if="!$store.state.loading">
       <header class="block hero">
         <div v-if="partecipazioni.length">
           <h1>I tuoi eventi {{ user.username }}</h1>

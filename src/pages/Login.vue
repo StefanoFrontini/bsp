@@ -4,7 +4,7 @@
       class="signup"
       @submit.prevent="login"
       autocomplete="off"
-      v-show="!$store.state.loading"
+      v-if="!$store.state.loading"
     >
       <h1>Bentornato</h1>
       <h2>Non hai un account? <g-link to="/signup">Registrati</g-link></h2>

@@ -1,112 +1,114 @@
 <template>
   <Layout>
-    <article class="episode-details dark">
-      <div class="episode-preview">
-        <div class="episode-preview-sponsor">
-          <div class="episode-preview-photo">
+    <div v-if="!$store.state.loading">
+      <article class="episode-details dark">
+        <div class="episode-preview">
+          <div class="episode-preview-sponsor">
+            <div class="episode-preview-photo">
+              <g-image
+                class="round"
+                :src="$page.programma.sponsor_photo"
+                :alt="$page.programma.alt"
+              ></g-image>
+              <p>{{ $page.programma.sponsor }}</p>
+            </div>
+          </div>
+          <div class="episode-preview-details">
+            <p class="gradient-subheading">
+              {{ $page.programma.created_at }}
+            </p>
+            <h3>{{ $page.programma.title }}</h3>
+            <p>
+              <small>{{ $page.programma.description }}</small>
+            </p>
             <g-image
-              class="round"
-              :src="$page.programma.sponsor_photo"
-              :alt="$page.programma.alt"
-            ></g-image>
-            <p>{{ $page.programma.sponsor }}</p>
+              src="~/assets/images/zoomus-ar21.svg"
+              alt="Zoom meetings logo"
+              width="80"
+            />
           </div>
         </div>
-        <div class="episode-preview-details">
-          <p class="gradient-subheading">
-            {{ $page.programma.created_at }}
-          </p>
-          <h3>{{ $page.programma.title }}</h3>
-          <p>
-            <small>{{ $page.programma.description }}</small>
-          </p>
-          <g-image
-            src="~/assets/images/zoomus-ar21.svg"
-            alt="Zoom meetings logo"
-            width="80"
-          />
-        </div>
-      </div>
 
-      <form
-        class="signup"
-        @submit.prevent="handleSubmit"
-        autocomplete="off"
-        v-show="!$store.state.loading"
-      >
-        <h1>Registrati all’evento</h1>
+        <form
+          class="signup"
+          @submit.prevent="handleSubmit"
+          autocomplete="off"
+          v-if="!$store.state.loading"
+        >
+          <h1>Registrati all’evento</h1>
 
-        <div class="signup__field">
-          <input
-            class="signup__input"
-            type="email"
-            v-model="formData.email"
-            name="utente"
-            required
-          />
-          <label class="signup__label" for="utente">Email</label>
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="email"
+              v-model="formData.email"
+              name="utente"
+              required
+            />
+            <label class="signup__label" for="utente">Email</label>
+          </div>
 
-        <div class="signup__field">
-          <input
-            class="signup__input"
-            type="text"
-            v-model="formData.nome"
-            name="nome"
-            required
-          />
-          <label class="signup__label" for="nome">Nome</label>
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="text"
+              v-model="formData.nome"
+              name="nome"
+              required
+            />
+            <label class="signup__label" for="nome">Nome</label>
+          </div>
 
-        <div class="signup__field">
-          <input
-            class="signup__input"
-            type="text"
-            v-model="formData.cognome"
-            name="cognome"
-            required
-          />
-          <label class="signup__label" for="cognome">Cognome</label>
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="text"
+              v-model="formData.cognome"
+              name="cognome"
+              required
+            />
+            <label class="signup__label" for="cognome">Cognome</label>
+          </div>
 
-        <div class="signup__field">
-          <input
-            class="signup__input"
-            type="text"
-            v-model="formData.cellulare"
-            name="cellulare"
-            required
-          />
-          <label class="signup__label" for="cellulare">Cellulare</label>
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="text"
+              v-model="formData.cellulare"
+              name="cellulare"
+              required
+            />
+            <label class="signup__label" for="cellulare">Cellulare</label>
+          </div>
 
-        <div class="signup__field">
-          <input
-            class="signup__input"
-            type="text"
-            v-model="formData.professione"
-            name="professione"
-            required
-          />
-          <label class="signup__label" for="professione">Professione</label>
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="text"
+              v-model="formData.professione"
+              name="professione"
+              required
+            />
+            <label class="signup__label" for="professione">Professione</label>
+          </div>
 
-        <div class="signup__field">
-          <input
-            class="signup__input cerca"
-            type="text"
-            v-model="formData.chi_cerca"
-            name="chi_cerca"
-            required
-          />
-          <label class="signup__label" for="chi_cerca"
-            >Con chi vorresti essere messo in contatto?</label
-          >
-        </div>
+          <div class="signup__field">
+            <input
+              class="signup__input cerca"
+              type="text"
+              v-model="formData.chi_cerca"
+              name="chi_cerca"
+              required
+            />
+            <label class="signup__label" for="chi_cerca"
+              >Con chi vorresti essere messo in contatto?</label
+            >
+          </div>
 
-        <button type="submit" class="button">Iscriviti</button>
-      </form>
-    </article>
+          <button type="submit" class="button">Iscriviti</button>
+        </form>
+      </article>
+    </div>
   </Layout>
 </template>
 
@@ -153,6 +155,8 @@ export default {
         chi_cerca: "",
         eventoId: "",
       },
+      user: {},
+      token: "",
     };
   },
   metaInfo() {
@@ -191,6 +195,50 @@ export default {
     };
   },
   methods: {
+    logout() {
+      this.$store
+        .dispatch("logout")
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async getAnagrafica() {
+      let email = this.user.email;
+      let token = this.token;
+      try {
+        const { data } = await axios.post("/api/getAnagrafica", {
+          email,
+          token,
+        });
+        console.log("Anagraficadata:", data);
+        if (data) {
+          this.formData.id = data.id;
+          this.formData.nome = data.nome;
+          this.formData.cognome = data.cognome;
+          this.formData.cellulare = data.cellulare;
+          this.formData.email = data.email;
+          this.formData.professione = data.professione;
+          this.formData.chi_cerca = data.chi_cerca;
+        }
+      } catch (error) {
+        console.error("Error from server:", error.response.data);
+        if (error.response.data.includes("10.00 seconds")) {
+          let messageA = "Riprova ad accedere tra 10 secondi";
+          this.$store.dispatch("message_alert", messageA);
+          this.$store.dispatch("message_alert_active", true);
+          setTimeout(
+            () => this.$store.dispatch("message_alert_active", false),
+            5000
+          );
+          this.logout();
+        }
+      }
+
+      return;
+    },
     async handleSubmit(e) {
       try {
         const { data } = await axios.post(
@@ -245,6 +293,15 @@ export default {
     //   let postPath = this.$page.episode.path;
     //   return `${siteUrl}${postPath}`;
     // },
+  },
+  created() {
+    if (this.$store.getters.isLoggedIn) {
+      if (process.isClient) {
+        this.user = JSON.parse(localStorage.getItem("user"));
+        this.token = JSON.parse(localStorage.getItem("token"));
+      }
+      this.getAnagrafica();
+    }
   },
   mounted() {
     this.formData.eventoId = this.$page.programma.id_evento.toString();

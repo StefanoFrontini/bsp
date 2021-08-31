@@ -4,7 +4,7 @@
       class="signup"
       @submit.prevent="reset"
       autocomplete="off"
-      v-show="!$store.state.loading"
+      v-if="!$store.state.loading"
     >
       <h1>Nuova password</h1>
       <h2>Inserisci una nuova password</h2>
