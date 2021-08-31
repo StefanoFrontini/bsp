@@ -58,7 +58,7 @@ export default {
 
         setTimeout(
           () => this.$store.dispatch("message_success_active", false),
-          5000
+          7000
         );
       } catch (error) {
         console.error(error);
@@ -67,7 +67,7 @@ export default {
         this.$store.dispatch("message_alert_active", true);
         setTimeout(
           () => this.$store.dispatch("message_alert_active", false),
-          5000
+          7000
         );
       }
     },

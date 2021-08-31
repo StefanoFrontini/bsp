@@ -135,13 +135,13 @@ export default {
         this.formData.email = "";
         this.formData.nome = "";
         this.formData.cognome = "";
-        // setTimeout(() => this.iscrittoAperitivoDisappear(), 5000);
+        // setTimeout(() => this.iscrittoAperitivoDisappear(), 7000);
       } catch (error) {
         this.errors.push(error.response.data);
         this.formData.email = "";
         this.formData.nome = "";
         this.formData.cognome = "";
-        // setTimeout(() => this.errorAperitivoDisappear(), 5000);
+        // setTimeout(() => this.errorAperitivoDisappear(), 7000);
       }
     },
   },

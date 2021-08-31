@@ -73,7 +73,7 @@ export default {
           this.$store.dispatch("message_success_active", true);
           setTimeout(
             () => this.$store.dispatch("message_success_active", false),
-            5000
+            7000
           );
           this.$router.push("/login");
         })
@@ -114,7 +114,7 @@ export default {
             this.$store.dispatch("message_alert_active", true);
             setTimeout(
               () => this.$store.dispatch("message_alert_active", false),
-              5000
+              7000
             );
             this.logout();
           }

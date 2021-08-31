@@ -115,7 +115,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
                 setTimeout(
                   () =>
                     appOptions.store.dispatch("message_alert_active", false),
-                  5000
+                  7000
                 );
               } else {
                 throw `Server error: ${
@@ -147,7 +147,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
           })
           .catch((error) => {
             process.isClient ? localStorage.removeItem("token") : false;
-            console.error(error.response.data);
+            console.error("main.js:", error.response.data);
             commit("AUTH_ERROR");
             if (error.response.data.data[0].messages[0].message) {
               if (
@@ -161,7 +161,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
                 setTimeout(
                   () =>
                     appOptions.store.dispatch("message_alert_active", false),
-                  5000
+                  7000
                 );
               } else if (
                 error.response.data.data[0].messages[0].message.includes(
@@ -174,7 +174,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
                 setTimeout(
                   () =>
                     appOptions.store.dispatch("message_alert_active", false),
-                  5000
+                  7000
                 );
                 throw `Server error: ${
                   error.response.data.data[0].messages[0].message

@@ -1,5 +1,20 @@
 <template>
   <Layout>
+    <header class="block hero">
+      <h1>Entra nella community</h1>
+      <p>
+        Registrati per essere sempre aggiornato sui prossimi eventi di
+        <em>Business Speed Dating</em>!
+      </p>
+      <small class="small">
+        Puoi annullare l’iscrizione in qualsiasi momento e non passeremo mai la
+        tua e-mail a terzi.
+      </small>
+      <p>
+        Accedi al sito per scaricare la lista dei partecipanti e programmare
+        incontri one-to-one con le persone che hai conosciuto!
+      </p>
+    </header>
     <form
       class="signup"
       @submit.prevent="register"
@@ -47,6 +62,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   metaInfo() {
     return {
@@ -84,15 +101,17 @@ export default {
       this.$store
         .dispatch("register", reqObj)
         .then(() => {
-          let messageS = `Ciao ${
-            this.$store.getters.username
-          }! Ora accedi per avere la lista dei partecipanti`;
+          axios.post("/api/addMailchimp", reqObj);
+          let messageS = `Ciao ${this.$store.getters.username}!
+          Riceverai le notifiche dei nuovi eventi all’indirizzo:
+          ${reqObj.email}
+          Accedi per avere la lista dei partecipanti degli eventi passati`;
           this.$store.dispatch("message_success", messageS);
           this.$store.dispatch("message_success_active", true);
 
           setTimeout(
             () => this.$store.dispatch("message_success_active", false),
-            5000
+            7000
           );
           this.logout();
         })
@@ -102,6 +121,14 @@ export default {
           this.user.email = "";
           this.user.password = "";
           console.error(error);
+          // let messageA = "Utente già registrato! Riprova o accedi";
+          // this.$store.dispatch("message_alert", messageA);
+          // this.$store.dispatch("message_alert_active", true);
+          // setTimeout(
+          //   () => this.$store.dispatch("message_alert_active", false),
+          //   7000
+          // );
+          this.logout();
         });
     },
   },
@@ -109,6 +136,48 @@ export default {
 </script>
 
 <style scoped>
+.block {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 5vw;
+}
+
+.hero {
+  background: var(--text-emphasized);
+  color: var(--text);
+}
+
+.hero h1 {
+  color: var(--white);
+  font-size: clamp(1.75rem, 10vw, 3.5rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+}
+
+.hero p {
+  color: var(--gray-medium);
+  font-size: clamp(0.875rem, 2.75vw, 1.25rem);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 90vw;
+  width: 46ch;
+}
+
+.hero h1,
+.hero p {
+  text-align: center;
+}
+
+.small {
+  font-size: 0.8rem;
+  margin-top: 2rem;
+  color: var(--gray-medium);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
 button,
 input {
   border: none;
