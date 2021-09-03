@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     subscriberHash,
     {
       email_address: email,
-      status: "subscribed",
+      status: "pending",
     }
   );
   console.log("response:", response);
