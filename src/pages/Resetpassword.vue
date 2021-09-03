@@ -71,11 +71,11 @@ export default {
             passwordConfirmation,
           }
         );
-        console.log("data:", data);
+
         let messageS = "Password cambiata!";
         this.$store.dispatch("message_success", messageS);
         this.$store.dispatch("message_success_active", true);
-        this.$router.push("/login");
+        this.$router.push("/login/");
 
         setTimeout(
           () => this.$store.dispatch("message_success_active", false),

@@ -108,7 +108,7 @@
           <button type="submit" class="button">Iscriviti</button>
           <h3 class="small">
             Stufo di inserire sempre i dati?
-            <g-link to="/signup">Registrati</g-link>
+            <g-link to="/signup">Entra nella community</g-link>
           </h3>
         </form>
       </article>
@@ -217,7 +217,7 @@ export default {
           email,
           token,
         });
-        console.log("Anagraficadata:", data);
+
         if (data) {
           this.formData.id = data.id;
           this.formData.nome = data.nome;
@@ -316,7 +316,7 @@ export default {
 <style scoped>
 .small {
   margin-top: 1rem;
-  color: var(--gray-medium);
+  color: var(--gray-text);
   font-weight: lighter;
   text-align: center;
 }

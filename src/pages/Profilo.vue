@@ -179,6 +179,12 @@ export default {
     NoFoto,
   },
   name: "Profilo",
+  metaInfo() {
+    return {
+      title: "Profilo | Business Speed Dating",
+      titleTemplate: "%s",
+    };
+  },
   data() {
     return {
       user: {},
@@ -196,7 +202,7 @@ export default {
       this.$store
         .dispatch("logout")
         .then(() => {
-          this.$router.push("/login");
+          this.$router.push("/login/");
         })
         .catch((err) => {
           console.log(err);
@@ -211,7 +217,7 @@ export default {
             email,
             token,
           });
-          console.log("Anagraficadata:", data);
+
           if (data) {
             this.profilo = data;
             this.update_user.id = this.profilo.id;
@@ -246,7 +252,6 @@ export default {
             "/api/updateAnagrafica",
             this.update_user
           );
-          console.log(`Nuovo utente nel db! ${data.nome} ${data.cognome}`);
 
           this.profilo = data;
           let messageS = "Dati aggiornati!";
@@ -279,7 +284,7 @@ export default {
           "https://bsdating.herokuapp.com/upload",
           formData
         );
-        console.log("data", data);
+
         const new_profilo = this.profilo;
         new_profilo.foto = { url: data[0].url };
         this.profilo = new_profilo;
@@ -298,7 +303,7 @@ export default {
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-      console.log(">>>> 1st element in files array >>>> ", this.file);
+      // console.log(">>>> 1st element in files array >>>> ", this.file);
       let reader = new FileReader();
       reader.addEventListener(
         "load",

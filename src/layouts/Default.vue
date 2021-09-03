@@ -21,8 +21,8 @@
           <button class="button" @click="logout">Esci</button>
         </div>
         <div v-else class="ul">
-          <g-link to="/login">Accedi</g-link>
-          <g-link to="/signup">Registrati</g-link>
+          <g-link to="/login/">Accedi</g-link>
+          <g-link to="/signup/">Registrati</g-link>
         </div>
       </nav>
     </header>
@@ -144,7 +144,7 @@ export default {
             () => this.$store.dispatch("message_success_active", false),
             7000
           );
-          this.$router.push("/login");
+          this.$router.push("/login/");
         })
         .catch((err) => {
           console.log(err);

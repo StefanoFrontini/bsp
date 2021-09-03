@@ -34,7 +34,7 @@
       <button type="submit" class="button">Accedi</button>
       <h2>
         Password dimenticata?
-        <g-link to="/forgotpassword">Richiedi nuova password</g-link>
+        <g-link to="/forgotpassword/">Richiedi nuova password</g-link>
       </h2>
     </form>
   </Layout>
@@ -44,7 +44,7 @@
 export default {
   metaInfo() {
     return {
-      title: "Login",
+      title: "Login | Business Speed Dating",
       titleTemplate: "%s",
     };
   },

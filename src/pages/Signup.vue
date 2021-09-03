@@ -67,7 +67,7 @@ import axios from "axios";
 export default {
   metaInfo() {
     return {
-      title: "Registrati",
+      title: "Registrati | Business Speed Dating",
       titleTemplate: "%s",
     };
   },
@@ -85,7 +85,7 @@ export default {
       this.$store
         .dispatch("logout")
         .then(() => {
-          this.$router.push("/login");
+          this.$router.push("/login/");
         })
         .catch((err) => {
           console.log(err);

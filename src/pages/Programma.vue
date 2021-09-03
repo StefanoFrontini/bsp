@@ -48,7 +48,7 @@ export default {
 
   metaInfo() {
     return {
-      title: "Eventi in programma",
+      title: "Eventi in programma | Business Speed Dating",
       titleTemplate: "%s",
     };
   },

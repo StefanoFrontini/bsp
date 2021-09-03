@@ -41,6 +41,17 @@
           <h3>{{ currentEvent.titolo }}</h3>
           <p>{{ currentEvent.descrizione }}</p>
         </div>
+
+        <JsonCSV
+          :data="currentEvent.partecipanti"
+          class="download"
+          delimiter=";"
+          :separator-excel="excel"
+          :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
+          :fields="field"
+        >
+          Scarica la lista
+        </JsonCSV>
       </div>
     </section>
 
@@ -65,7 +76,7 @@
       </div>
     </section>
 
-    <section class="block episodes">
+    <section class="block episodes block2">
       <PartecipanteCard
         v-for="item in currentEvent.partecipanti"
         :key="item.id"
@@ -76,10 +87,25 @@
 </template>
 
 <script>
+import JsonCSV from "vue-json-csv";
 import PartecipanteCard from "~/components/PartecipanteCard.vue";
 export default {
   components: {
     PartecipanteCard,
+    JsonCSV,
+  },
+  data() {
+    return {
+      field: [
+        "nome",
+        "cognome",
+        "professione",
+        "chi_cerca",
+        "email",
+        "cellulare",
+      ],
+      excel: true,
+    };
   },
   computed: {
     currentEvent() {
@@ -90,12 +116,30 @@ export default {
 </script>
 
 <style scoped>
+.download {
+  border: 2px solid;
+  border-radius: 0.25rem;
+  color: var(--pink-dark);
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2.25rem;
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  grid-column: 1 / span 2;
+}
+
 .block {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 4rem 5vw;
+}
+
+.block.block2 {
+  padding-top: 0rem;
 }
 
 .hero {
@@ -264,7 +308,7 @@ h1 {
 }
 .episode-preview {
   max-width: 630px;
-  margin-bottom: 5rem;
+  margin-bottom: 0rem;
 }
 
 @media (min-width: 400px) {

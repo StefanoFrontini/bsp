@@ -56,6 +56,12 @@ export default {
     EventoPartecipanteCard,
     Notification,
   },
+  metaInfo() {
+    return {
+      title: "I tuoi eventi | Business Speed Dating",
+      titleTemplate: "%s",
+    };
+  },
   data() {
     return {
       user: {},
@@ -75,7 +81,7 @@ export default {
             () => this.$store.dispatch("message_success_active", false),
             7000
           );
-          this.$router.push("/login");
+          this.$router.push("/login/");
         })
         .catch((err) => {
           console.log(err);
@@ -102,10 +108,6 @@ export default {
           } else {
             this.partecipazioni = [];
           }
-
-          console.log("PartecipazioniData", data);
-          // const parsedData = JSON.parse(data);
-          // console.log("parsedData", parsedData);
         } catch (error) {
           console.error("Error from server:", error.response.data);
           if (error.response.data.includes("10.00 seconds")) {

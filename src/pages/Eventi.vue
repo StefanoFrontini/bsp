@@ -110,6 +110,7 @@ export default {
     async handleSubmit(e) {
       try {
         const { data } = await axios.post("/api/addMailchimp", this.formData);
+        this.formData.email = "";
         let messageS = `Ti sei iscritto ${data.full_name}!`;
         this.$store.dispatch("message_success", messageS);
         this.$store.dispatch("message_success_active", true);
@@ -131,7 +132,7 @@ export default {
 
   metaInfo() {
     return {
-      title: "Eventi passati",
+      title: "Eventi passati | Business Speed Dating",
       titleTemplate: "%s",
     };
   },
