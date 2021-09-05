@@ -89,7 +89,6 @@ export default function(Vue, { router, head, isClient, appOptions }) {
           .then((response) => {
             const token = response.data.jwt;
             const user = response.data.user;
-            console.log("response_data", response.data);
 
             if (process.isClient) {
               localStorage.setItem("token", JSON.stringify(token));

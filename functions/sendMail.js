@@ -26,9 +26,9 @@ exports.handler = async (event) => {
         text: `Ciao ${nome} ${cognome},
         ti aspettiamo alle ore 18:30 del ${new Intl.DateTimeFormat(
           "it-IT"
-        ).format(data_evento)} presso il ${
-          eventi[0].location
-        }, ${location_indirizzo}.
+        ).format(data_evento)} presso il ${eventi[0].location}, ${
+          eventi[0].location_indirizzo
+        }.
         Fai iscrivere altri amici!
         A presto!
         Stefano e Maurizio

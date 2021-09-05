@@ -1,87 +1,105 @@
 <template>
   <Layout>
-    <section class="block">
-      <h2>Il prossimo aperitivo è il 29 luglio ore 18:30!</h2>
-      <div class="next-episode-wrapper">
-        <div class="episode-poster">
-          <g-image
-            class="square"
-            src="~/assets/images/cheers.jpg"
-            alt="cheers"
-          ></g-image>
-        </div>
-        <h3>GUD Eustachi</h3>
-        <small>Via Eustachi 25 - Milano</small>
-        <form
-          name="aperitivo"
-          method="post"
-          @submit.prevent="handleSubmit"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-        >
-          <input type="hidden" name="form-name" value="contact" />
-          <p hidden>
-            <label> Don’t fill this out: <input name="bot-field"/></label>
-          </p>
-          <div class="inputs">
-            <input
-              type="email"
-              name="email"
-              id="email"
-              v-model="formData.email"
-              required
-              placeholder="Email"
-            />
-            <input
-              type="text"
-              name="nome"
-              id="nome"
-              v-model="formData.nome"
-              required
-              placeholder="Nome"
-            />
-            <input
-              type="text"
-              name="cognome"
-              id="cognome"
-              v-model="formData.cognome"
-              required
-              placeholder="Cognome"
-            />
+    <div v-if="!$store.state.loading">
+      <section class="block">
+        <h1>Il prossimo aperitivo è il 30 settembre ore 18:30!</h1>
+        <div class="next-episode-wrapper">
+          <div class="episode-poster">
+            <g-image
+              class="square"
+              src="~/assets/images/cheers.jpg"
+              alt="cheers"
+            ></g-image>
           </div>
-          <button type="submit" class="button">
-            Iscriviti!
-            <!-- <input type="submit" value="Iscriviti!" /> -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-arrow-right"
-            >
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </button>
-        </form>
-        <div
-          ref="iscrittoAperitivo"
-          v-for="(message, index) in messages"
-          :key="index"
-        >
-          {{ iscritto }}
-          <p class="iscritto">{{ message }}</p>
+          <div class="location">
+            <h3>GUD Eustachi</h3>
+            <small>Via Eustachi 25 - Milano</small>
+          </div>
+          <form
+            name="aperitivo"
+            class="signup"
+            @submit.prevent="handleSubmit"
+            autocomplete="off"
+          >
+            <h2>Registrati all’evento</h2>
+
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="email"
+                v-model="formData.email"
+                name="utente"
+                required
+              />
+              <label class="signup__label" for="utente">Email</label>
+            </div>
+
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="text"
+                v-model="formData.nome"
+                name="nome"
+                required
+              />
+              <label class="signup__label" for="nome">Nome</label>
+            </div>
+
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="text"
+                v-model="formData.cognome"
+                name="cognome"
+                required
+              />
+              <label class="signup__label" for="cognome">Cognome</label>
+            </div>
+
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="text"
+                v-model="formData.cellulare"
+                name="cellulare"
+                required
+              />
+              <label class="signup__label" for="cellulare">Cellulare</label>
+            </div>
+
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="text"
+                v-model="formData.professione"
+                name="professione"
+                required
+              />
+              <label class="signup__label" for="professione">Professione</label>
+            </div>
+
+            <div class="signup__field">
+              <input
+                class="signup__input cerca"
+                type="text"
+                v-model="formData.chi_cerca"
+                name="chi_cerca"
+                required
+              />
+              <label class="signup__label" for="chi_cerca"
+                >Con chi vorresti essere messo in contatto?</label
+              >
+            </div>
+
+            <button type="submit" class="button">Iscriviti</button>
+            <h3 class="small">
+              Stufo di inserire sempre i dati?
+              <g-link to="/signup">Entra nella community</g-link>
+            </h3>
+          </form>
         </div>
-        <div ref="errorAperitivo" v-for="(error, index) in errors" :key="index">
-          <p class="error">{{ error }}</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </Layout>
 </template>
 
@@ -98,52 +116,114 @@ export default {
           key: "description",
           name: "description",
           content:
-            "Partecipa all’aperitivo del 29 luglio 2021 in programma al GUD Milano!",
+            "Partecipa all’aperitivo del 30 settembre 2021 in programma al GUD Milano!",
         },
       ],
     };
   },
   data() {
     return {
-      errors: [],
-      messages: [],
+      user: {},
+      token: "",
       formData: {
-        form: "aperitivo",
         email: "",
         nome: "",
         cognome: "",
+        cellulare: "",
+        professione: "",
+        chi_cerca: "",
       },
     };
   },
   methods: {
-    errorAperitivoDisappear() {
-      this.$refs.errorAperitivo.style.display = "none";
-      this.formData.email = "";
-      this.formData.nome = "";
-      this.formData.cognome = "";
+    logout() {
+      this.$store
+        .dispatch("logout")
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
-    iscrittoAperitivoDisappear() {
-      this.$refs.iscrittoAperitivo.style.display = "none";
-      this.formData.email = "";
-      this.formData.nome = "";
-      this.formData.cognome = "";
+    async getAnagrafica() {
+      let email = this.user.email;
+      let token = this.token;
+      try {
+        const { data } = await axios.post("/api/getAnagrafica", {
+          email,
+          token,
+        });
+
+        if (data) {
+          this.formData.id = data.id;
+          this.formData.nome = data.nome;
+          this.formData.cognome = data.cognome;
+          this.formData.cellulare = data.cellulare;
+          this.formData.email = data.email;
+          this.formData.professione = data.professione;
+          this.formData.chi_cerca = data.chi_cerca;
+        }
+      } catch (error) {
+        console.error("Error from server:", error.response.data);
+        if (error.response.data.includes("10.00 seconds")) {
+          let messageA = "Riprova ad accedere tra 10 secondi";
+          this.$store.dispatch("message_alert", messageA);
+          this.$store.dispatch("message_alert_active", true);
+          setTimeout(
+            () => this.$store.dispatch("message_alert_active", false),
+            7000
+          );
+          this.logout();
+        }
+      }
+
+      return;
     },
     async handleSubmit(e) {
       try {
         const { data } = await axios.post("/api/addAperitivo", this.formData);
-        this.messages.push(data);
+        // console.log("data:", data);
+
         this.formData.email = "";
         this.formData.nome = "";
         this.formData.cognome = "";
-        // setTimeout(() => this.iscrittoAperitivoDisappear(), 7000);
+        this.formData.cellulare = "";
+        this.formData.professione = "";
+        this.formData.chi_cerca = "";
+        let messageS = `Ti sei registrato all’evento ${data.nome}!
+        A breve riceverai una mail di conferma all’indirizzo:
+        ${data.email}
+        `;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
+
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          7000
+        );
       } catch (error) {
-        this.errors.push(error.response.data);
-        this.formData.email = "";
-        this.formData.nome = "";
-        this.formData.cognome = "";
-        // setTimeout(() => this.errorAperitivoDisappear(), 7000);
+        console.log(error.response.data);
+
+        let messageA =
+          "Ops..c'è stato un problema, riprova tra 10 secondi o contatta: stefano.frontini@con.repower.com";
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          7000
+        );
       }
     },
+  },
+  created() {
+    if (this.$store.getters.isLoggedIn) {
+      if (process.isClient) {
+        this.user = JSON.parse(localStorage.getItem("user"));
+        this.token = JSON.parse(localStorage.getItem("token"));
+      }
+      this.getAnagrafica();
+    }
   },
 };
 </script>
@@ -162,6 +242,8 @@ export default {
   width: 100%;
   height: 180px;
   position: relative;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 .square {
@@ -204,40 +286,104 @@ export default {
   background-color: transparent;
   cursor: pointer;
   margin: 0 auto;
-  margin-top: 2rem;
 }
 
-input[type="email"],
-input[type="text"] {
-  border: 2px solid black;
-  border-radius: 0.25rem;
-  margin-top: 2rem;
-  padding: 0.75rem 1rem;
+.location {
+  text-align: center;
+}
+
+button,
+input {
+  border: none;
   outline: none;
 }
 
-.inputs {
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.small {
+  margin-top: 1rem;
+  color: var(--gray-text);
+  font-weight: lighter;
+  text-align: center;
+}
+
+.signup {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 1rem;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  margin: auto;
+
+  border-radius: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.iscritto {
-  color: var(--pink);
-  margin-top: 2rem;
-  text-align: center;
-  background: var(--text-emphasized);
-  padding: 0.75rem 1rem;
-  border-radius: 0.25rem;
+/*  Field */
+.signup__field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin-bottom: 50px;
 }
 
-.error {
-  padding: 0.75rem 1rem;
-  margin-top: 2rem;
-  text-align: center;
-  color: var(--pink-dark);
-  background: var(--primary);
-  border-radius: 0.25rem;
+.signup__field:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 0px;
+  height: 2px;
+  background: var(--pink-dark);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.4s ease;
+}
+
+.signup__field:hover:before {
+  width: 100%;
+}
+
+/*  Input */
+.signup__input {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+  padding: 10px 2px 0;
+  border-bottom: 2px solid var(--primary);
+}
+
+.signup__input.cerca {
+  padding: 40px 2px 0;
+}
+
+/*  Label */
+.signup__label {
+  color: #bdbdbd;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.signup__input:focus + .signup__label,
+.signup__input:valid + .signup__label {
+  top: 0;
+  font-size: 1rem;
+  background-color: white;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -245,6 +391,12 @@ input[type="text"] {
   input[type="text"],
   textarea {
     font-size: 16px;
+  }
+}
+
+@media (min-width: 600px) {
+  .signup__input.cerca {
+    padding: 10px 2px 0;
   }
 }
 </style>

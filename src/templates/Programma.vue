@@ -270,12 +270,7 @@ export default {
         );
       } catch (error) {
         console.log(error.response.data);
-        this.formData.email = "";
-        this.formData.nome = "";
-        this.formData.cognome = "";
-        this.formData.cellulare = "";
-        this.formData.professione = "";
-        this.formData.chi_cerca = "";
+
         let messageA =
           "Ops..c'è stato un problema, riprova tra 10 secondi o contatta: stefano.frontini@con.repower.com";
         this.$store.dispatch("message_alert", messageA);

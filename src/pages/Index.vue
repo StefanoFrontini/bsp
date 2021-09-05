@@ -98,8 +98,8 @@
         </div>
       </div>
     </section>
-    <!-- <section class="block">
-      <h2>Il prossimo aperitivo è il 29 luglio ore 18:30!</h2>
+    <section class="block">
+      <h2>Il prossimo aperitivo è il 30 settembre ore 18:30!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster">
           <g-image
@@ -114,7 +114,7 @@
           <g-link class="button" to="/aperitivo/">Iscriviti all’evento</g-link>
         </div>
       </div>
-    </section> -->
+    </section>
     <section class="block featured">
       <h2>Guarda gli eventi passati</h2>
       <nav class="sponsor-photos">

@@ -73,6 +73,16 @@
           <h3>{{ currentEvent.titolo }}</h3>
           <p>{{ currentEvent.descrizione }}</p>
         </div>
+        <JsonCSV
+          :data="currentEvent.partecipanti"
+          class="download"
+          delimiter=";"
+          :separator-excel="excel"
+          :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
+          :fields="field"
+        >
+          Scarica la lista
+        </JsonCSV>
       </div>
     </section>
 

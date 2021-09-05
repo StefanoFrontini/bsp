@@ -25,7 +25,11 @@ exports.handler = async (event) => {
     eventoId,
   } = payload;
 
-  const eventi = eventoId;
+  const eventi = [];
+
+  const nuovo_evento = eventoId;
+
+  eventi.push(nuovo_evento);
 
   const variables = {
     email,
@@ -40,6 +44,9 @@ exports.handler = async (event) => {
   const GET_ID = `query($email: String) {
     contattos(where: { email: $email }) {
       id
+      eventi {
+        id
+      }
     }
   }`;
 
@@ -82,6 +89,7 @@ exports.handler = async (event) => {
         professione
         chi_cerca
         eventi {
+          id
           titolo
           data
           online_offline
@@ -117,6 +125,9 @@ exports.handler = async (event) => {
     if (data.data.contattos.length) {
       console.log("id = ", data.data.contattos[0].id);
       variables.id = data.data.contattos[0].id;
+      for (const evento of data.data.contattos[0].eventi) {
+        variables.eventi.push(evento.id);
+      }
       try {
         const { data } = await axios({
           url: STRAPI_ENDPOINT,
@@ -126,15 +137,21 @@ exports.handler = async (event) => {
             variables,
           },
         });
+        console.log("updateContatto", data.data.updateContatto.contatto);
+        const eventoData = data.data.updateContatto.contatto.eventi.find(
+          (item) => item.id === nuovo_evento
+        );
+        console.log("eventoData", eventoData);
+        const datiPerMail = data.data.updateContatto.contatto;
+        datiPerMail.eventi = [eventoData];
+        console.log("DatiperMail", datiPerMail);
+
         const pingReport = await axios.post(
           `${URL}/api/sendReport`,
-          data.data.updateContatto.contatto
+          datiPerMail
         );
 
-        const pingMail = await axios.post(
-          `${URL}/api/sendMail`,
-          data.data.updateContatto.contatto
-        );
+        const pingMail = await axios.post(`${URL}/api/sendMail`, datiPerMail);
 
         return {
           statusCode: 200,
@@ -187,21 +204,20 @@ exports.handler = async (event) => {
 
         return {
           statusCode: 200,
-          body: JSON.stringify(
-            `Ti sei registrato all’evento ${
-              data.data.createContatto.contatto.nome
-            } ${data.data.createContatto.contatto.cognome}!
-            A breve riceverai una mail di conferma all’indirizzo:
-            ${data.data.createContatto.contatto.email}`
-          ),
+          body: JSON.stringify(data.data.createContatto.contatto),
+          // body: JSON.stringify(
+          //   `Ti sei registrato all’evento ${
+          //     data.data.createContatto.contatto.nome
+          //   } ${data.data.createContatto.contatto.cognome}!
+          //   A breve riceverai una mail di conferma all’indirizzo:
+          //   ${data.data.createContatto.contatto.email}`
+          // ),
         };
       } catch (error) {
         console.log("error", error);
         return {
           statusCode: 500,
-          body: JSON.stringify(
-            "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-          ),
+          body: JSON.stringify(error.response.data),
         };
       }
     }
@@ -209,9 +225,7 @@ exports.handler = async (event) => {
     console.log("error", error);
     return {
       statusCode: 500,
-      body: JSON.stringify(
-        "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-      ),
+      body: JSON.stringify(error.response.data),
     };
   }
 };
