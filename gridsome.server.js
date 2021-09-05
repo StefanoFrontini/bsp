@@ -5,12 +5,12 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const axios = require("axios");
+//const axios = require("axios");
 
 module.exports = function(api) {
   // api.loadSource(async (actions) => {
   //   const { data } = await axios.get(
-  //     `https://bsdating.herokuapp.com/contattos`
+  //     `/contattos`
   //   );
 
   //   const collection = actions.addCollection({

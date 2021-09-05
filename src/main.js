@@ -85,7 +85,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       async login({ commit }, user) {
         commit("AUTH_REQUEST");
         await axios
-          .post(`https://bsdating.herokuapp.com/auth/local`, user)
+          .post(process.env.GRIDSOME_STRAPI_LOGIN_URL, user)
           .then((response) => {
             const token = response.data.jwt;
             const user = response.data.user;
