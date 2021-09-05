@@ -47,7 +47,7 @@ export default {
       let email = this.user.email;
       try {
         const { data } = await axios.post(
-          "https://bsdating.herokuapp.com/auth/forgot-password",
+          process.env.GRIDSOME_FORGOT_PASSWORD_URL,
           {
             email,
           }

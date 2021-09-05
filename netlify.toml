@@ -3,6 +3,8 @@
   command="gridsome build"
   functions = "functions"
 
+[dev]
+  framework = "gridsome"
 
 [[redirects]]
   from = "/api/*"

@@ -64,7 +64,7 @@ export default {
       let code = this.code;
       try {
         const { data } = await axios.post(
-          "https://bsdating.herokuapp.com/auth/reset-password",
+          process.env.GRIDSOME_RESET_PASSWORD_URL,
           {
             code,
             password,

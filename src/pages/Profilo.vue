@@ -281,7 +281,7 @@ export default {
 
       try {
         const { data } = await axios.post(
-          "https://bsdating.herokuapp.com/upload",
+          process.env.GRIDSOME_FILE_UPLOAD_URL,
           formData
         );
 

@@ -33,7 +33,7 @@ module.exports = function(api) {
   //   }
   // });
   // api.loadSource(async (actions) => {
-  //   const { data } = await axios.get(`https://bsdating.herokuapp.com/eventos`);
+  //   const { data } = await axios.get(`/eventos`);
 
   //   const collection = actions.addCollection({
   //     typeName: "Eventos",

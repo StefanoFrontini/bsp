@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
-  host: "smtp.zoho.eu",
-  port: 465,
+  host: process.env.ZOHO_SMTP,
+  port: process.env.SMTP_PORT,
   secure: true,
   auth: {
     user: process.env.ZOHO_USER,
