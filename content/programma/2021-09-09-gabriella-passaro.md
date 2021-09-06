@@ -1,5 +1,5 @@
 ---
-slug: privacy-diritto-lavoro
+slug: gabriella-passaro
 
 title: Privacy e diritto sul lavoro
 

@@ -1,5 +1,5 @@
 ---
-slug: privacy-diritto-lavoro
+slug: alessandro-gambino
 
 title: Consulenza fiscale e societaria
 

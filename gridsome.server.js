@@ -57,7 +57,36 @@ module.exports = function(api) {
   //   }
   // });
 
-  api.createPages(({ createPage }) => {
+  api.createPages(async ({ graphql, createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
+    const { data } = await graphql(`
+      {
+        testimonianza {
+          testimonianzas {
+            data
+            slug
+            video {
+              url
+            }
+            contatto {
+              nome
+              cognome
+            }
+          }
+        }
+      }
+    `);
+
+    const testimonianze = data.testimonianza.testimonianzas;
+
+    testimonianze.forEach((testimonianza) => {
+      createPage({
+        path: `/testimonianza/${testimonianza.slug}`,
+        component: "./src/templates/Testimonianza.vue",
+        context: {
+          id: testimonianza.id,
+        },
+      });
+    });
   });
 };

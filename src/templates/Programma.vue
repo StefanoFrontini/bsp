@@ -108,7 +108,7 @@
           <button type="submit" class="button">Iscriviti</button>
           <h3 class="small">
             Stufo di inserire sempre i dati?
-            <g-link to="/signup">Entra nella community</g-link>
+            <g-link to="/signup/">Entra nella community</g-link>
           </h3>
         </form>
       </article>

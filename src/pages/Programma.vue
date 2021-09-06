@@ -16,7 +16,7 @@
 <page-query>
 
 query {
-  programma: allProgramma(sort:{by:"created_at", order: DESC}) {
+  programma: allProgramma(sort:{by:"created_at", order: ASC}) {
     edges{
       node{
         id
