@@ -63,6 +63,7 @@ module.exports = function(api) {
       {
         testimonianza {
           testimonianzas {
+            id
             data
             slug
             video {

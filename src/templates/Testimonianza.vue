@@ -5,12 +5,12 @@
         <div class="episode-preview-sponsor">
           <div class="episode-preview-photo-small">
             <g-image
-              v-if="partecipante.foto"
+              v-if="$page.testimonianza.foto"
               class="round"
-              :src="partecipante.foto.url"
+              :src="$page.testimonianza.foto.url"
               :alt="
-                `Partecipante della serata ${partecipante.nome} ${
-                  partecipante.cognome
+                `testimonianza ${$page.testimonianza.nome} ${
+                  $page.testimonianza.cognome
                 }`
               "
             />
@@ -21,14 +21,14 @@
             />
           </div>
           <p class="name">
-            {{ partecipante.nome + " " + partecipante.cognome }}
+            {{ $page.testimonianza.nome + " " + $page.testimonianza.cognome }}
           </p>
         </div>
 
-        <p class="professione">{{ partecipante.professione }}</p>
+        <p class="professione">{{ $page.testimonianza.professione }}</p>
         <div class="contatti">
-          <p class="email">{{ partecipante.email }}</p>
-          <p class="cellulare">{{ partecipante.cellulare }}</p>
+          <p class="email">{{ $page.testimonianza.email }}</p>
+          <p class="cellulare">{{ $page.testimonianza.cellulare }}</p>
         </div>
 
         <div class="cerca">
@@ -36,7 +36,7 @@
             Chi cerca
           </p>
           <p>
-            {{ partecipante.chi_cerca }}
+            {{ $page.testimonianza.chi_cerca }}
           </p>
         </div>
       </div>
@@ -46,17 +46,26 @@
 
 <page-query>
 
-query Evento($id: ID!) {
-  evento(id: $id){
-    title
-    sponsor
-    description
-    path
-    sponsor_photo
-    alt
-    created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-    link_video
-  }
+query ($id: ID!) {
+  testimonianza{
+    testimonianza(id: $id){
+      data
+      video{
+        url
+      }
+      contatto{
+        nome
+        cognome
+        email
+        cellulare
+        professione
+        chi_cerca
+        foto{
+          url
+        }
+      }
+   }
+ }
 }
 
 
