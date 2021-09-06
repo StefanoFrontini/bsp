@@ -130,7 +130,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       async register({ commit }, user) {
         commit("AUTH_REQUEST");
         await axios
-          .post(`https://bsdating.herokuapp.com/auth/local/register`, user)
+          .post(process.env.GRIDSOME_STRAPI_REGISTER_URL, user)
           .then((response) => {
             const token = response.data.jwt;
             const user = response.data.user;

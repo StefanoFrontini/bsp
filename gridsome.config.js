@@ -29,5 +29,17 @@ module.exports = {
         route: "/programma/:slug",
       },
     },
+    {
+      use: "@gridsome/source-graphql",
+      options: {
+        url: process.env.GRIDSOME_STRAPI_URL + "/graphql",
+        fieldName: "testimonianza",
+        typeName: "testimonianzaTypes",
+
+        // headers: {
+        //   Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+        // },
+      },
+    },
   ],
 };

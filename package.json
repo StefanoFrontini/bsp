@@ -8,6 +8,7 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "@gridsome/source-graphql": "^0.1.0",
     "@gridsome/vue-remark": "^0.2.6",
     "@mailchimp/mailchimp_marketing": "^3.0.55",
     "axios": "^0.21.1",
