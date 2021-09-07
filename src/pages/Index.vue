@@ -38,28 +38,6 @@
               alt="Zoom meeting logo"
               width="80"
             />
-
-            <!-- <div class="episode-links">
-              <a :href="$page.programma.edges[0].node.path"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="feather feather-info"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                Dettagli Evento</a
-              >
-            </div> -->
           </div>
         </div>
         <div>
@@ -101,7 +79,7 @@
     <section class="block">
       <h2>Il prossimo aperitivo è il 30 settembre ore 18:30!</h2>
       <div class="next-episode-wrapper">
-        <div class="episode-poster">
+        <div class="episode-poster aperitivo">
           <g-image
             class="square"
             src="~/assets/images/cheers.jpg"
@@ -115,6 +93,7 @@
         </div>
       </div>
     </section>
+
     <section class="block featured">
       <h2>Guarda gli eventi passati</h2>
       <nav class="sponsor-photos">
@@ -181,25 +160,78 @@
         </transition>
       </article>
     </section>
-    <!-- <section class="block testimonials">
+
+    <section class="block featured">
       <h2>Testimonianze</h2>
-      <nav class="sponsor-photos"></nav>
-      <div class="testimonial-wrapper">
-        <div class="testimonial-preview">
-          <div class="testimonial-preview-sponsor">
-            <div class="testimonial-preview-photo"></div>
-            <p>Lucia Perfetti</p>
-            <p>Arteterapia</p>
-          </div>
-          <div class="testimonial-video">
-            <a href="#"></a>
-          </div>
+      <nav class="sponsor-photos">
+        <div
+          v-for="item in $page.testimonianze.testimonianzas"
+          :key="item.id"
+          :class="{ active: item.id === activeIndexTestimonianza }"
+        >
+          <a href="#" @click="selectItemTestimonianza(item.id)">
+            <div class="episode-preview-photo-small">
+              <g-image class="round" :src="item.contatto.foto.url"></g-image>
+            </div>
+          </a>
         </div>
-        <div class="testimonials-links">
-          <a href="#" class="button">Vedi tutte le testimonianze</a>
-        </div>
-      </div>
-    </section> -->
+      </nav>
+
+      <article class="episode-details dark">
+        <transition appear name="slide" mode="out-in">
+          <div class="episode-poster" :key="selectedItemTestimonianza.id">
+            <video class="square" width="560" height="314" controls>
+              <source
+                :src="selectedItemTestimonianza.video.url"
+                type="video/mp4"
+              />
+
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </transition>
+        <transition appear name="slide" mode="out-in">
+          <div class="episode-info" :key="selectedItemTestimonianza.id">
+            <h3>
+              {{
+                selectedItemTestimonianza.contatto.nome +
+                  " " +
+                  selectedItemTestimonianza.contatto.cognome
+              }}
+            </h3>
+            <p class="gradient-subheading"></p>
+            <p class="episode-description">
+              {{ selectedItemTestimonianza.contatto.professione }}
+            </p>
+            <div class="episode-links">
+              <g-link
+                :to="{
+                  path: '/testimonianza/' + selectedItemTestimonianza.slug,
+                }"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-info"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                Dettagli Testimonianza</g-link
+              >
+            </div>
+          </div>
+        </transition>
+      </article>
+    </section>
   </Layout>
 </template>
 
@@ -225,7 +257,7 @@ query {
 
   }
 
-  programma: allProgramma( order: ASC, limit: 1) {
+  programma: allProgramma(sort:{by:"created_at", order: ASC}, limit: 1) {
 		edges {
 			node {
 				id
@@ -236,12 +268,28 @@ query {
         alt
         created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
         description
-
-
-
 			}
 		}
 	}
+
+  testimonianze: testimonianza{
+    testimonianzas {
+      id
+      slug
+      data
+      video{
+        url
+      }
+      contatto{
+        nome
+        cognome
+        professione
+        foto{
+          url
+        }
+      }
+    }
+  }
 
 
 }
@@ -272,6 +320,12 @@ export default {
       activeIndex: null,
       items: [],
       selectedItem: {},
+      activeIndexTestimonianza: null,
+      itemsTestimonianza: [],
+      selectedItemTestimonianza: {
+        contatto: { nome: "", cognome: "" },
+        video: { url: "" },
+      },
     };
   },
   methods: {
@@ -287,6 +341,18 @@ export default {
       const found = this.items.find((el) => el.id === b);
       return found;
     },
+    selectItemTestimonianza(i) {
+      this.activeIndexTestimonianza = i;
+      this.selectedItemTestimonianza = this.findItemTestimonianza();
+    },
+    findItemTestimonianza() {
+      const b = this.activeIndexTestimonianza;
+      // function checkId(el) {
+      //   return el.id === b;
+      // }
+      const found = this.itemsTestimonianza.find((el) => el.id === b);
+      return found;
+    },
   },
   mounted() {
     for (let edge of this.$page.eventi.edges) {
@@ -294,6 +360,11 @@ export default {
     }
     this.activeIndex = this.items[0].id;
     this.selectedItem = this.items[0];
+    for (let i of this.$page.testimonianze.testimonianzas) {
+      this.itemsTestimonianza.push(i);
+    }
+    this.activeIndexTestimonianza = this.itemsTestimonianza[0].id;
+    this.selectedItemTestimonianza = this.itemsTestimonianza[0];
   },
 };
 </script>
@@ -598,6 +669,9 @@ article .episode-links {
   }
   .episode-poster {
     height: 380px;
+  }
+  .episode-poster.aperitivo {
+    height: 250px;
   }
 }
 
