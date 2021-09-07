@@ -45,6 +45,26 @@
           <p>
             <strong>Maurizio Mancini</strong> è un consulente immobiliare Remax
           </p>
+          <p>
+            <a
+              target="_blank"
+              rel="noopener"
+              class="sito"
+              href="https://www.remax.it/trova/agenti-agenzie/agente/maurizio-mancini-1"
+              >sito web</a
+            >
+          </p>
+          <p>
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://freedhome.co/propertymanager/?utm_source=Sales%20Partners%20-%20Maurizio%20Mancini&utm_medium=HO%20Request%20Magnet&utm_campaign=2021%20-%20HO%20Request%20Magnet%20-%20Maurizio%20Mancini"
+              ><g-image
+                width="100"
+                src="~/assets/images/freedhome-logo.png"
+                alt="freedhome"
+            /></a>
+          </p>
           <div class="host-links">
             <a href="https://www.youtube.com/channel/UCAWp8eukTvsEimrcZTfiztw"
               >Seguimi su YouTube
@@ -83,7 +103,11 @@
             <strong>Stefano Frontini</strong> è un consulente energetico Repower
             e Utility Manager certificato.
           </p>
-          <a class="sito" href="https://www.pilloledienergia.com/"
+          <a
+            class="sito"
+            href="https://www.pilloledienergia.com/"
+            target="_blank"
+            rel="noopener"
             >www.pilloledienergia.com</a
           >
           <div class="host-links">
