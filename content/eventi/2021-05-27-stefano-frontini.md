@@ -1,5 +1,5 @@
 ---
-slug: energia
+slug: stefano-frontini
 
 title: Energia elettrica e gas
 
