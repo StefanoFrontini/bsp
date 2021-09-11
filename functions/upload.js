@@ -1,7 +1,4 @@
 const axios = require("axios");
-const fetch = require("node-fetch");
-const Busboy = require("busboy");
-const FormData = require("form-data");
 
 const { URL } = process.env;
 const context = process.env.CONTEXT;
