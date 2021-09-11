@@ -7,6 +7,8 @@
 
 //const axios = require("axios");
 
+const slugify = require("slugify");
+
 module.exports = function(api) {
   // api.loadSource(async (actions) => {
   //   const { data } = await axios.get(
@@ -86,6 +88,40 @@ module.exports = function(api) {
         component: "./src/templates/Testimonianza.vue",
         context: {
           id: testimonianza.id,
+        },
+      });
+    });
+  });
+  api.createPages(async ({ graphql, createPage }) => {
+    const { data } = await graphql(`
+      {
+        contatto {
+          contattos {
+            id
+            nome
+            cognome
+            email
+            cellulare
+            professione
+            chi_cerca
+            foto {
+              url
+            }
+          }
+        }
+      }
+    `);
+    const membri = data.contatto.contattos;
+
+    membri.forEach((membro) => {
+      const name = `${membro.nome
+        .trim()
+        .toLowerCase()}-${membro.cognome.trim().toLowerCase()}`;
+      createPage({
+        path: `/membro/${slugify(name)}`,
+        component: "./src/templates/Membro.vue",
+        context: {
+          id: membro.id,
         },
       });
     });

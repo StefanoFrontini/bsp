@@ -41,5 +41,17 @@ module.exports = {
         // },
       },
     },
+    {
+      use: "@gridsome/source-graphql",
+      options: {
+        url: process.env.GRIDSOME_STRAPI_URL + "/graphql",
+        fieldName: "contatto",
+        typeName: "contattoTypes",
+
+        // headers: {
+        //   Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+        // },
+      },
+    },
   ],
 };

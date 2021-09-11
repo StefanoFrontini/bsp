@@ -66,6 +66,7 @@ export default {
     return {
       user: {},
       token: "",
+      auth: "",
       partecipazioni: [],
     };
   },
@@ -129,7 +130,8 @@ export default {
   created() {
     if (process.isClient) {
       this.user = JSON.parse(localStorage.getItem("user"));
-      this.token = JSON.parse(localStorage.getItem("token"));
+      this.token = localStorage.getItem("token");
+      this.auth = localStorage.getItem("auth");
     }
     this.getPartecipazioni();
   },

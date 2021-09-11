@@ -199,9 +199,9 @@ export default {
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
-    if (this.isLoggedIn && this.authStatus === "") {
-      this.logout();
-    }
+    // if (this.isLoggedIn && this.authStatus === "") {
+    //   this.logout();
+    // }
   },
 };
 </script>

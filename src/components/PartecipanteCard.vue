@@ -1,51 +1,61 @@
 <template>
   <article class="episode-details dark">
-    <div class="episode-preview">
-      <div class="episode-preview-sponsor">
-        <div class="episode-preview-photo-small">
-          <g-image
-            v-if="partecipante.foto"
-            class="round"
-            :src="partecipante.foto.url"
-            :alt="
-              `Partecipante della serata ${partecipante.nome} ${
-                partecipante.cognome
-              }`
-            "
-          />
-          <g-image
-            v-else
-            src="~/assets/images/unknown-profile.jpeg"
-            class="round"
-          />
+    <g-link :to="partecipanteSlug">
+      <div class="episode-preview">
+        <div class="episode-preview-sponsor">
+          <div class="episode-preview-photo-small">
+            <g-image
+              v-if="partecipante.foto"
+              class="round"
+              :src="partecipante.foto.url"
+              :alt="
+                `Partecipante della serata ${partecipante.nome} ${
+                  partecipante.cognome
+                }`
+              "
+            />
+            <g-image
+              v-else
+              src="~/assets/images/unknown-profile.jpeg"
+              class="round"
+            />
+          </div>
+          <p class="name">
+            {{ partecipante.nome + " " + partecipante.cognome }}
+          </p>
         </div>
-        <p class="name">
-          {{ partecipante.nome + " " + partecipante.cognome }}
-        </p>
-      </div>
 
-      <p class="professione">{{ partecipante.professione }}</p>
-      <div class="contatti">
-        <p class="email">{{ partecipante.email }}</p>
-        <p class="cellulare">{{ partecipante.cellulare }}</p>
-      </div>
+        <p class="professione">{{ partecipante.professione }}</p>
+        <div class="contatti">
+          <p class="email">{{ partecipante.email }}</p>
+          <p class="cellulare">{{ partecipante.cellulare }}</p>
+        </div>
 
-      <div class="cerca">
-        <p class="gradient-subheading">
-          Chi cerca
-        </p>
-        <p>
-          {{ partecipante.chi_cerca }}
-        </p>
+        <div class="cerca">
+          <p class="gradient-subheading">
+            Chi cerca
+          </p>
+          <p>
+            <small>{{ partecipante.chi_cerca }}</small>
+          </p>
+        </div>
       </div>
-    </div>
+    </g-link>
   </article>
 </template>
 
 <script>
+import slugify from "slugify";
 export default {
   props: ["partecipante"],
-  methods: {},
+  computed: {
+    partecipanteSlug() {
+      const name = `${this.partecipante.nome
+        .trim()
+        .toLowerCase()}-${this.partecipante.cognome.trim().toLowerCase()}`;
+      return `/membro/${slugify(name)}/`;
+    },
+  },
 };
 </script>
 
@@ -159,6 +169,7 @@ export default {
 
 .episode-preview {
   max-width: 630px;
+  color: var(--dark);
 }
 
 .episode-preview-sponsor {

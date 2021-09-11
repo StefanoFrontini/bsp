@@ -32,7 +32,9 @@
               {{ evento.data }}
             </p>
             <h3>{{ evento.titolo }}</h3>
-            <p>{{ evento.descrizione }}</p>
+            <p>
+              <small>{{ evento.descrizione }}</small>
+            </p>
             <div class="episode-links">
               <button @click="update_evento" class="button">
                 <svg

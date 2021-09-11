@@ -30,7 +30,7 @@
               Chi cerca
             </p>
             <p>
-              {{ profilo.chi_cerca }}
+              <small> {{ profilo.chi_cerca }}</small>
             </p>
           </div>
         </div>
@@ -189,6 +189,7 @@ export default {
     return {
       user: {},
       token: "",
+      auth: "",
       profilo: {},
       update_user: {},
       file: "",
@@ -323,7 +324,8 @@ export default {
   created() {
     if (process.isClient) {
       this.user = JSON.parse(localStorage.getItem("user"));
-      this.token = JSON.parse(localStorage.getItem("token"));
+      this.token = localStorage.getItem("token");
+      this.auth = localStorage.getItem("auth");
     }
     this.getAnagrafica();
   },

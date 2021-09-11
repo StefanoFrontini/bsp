@@ -21,7 +21,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
 
   appOptions.store = new Vuex.Store({
     state: {
-      status: "",
+      status: process.isClient ? localStorage.getItem("auth") || "" : false,
       token: process.isClient ? localStorage.getItem("token") || "" : false,
       user: {},
       evento: {},
@@ -80,6 +80,9 @@ export default function(Vue, { router, head, isClient, appOptions }) {
         commit("MESSAGE_SUCCESS_ACTIVE", msg);
       },
       update_event({ commit }, event) {
+        if (process.isClient) {
+          localStorage.setItem("current_event", JSON.stringify(event));
+        }
         commit("CURRENT_EVENT", event);
       },
       async login({ commit }, user) {
@@ -91,8 +94,9 @@ export default function(Vue, { router, head, isClient, appOptions }) {
             const user = response.data.user;
 
             if (process.isClient) {
-              localStorage.setItem("token", JSON.stringify(token));
+              localStorage.setItem("token", token);
               localStorage.setItem("user", JSON.stringify(user));
+              localStorage.setItem("auth", "success");
             }
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             commit("AUTH_SUCCESS", { token, user });
@@ -190,6 +194,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       },
       logout({ commit }) {
         process.isClient ? localStorage.removeItem("token") : false;
+        process.isClient ? localStorage.removeItem("auth") : false;
         delete axios.defaults.headers.common["Authorization"];
         commit("LOGOUT");
       },
