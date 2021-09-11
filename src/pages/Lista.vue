@@ -39,19 +39,22 @@
             {{ currentEvent.data }}
           </p>
           <h3>{{ currentEvent.titolo }}</h3>
-          <p>{{ currentEvent.descrizione }}</p>
+          <p>
+            <small>{{ currentEvent.descrizione }}</small>
+          </p>
         </div>
-
-        <JsonCSV
-          :data="currentEvent.partecipanti"
-          class="download"
-          delimiter=";"
-          :separator-excel="excel"
-          :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
-          :fields="field"
-        >
-          Scarica la lista
-        </JsonCSV>
+        <div v-if="currentEvent.partecipanti" class="download">
+          <JsonCSV
+            :data="currentEvent.partecipanti"
+            class="button-download"
+            delimiter=";"
+            :separator-excel="excel"
+            :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
+            :fields="field"
+          >
+            Scarica la lista
+          </JsonCSV>
+        </div>
       </div>
     </section>
 
@@ -73,16 +76,18 @@
           <h3>{{ currentEvent.titolo }}</h3>
           <p>{{ currentEvent.descrizione }}</p>
         </div>
-        <JsonCSV
-          :data="currentEvent.partecipanti"
-          class="download"
-          delimiter=";"
-          :separator-excel="excel"
-          :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
-          :fields="field"
-        >
-          Scarica la lista
-        </JsonCSV>
+        <div v-if="currentEvent.partecipanti" class="download">
+          <JsonCSV
+            :data="currentEvent.partecipanti"
+            class="button-download"
+            delimiter=";"
+            :separator-excel="excel"
+            :name="`lista-partecipanti-del-${currentEvent.data}.csv`"
+            :fields="field"
+          >
+            Scarica la lista
+          </JsonCSV>
+        </div>
       </div>
     </section>
 
@@ -115,18 +120,27 @@ export default {
         "cellulare",
       ],
       excel: true,
+      current_event: {},
     };
   },
-  computed: {
-    currentEvent() {
-      return this.$store.getters.currentEvent;
-    },
+  // computed: {
+  //   currentEvent() {
+  //     return this.$store.getters.currentEvent;
+  //   },
+  // },
+  created() {
+    if (process.isClient) {
+      this.currentEvent = JSON.parse(localStorage.getItem("current_event"));
+    }
   },
 };
 </script>
 
 <style scoped>
 .download {
+  grid-column: 1 / span 2;
+}
+.button-download {
   border: 2px solid;
   border-radius: 0.25rem;
   color: var(--pink-dark);
@@ -137,7 +151,6 @@ export default {
   padding: 0.75rem 1rem;
   text-align: center;
   cursor: pointer;
-  grid-column: 1 / span 2;
 }
 
 .block {

@@ -48,8 +48,10 @@
             >Iscriviti all’evento</a
           >
           <p>
-            Vedi tutti i prossimi eventi di
-            <em>Business Speed Dating</em>:
+            <small>
+              Vedi tutti i prossimi eventi di
+              <em>Business Speed Dating</em>:</small
+            >
           </p>
           <div class="links">
             <g-link to="/programma/">

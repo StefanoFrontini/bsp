@@ -90,4 +90,35 @@ module.exports = function(api) {
       });
     });
   });
+  api.createPages(async ({ graphql, createPage }) => {
+    const { data } = await graphql(`
+      {
+        contatto {
+          contattos {
+            id
+            nome
+            cognome
+            email
+            cellulare
+            professione
+            chi_cerca
+            foto {
+              url
+            }
+          }
+        }
+      }
+    `);
+    const membri = data.contatto.contattos;
+
+    membri.forEach((membro) => {
+      createPage({
+        path: `/membro/${membro.nome}-${membro.cognome}`,
+        component: "./src/templates/Membro.vue",
+        context: {
+          id: membro.id,
+        },
+      });
+    });
+  });
 };
