@@ -7,6 +7,8 @@
 
 //const axios = require("axios");
 
+const slugify = require("slugify");
+
 module.exports = function(api) {
   // api.loadSource(async (actions) => {
   //   const { data } = await axios.get(
@@ -112,8 +114,11 @@ module.exports = function(api) {
     const membri = data.contatto.contattos;
 
     membri.forEach((membro) => {
+      const name = `${membro.nome
+        .trim()
+        .toLowerCase()}-${membro.cognome.trim().toLowerCase()}`;
       createPage({
-        path: `/membro/${membro.nome}-${membro.cognome}`,
+        path: `/membro/${slugify(name)}`,
         component: "./src/templates/Membro.vue",
         context: {
           id: membro.id,

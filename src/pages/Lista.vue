@@ -120,7 +120,7 @@ export default {
         "cellulare",
       ],
       excel: true,
-      current_event: {},
+      currentEvent: {},
     };
   },
   // computed: {

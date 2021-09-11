@@ -1,10 +1,6 @@
 <template>
   <article class="episode-details dark">
-    <g-link
-      :to="
-        `/membro/${partecipante.nome.toLowerCase()}-${partecipante.cognome.toLowerCase()}/`
-      "
-    >
+    <g-link :to="partecipanteSlug">
       <div class="episode-preview">
         <div class="episode-preview-sponsor">
           <div class="episode-preview-photo-small">
@@ -49,9 +45,17 @@
 </template>
 
 <script>
+import slugify from "slugify";
 export default {
   props: ["partecipante"],
-  methods: {},
+  computed: {
+    partecipanteSlug() {
+      const name = `${this.partecipante.nome
+        .trim()
+        .toLowerCase()}-${this.partecipante.cognome.trim().toLowerCase()}`;
+      return `/membro/${slugify(name)}/`;
+    },
+  },
 };
 </script>
 
