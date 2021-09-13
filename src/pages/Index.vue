@@ -7,10 +7,15 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
+    <!-- <div>
+      <h1>Search</h1>
+
+      <Search />
+    </div> -->
     <section class="block next">
       <h2>
         Il prossimo evento online è il
-        {{ $page.programma.edges[0].node.created_at }}!
+        {{ formattedData }}!
       </h2>
 
       <div class="next-episode-wrapper">
@@ -19,19 +24,21 @@
             <div class="episode-preview-photo">
               <g-image
                 class="round"
-                :src="$page.programma.edges[0].node.sponsor_photo"
-                :alt="$page.programma.edges[0].node.alt"
+                :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url"
               ></g-image>
             </div>
-            <p>{{ $page.programma.edges[0].node.sponsor }}</p>
+            <p>
+              {{ $page.programmaOnline.eventos[0].sponsor_serata.nome }}
+              {{ $page.programmaOnline.eventos[0].sponsor_serata.cognome }}
+            </p>
           </div>
           <div class="episode-preview-details">
             <p class="gradient-subheading">
-              {{ $page.programma.edges[0].node.created_at }}
+              {{ formattedData }}
             </p>
-            <h3>{{ $page.programma.edges[0].node.title }}</h3>
+            <h3>{{ $page.programmaOnline.eventos[0].titolo }}</h3>
             <p>
-              <small>{{ $page.programma.edges[0].node.description }}</small>
+              <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small>
             </p>
             <g-image
               src="~/assets/images/zoomus-ar21.svg"
@@ -41,11 +48,11 @@
           </div>
         </div>
         <div>
-          <a
-            :href="$page.programma.edges[0].node.path"
+          <g-link
+            :to="`/programma/${this.$page.programmaOnline.eventos[0].slug}/`"
             class="button"
             rel="noopener"
-            >Iscriviti all’evento</a
+            >Iscriviti all’evento</g-link
           >
           <p>
             <small>
@@ -79,7 +86,7 @@
       </div>
     </section>
     <section class="block">
-      <h2>Il prossimo aperitivo è il 30 settembre ore 18:30!</h2>
+      <h2>Il prossimo aperitivo è il {{ formattedDataOffline }}!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster aperitivo">
           <g-image
@@ -89,9 +96,13 @@
           ></g-image>
         </div>
         <div class="aperitivo-links">
-          <h3>GUD Eustachi</h3>
-          <small>Via Eustachi 25 - Milano</small>
-          <g-link class="button" to="/aperitivo/">Iscriviti all’evento</g-link>
+          <h3>{{ $page.programmaOffline.eventos[0].location }}</h3>
+          <small>{{ $page.programmaOffline.eventos[0].location }}</small>
+          <g-link
+            class="button"
+            :to="`/programma/${$page.programmaOffline.eventos[0].slug}/`"
+            >Iscriviti all’evento</g-link
+          >
         </div>
       </div>
     </section>
@@ -100,16 +111,15 @@
       <h2>Guarda gli eventi passati</h2>
       <nav class="sponsor-photos">
         <div
-          v-for="edge in $page.eventi.edges"
-          :key="edge.node.id"
-          :class="{ active: edge.node.id === activeIndex }"
+          v-for="edge in $page.eventi.eventos"
+          :key="edge.id"
+          :class="{ active: edge.id === activeIndex }"
         >
-          <a href="#" @click="selectItem(edge.node.id)">
+          <a href="#" @click="selectItem(edge.id)">
             <div class="episode-preview-photo-small">
               <g-image
                 class="round"
-                :src="edge.node.sponsor_photo"
-                :alt="edge.node.alt"
+                :src="edge.sponsor_serata.foto.url"
               ></g-image>
             </div>
           </a>
@@ -120,7 +130,7 @@
           <div class="episode-poster" :key="selectedItem.id">
             <iframe
               class="square"
-              :title="selectedItem.title"
+              :title="selectedItem.titolo"
               :src="selectedItem.link_video"
               width="560"
               height="314"
@@ -134,11 +144,14 @@
         </transition>
         <transition appear name="slide" mode="out-in">
           <div class="episode-info" :key="selectedItem.id">
-            <h3>{{ selectedItem.title }}</h3>
-            <p class="gradient-subheading">con {{ selectedItem.sponsor }}</p>
-            <p class="episode-description">{{ selectedItem.description }}</p>
+            <h3>{{ selectedItem.titolo }}</h3>
+            <p class="gradient-subheading">
+              con {{ selectedItem.sponsor_serata.nome }}
+              {{ selectedItem.sponsor_serata.cognome }}
+            </p>
+            <p class="episode-description">{{ selectedItem.descrizione }}</p>
             <div class="episode-links">
-              <a :href="selectedItem.path"
+              <g-link :to="`/evento/${selectedItem.slug}`"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -155,7 +168,7 @@
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                Dettagli Evento</a
+                Dettagli Evento</g-link
               >
             </div>
           </div>
@@ -239,59 +252,91 @@
 
 <page-query>
 
-
-
 query {
-  eventi: allEvento(sort:{by:"created_at", order: DESC}) {
-    edges{
-      node{
-        id
-        title
-        sponsor
-        description
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY", locale: "it")
-        link_video
-      }
-    }
-
-  }
-
-  programma: allProgramma(sort:{by:"created_at", order: ASC}, limit: 1) {
-		edges {
-			node {
-				id
-        title
-        sponsor
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-        description
-			}
-		}
-	}
-
-  testimonianze: testimonianza{
-    testimonianzas {
-      id
-      slug
-      data
-      video{
-        url
-      }
-      contatto{
-        nome
-        cognome
-        professione
-        foto{
-          url
+      eventi: evento {
+          eventos(where: { passato_futuro: "passato", online_offline: "online" }, sort: "data:desc") {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
         }
-      }
-    }
-  }
+
+        programmaOnline: evento {
+          eventos(where: { passato_futuro: "futuro", online_offline: "online" }, limit: 1) {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
+
+        programmaOffline: evento {
+          eventos(where: { passato_futuro: "futuro", online_offline: "offline" }, limit: 1) {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
+
+        testimonianze: testimonianza{
+          testimonianzas {
+            id
+            slug
+            data
+            video{
+              url
+            }
+            contatto{
+              nome
+              cognome
+              professione
+              foto{
+                url
+              }
+            }
+          }
+        }
 
 
 }
@@ -311,6 +356,9 @@ query {
 
 <script>
 export default {
+  // components: {
+  //   Search: () => import("~/components/Search.vue"),
+  // },
   metaInfo() {
     return {
       title: `${this.$static.metadata.siteName}`,
@@ -321,7 +369,9 @@ export default {
     return {
       activeIndex: null,
       items: [],
-      selectedItem: {},
+      selectedItem: {
+        sponsor_serata: { nome: "", cognome: "" },
+      },
       activeIndexTestimonianza: null,
       itemsTestimonianza: [],
       selectedItemTestimonianza: {
@@ -356,9 +406,39 @@ export default {
       return found;
     },
   },
+  computed: {
+    formattedData() {
+      const data_evento = new Date(this.$page.programmaOnline.eventos[0].data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
+    formattedDataOffline() {
+      const data_evento = new Date(this.$page.programmaOffline.eventos[0].data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
+  },
   mounted() {
-    for (let edge of this.$page.eventi.edges) {
-      this.items.push(edge.node);
+    for (let edge of this.$page.eventi.eventos) {
+      this.items.push(edge);
     }
     this.activeIndex = this.items[0].id;
     this.selectedItem = this.items[0];

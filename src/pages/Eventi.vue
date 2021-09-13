@@ -56,9 +56,9 @@
     </header>
     <section class="block episodes">
       <EventoCard
-        v-for="edge in $page.eventi.edges"
-        :key="edge.node.id"
-        :evento="edge.node"
+        v-for="edge in $page.eventi.eventos"
+        :key="edge.id"
+        :evento="edge"
       />
     </section>
   </Layout>
@@ -67,22 +67,27 @@
 <page-query>
 
 query {
-  eventi: allEvento(sort:{by:"created_at", order: DESC}) {
-    edges{
-      node{
-        id
-        title
-        sponsor
-        description
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-        link_video
-      }
-    }
-
-  }
+  eventi: evento {
+          eventos(where: { passato_futuro: "passato", online_offline: "online" }, sort: "data:desc") {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
 
 }
 

@@ -7,8 +7,6 @@
 
 //const axios = require("axios");
 
-const slugify = require("slugify");
-
 module.exports = function(api) {
   // api.loadSource(async (actions) => {
   //   const { data } = await axios.get(
@@ -58,6 +56,89 @@ module.exports = function(api) {
   //     });
   //   }
   // });
+  api.createPages(async ({ graphql, createPage }) => {
+    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+    const { data } = await graphql(`
+      {
+        evento {
+          eventos(where: { passato_futuro: "futuro" }) {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
+      }
+    `);
+
+    const programma = data.evento.eventos;
+
+    programma.forEach((evento) => {
+      createPage({
+        path: `/programma/${evento.slug}/`,
+        component: "./src/templates/Programma.vue",
+        context: {
+          id: evento.id,
+        },
+      });
+    });
+  });
+
+  api.createPages(async ({ graphql, createPage }) => {
+    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+    const { data } = await graphql(`
+      {
+        evento {
+          eventos(
+            where: { passato_futuro: "passato", online_offline: "online" }
+          ) {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
+      }
+    `);
+
+    const eventi = data.evento.eventos;
+
+    eventi.forEach((evento) => {
+      createPage({
+        path: `/evento/${evento.slug}`,
+        component: "./src/templates/Evento.vue",
+        context: {
+          id: evento.id,
+        },
+      });
+    });
+  });
 
   api.createPages(async ({ graphql, createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
@@ -98,6 +179,7 @@ module.exports = function(api) {
         contatto {
           contattos {
             id
+            slug
             nome
             cognome
             email
@@ -107,6 +189,8 @@ module.exports = function(api) {
             foto {
               url
             }
+            sito_web
+            linkedin
           }
         }
       }
@@ -114,11 +198,8 @@ module.exports = function(api) {
     const membri = data.contatto.contattos;
 
     membri.forEach((membro) => {
-      const name = `${membro.nome
-        .trim()
-        .toLowerCase()}-${membro.cognome.trim().toLowerCase()}`;
       createPage({
-        path: `/membro/${slugify(name)}`,
+        path: `/membro/${membro.slug}`,
         component: "./src/templates/Membro.vue",
         context: {
           id: membro.id,

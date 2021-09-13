@@ -4,22 +4,21 @@
       <div class="episode-preview-photo">
         <g-image
           class="round"
-          :src="programma.sponsor_photo"
-          :alt="programma.alt"
+          :src="programma.sponsor_serata.foto.url"
         ></g-image>
       </div>
-      <p>{{ programma.sponsor }}</p>
+      <p>{{ programma.nome }} {{ programma.cognome }}</p>
     </div>
     <div class="episode-preview-details">
       <p class="gradient-subheading">
-        {{ programma.created_at }}
+        {{ formattedData }}
       </p>
-      <h3>{{ programma.title }}</h3>
+      <h3>{{ programma.titolo }}</h3>
       <p>
-        <small>{{ programma.description }}</small>
+        <small>{{ programma.descrizione }}</small>
       </p>
       <div class="episode-links">
-        <a :href="programma.path"
+        <g-link :to="`/programma/${programma.slug}/`"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -36,7 +35,7 @@
             <line x1="12" y1="16" x2="12" y2="12"></line>
             <line x1="12" y1="8" x2="12.01" y2="8"></line>
           </svg>
-          Iscriviti all’evento</a
+          Iscriviti all’evento</g-link
         >
       </div>
     </div>
@@ -61,6 +60,22 @@
 <script>
 export default {
   props: ["programma"],
+  computed: {
+    formattedData() {
+      const data_evento = new Date(this.programma.data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
+  },
 };
 </script>
 
@@ -154,6 +169,15 @@ export default {
     display: grid;
     grid-template-columns: min(150px, 33%) min(410px, 66%);
     gap: 1.5rem;
+  }
+  .episode-preview-details {
+    width: 400px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .episode-preview-details {
+    width: 100%;
   }
 }
 </style>

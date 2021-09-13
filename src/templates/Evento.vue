@@ -6,27 +6,29 @@
           <div class="episode-preview-photo-small">
             <g-image
               class="round"
-              :src="this.$page.evento.sponsor_photo"
-              :alt="this.$page.evento.alt"
+              :src="this.$page.evento.evento.sponsor_serata.foto.url"
             ></g-image>
           </div>
-          <p>{{ $page.evento.sponsor }}</p>
+          <p>
+            {{ $page.evento.evento.sponsor_serata.nome }}
+            {{ $page.evento.evento.sponsor_serata.cognome }}
+          </p>
         </div>
         <div class="episode-preview-details">
           <p class="gradient-subheading">
-            {{ $page.evento.created_at }}
+            {{ formattedData }}
           </p>
-          <h1>{{ $page.evento.title }}</h1>
+          <h3>{{ $page.evento.evento.titolo }}</h3>
           <p>
-            <small>{{ $page.evento.description }}</small>
+            <small>{{ $page.evento.evento.descrizione }}</small>
           </p>
         </div>
       </div>
       <div class="episode-poster">
         <iframe
           class="square"
-          :title="this.$page.evento.title"
-          :src="this.$page.evento.link_video"
+          :title="this.$page.evento.evento.titolo"
+          :src="this.$page.evento.evento.link_video"
           width="560"
           height="314"
           style="border:none;overflow:hidden"
@@ -38,7 +40,21 @@
       </div>
 
       <div class="content">
-        <VueRemarkContent />
+        <h3>Links</h3>
+        <div v-if="$page.evento.evento.sponsor_serata.linkedin">
+          <a
+            target="_blank"
+            :href="`${this.$page.evento.evento.sponsor_serata.linkedin}`"
+            >LinkedIn</a
+          >
+        </div>
+        <div v-if="$page.evento.evento.sponsor_serata.sito_web">
+          <a
+            target="_blank"
+            :href="`${this.$page.evento.evento.sponsor_serata.sito_web}`"
+            >Sito web</a
+          >
+        </div>
       </div>
     </article>
   </Layout>
@@ -46,17 +62,29 @@
 
 <page-query>
 
-query Evento($id: ID!) {
-  evento(id: $id){
-    title
-    sponsor
-    description
-    path
-    sponsor_photo
-    alt
-    created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-    link_video
-  }
+query ($id: ID!) {
+  evento{
+    evento(id: $id){
+      data
+      titolo
+      descrizione
+      sponsor_serata{
+        nome
+        cognome
+        foto{
+          url
+        }
+        linkedin
+        sito_web
+      }
+      online_offline
+      passato_futuro
+      location
+      location_indirizzo
+      slug
+      link_video
+   }
+ }
 }
 
 
@@ -82,41 +110,55 @@ export default {
   },
   metaInfo() {
     return {
-      title: `${this.$page.evento.title}`,
+      title: `${this.$page.evento.evento.titolo}`,
       titleTemplate: "%s",
-      meta: [
-        {
-          key: "description",
-          name: "description",
-          content: `${this.$page.evento.description}`,
-        },
+      // meta: [
+      //   {
+      //     key: "description",
+      //     name: "description",
+      //     content: `${this.$page.evento.description}`,
+      //   },
 
-        { property: "og:type", content: "article" },
-        { property: "og:title", content: `${this.$page.evento.title}` },
-        {
-          property: "og:description",
-          content: `${this.$page.evento.description}`,
-        },
-        { property: "og:url", content: `${this.postUrl}` },
-        {
-          property: "article:published_time",
-          content: `${this.$page.evento.created_at}`,
-        },
-        { property: "og:image", content: `${this.ogImageUrl}` },
+      //   { property: "og:type", content: "article" },
+      //   { property: "og:title", content: `${this.$page.evento.title}` },
+      //   {
+      //     property: "og:description",
+      //     content: `${this.$page.evento.description}`,
+      //   },
+      //   { property: "og:url", content: `${this.postUrl}` },
+      //   {
+      //     property: "article:published_time",
+      //     content: `${this.$page.evento.created_at}`,
+      //   },
+      //   { property: "og:image", content: `${this.ogImageUrl}` },
 
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: `${this.$page.evento.title}` },
-        {
-          name: "twitter:description",
-          content: `${this.$page.evento.description}`,
-        },
-        { name: "twitter:creator", content: `${this.$page.evento.author}` },
-        { name: "twitter:image", content: `${this.ogImageUrl}` },
-      ],
+      //   { name: "twitter:card", content: "summary_large_image" },
+      //   { name: "twitter:title", content: `${this.$page.evento.title}` },
+      //   {
+      //     name: "twitter:description",
+      //     content: `${this.$page.evento.description}`,
+      //   },
+      //   { name: "twitter:creator", content: `${this.$page.evento.author}` },
+      //   { name: "twitter:image", content: `${this.ogImageUrl}` },
+      // ],
     };
   },
 
   computed: {
+    formattedData() {
+      const data_evento = new Date(this.$page.evento.evento.data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
     // ogImageUrl() {
     //   return `${this.$static.metadata.siteUrl}/logo-pillole-di-energia.png`;
     // },

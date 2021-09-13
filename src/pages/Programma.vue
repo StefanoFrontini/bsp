@@ -6,9 +6,9 @@
     </header>
     <section class="block episodes">
       <ProgrammaCard
-        v-for="edge in $page.programma.edges"
-        :key="edge.node.id"
-        :programma="edge.node"
+        v-for="edge in $page.programma.eventos"
+        :key="edge.id"
+        :programma="edge"
       />
     </section>
   </Layout>
@@ -16,22 +16,27 @@
 <page-query>
 
 query {
-  programma: allProgramma(sort:{by:"created_at", order: ASC}) {
-    edges{
-      node{
-        id
-        title
-        sponsor
-        description
-        path
-        sponsor_photo
-        alt
-        created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-
-      }
-    }
-
-  }
+  programma: evento {
+          eventos(where: { passato_futuro: "futuro", online_offline: "online" }, sort: "data:asc") {
+            id
+            data
+            titolo
+            descrizione
+            sponsor_serata {
+              nome
+              cognome
+              foto {
+                url
+              }
+            }
+            online_offline
+            passato_futuro
+            location
+            location_indirizzo
+            slug
+            link_video
+          }
+        }
 
 }
 
@@ -64,6 +69,10 @@ export default {
   padding: 4rem 5vw;
 }
 
+.episodes {
+  gap: 3rem;
+}
+
 .hero {
   background: var(--text-emphasized);
   color: var(--text);
@@ -90,17 +99,6 @@ export default {
   text-align: center;
 }
 
-.hero .button:not(:focus) {
-  color: var(--pink);
-}
-
-.hero-buttons .button {
-  gap: 0.5rem;
-  align-items: center;
-  display: flex;
-  margin: 0;
-}
-
 .button {
   border: 2px solid;
   border-radius: 0.25rem;
@@ -112,20 +110,6 @@ export default {
   padding: 0.75rem 1rem;
   text-align: center;
   text-decoration: none;
-}
-
-.hero-buttons {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-  margin-top: 1.5rem;
-}
-
-@media (min-width: 750px) {
-}
-.hero-buttons {
-  gap: 3rem;
-  flex-direction: row;
 }
 
 @media (min-width: 1000px) {

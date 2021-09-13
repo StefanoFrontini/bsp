@@ -2,30 +2,51 @@
   <Layout>
     <div v-if="!$store.state.loading">
       <article class="episode-details dark">
-        <div class="episode-preview">
+        <div
+          v-if="$page.evento.evento.online_offline === 'online'"
+          class="episode-preview"
+        >
           <div class="episode-preview-sponsor">
             <div class="episode-preview-photo">
               <g-image
                 class="round"
-                :src="$page.programma.sponsor_photo"
-                :alt="$page.programma.alt"
+                :src="this.$page.evento.evento.sponsor_serata.foto.url"
               ></g-image>
-              <p>{{ $page.programma.sponsor }}</p>
+              <p>
+                {{ $page.evento.evento.sponsor_serata.nome }}
+                {{ $page.evento.evento.sponsor_serata.cognome }}
+              </p>
             </div>
           </div>
           <div class="episode-preview-details">
             <p class="gradient-subheading">
-              {{ $page.programma.created_at }}
+              {{ formattedData }}
             </p>
-            <h3>{{ $page.programma.title }}</h3>
+            <h3>{{ $page.evento.evento.titolo }}</h3>
             <p>
-              <small>{{ $page.programma.description }}</small>
+              <small>{{ $page.evento.evento.descrizione }}</small>
             </p>
             <g-image
               src="~/assets/images/zoomus-ar21.svg"
               alt="Zoom meetings logo"
               width="80"
             />
+          </div>
+        </div>
+
+        <div v-if="$page.evento.evento.online_offline === 'offline'">
+          <h1>Il prossimo aperitivo è il {{ formattedData }}!</h1>
+
+          <div class="episode-poster">
+            <g-image
+              class="square"
+              src="~/assets/images/cheers.jpg"
+              alt="cheers"
+            ></g-image>
+          </div>
+          <div class="location">
+            <h3>{{ $page.evento.evento.location }}</h3>
+            <small>{{ $page.evento.evento.location_indirizzo }}</small>
           </div>
         </div>
 
@@ -118,18 +139,31 @@
 
 <page-query>
 
-query Programma($id: ID!) {
-  programma(id: $id){
-    title
-    sponsor
-    path
-    sponsor_photo
-    alt
-    created_at (format: "D MMMM YYYY [ore] HH:mm", locale: "it")
-    description
-    id_evento
-  }
+query ($id: ID!) {
+  evento{
+    evento(id: $id){
+      id
+      data
+      titolo
+      descrizione
+      sponsor_serata{
+        nome
+        cognome
+        foto{
+          url
+        }
+      }
+      online_offline
+      passato_futuro
+      location
+      location_indirizzo
+      slug
+      link_video
+   }
+ }
 }
+
+
 
 
 </page-query>
@@ -166,37 +200,37 @@ export default {
   },
   metaInfo() {
     return {
-      title: `${this.$page.programma.title}`,
+      title: `${this.$page.evento.evento.titolo}`,
       titleTemplate: "%s",
-      meta: [
-        {
-          key: "description",
-          name: "description",
-          content: `${this.$page.programma.description}`,
-        },
+      // meta: [
+      //   {
+      //     key: "description",
+      //     name: "description",
+      //     content: `${this.$page.programma.description}`,
+      //   },
 
-        { property: "og:type", content: "article" },
-        { property: "og:title", content: `${this.$page.programma.title}` },
-        {
-          property: "og:description",
-          content: `${this.$page.programma.description}`,
-        },
-        { property: "og:url", content: `${this.postUrl}` },
-        {
-          property: "article:published_time",
-          content: `${this.$page.programma.created_at}`,
-        },
-        { property: "og:image", content: `${this.ogImageUrl}` },
+      //   { property: "og:type", content: "article" },
+      //   { property: "og:title", content: `${this.$page.programma.title}` },
+      //   {
+      //     property: "og:description",
+      //     content: `${this.$page.programma.description}`,
+      //   },
+      //   { property: "og:url", content: `${this.postUrl}` },
+      //   {
+      //     property: "article:published_time",
+      //     content: `${this.$page.programma.created_at}`,
+      //   },
+      //   { property: "og:image", content: `${this.ogImageUrl}` },
 
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: `${this.$page.programma.title}` },
-        {
-          name: "twitter:description",
-          content: `${this.$page.programma.description}`,
-        },
-        { name: "twitter:creator", content: `${this.$page.programma.author}` },
-        { name: "twitter:image", content: `${this.ogImageUrl}` },
-      ],
+      //   { name: "twitter:card", content: "summary_large_image" },
+      //   { name: "twitter:title", content: `${this.$page.programma.title}` },
+      //   {
+      //     name: "twitter:description",
+      //     content: `${this.$page.programma.description}`,
+      //   },
+      //   { name: "twitter:creator", content: `${this.$page.programma.author}` },
+      //   { name: "twitter:image", content: `${this.ogImageUrl}` },
+      // ],
     };
   },
   methods: {
@@ -204,7 +238,7 @@ export default {
       this.$store
         .dispatch("logout")
         .then(() => {
-          this.$router.push("/login");
+          this.$router.push("/login/");
         })
         .catch((err) => {
           console.log(err);
@@ -264,6 +298,7 @@ export default {
         `;
         this.$store.dispatch("message_success", messageS);
         this.$store.dispatch("message_success_active", true);
+        this.$router.push("/programma/");
 
         setTimeout(
           () => this.$store.dispatch("message_success_active", false),
@@ -285,6 +320,20 @@ export default {
   },
 
   computed: {
+    formattedData() {
+      const data_evento = new Date(this.$page.evento.evento.data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
     // ogImageUrl() {
     //   return `${this.$static.metadata.siteUrl}/logo-pillole-di-energia.png`;
     // },
@@ -305,7 +354,7 @@ export default {
     }
   },
   mounted() {
-    this.formData.eventoId = this.$page.programma.id_evento.toString();
+    this.formData.eventoId = this.$page.evento.evento.id.toString();
   },
 };
 </script>
@@ -316,6 +365,47 @@ export default {
   color: var(--gray-text);
   font-weight: lighter;
   text-align: center;
+}
+
+.location {
+  text-align: center;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.episode-poster:before {
+  background: var(--gradient);
+  top: 0;
+  content: "";
+  height: 6px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.episode-poster:after {
+  background: var(--gradient);
+  bottom: 0;
+  content: "";
+  height: 3px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.episode-poster {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.square {
+  width: 100%;
+  height: 100%;
 }
 
 .episode-details {

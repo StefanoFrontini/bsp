@@ -46,6 +46,9 @@ exports.handler = async (event) => {
         cellulare
         professione
         chi_cerca
+        foto{
+          url
+        }
 
       }
     }
@@ -59,12 +62,16 @@ exports.handler = async (event) => {
       }
     ) {
       contatto {
+        id
         cognome
         nome
         email
         cellulare
         professione
         chi_cerca
+        foto{
+          url
+        }
       }
     }
   }`;

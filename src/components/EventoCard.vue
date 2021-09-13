@@ -3,7 +3,7 @@
     <div class="episode-poster">
       <iframe
         class="square"
-        :title="evento.title"
+        :title="evento.titolo"
         :src="evento.link_video"
         width="560"
         height="314"
@@ -19,22 +19,23 @@
         <div class="episode-preview-photo-small">
           <g-image
             class="round"
-            :src="evento.sponsor_photo"
-            :alt="evento.alt"
+            :src="evento.sponsor_serata.foto.url"
           ></g-image>
         </div>
-        <p>{{ evento.sponsor }}</p>
+        <p>
+          {{ evento.sponsor_serata.nome }} {{ evento.sponsor_serata.cognome }}
+        </p>
       </div>
       <div class="episode-preview-details">
         <p class="gradient-subheading">
-          {{ evento.created_at }}
+          {{ formattedData }}
         </p>
-        <h3>{{ evento.title }}</h3>
+        <h3>{{ evento.titolo }}</h3>
         <p>
-          <small>{{ evento.description }}</small>
+          <small>{{ evento.descrizione }}</small>
         </p>
         <div class="episode-links">
-          <a :href="evento.path"
+          <g-link :to="`/evento/${evento.slug}/`"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -51,7 +52,7 @@
               <line x1="12" y1="16" x2="12" y2="12"></line>
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
-            Dettagli Evento</a
+            Dettagli Evento</g-link
           >
         </div>
       </div>
@@ -62,6 +63,22 @@
 <script>
 export default {
   props: ["evento"],
+  computed: {
+    formattedData() {
+      const data_evento = new Date(this.evento.data);
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
+        data_evento
+      );
+      return converted_data;
+    },
+  },
 };
 </script>
 

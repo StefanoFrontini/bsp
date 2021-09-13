@@ -199,4 +199,10 @@ export default {
   margin: 0 auto;
   margin-top: 2rem;
 }
+
+@media (min-width: 1000px) {
+  .alert {
+    margin-left: -300px;
+  }
+}
 </style>

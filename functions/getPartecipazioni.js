@@ -22,6 +22,7 @@ exports.handler = async (event) => {
   const GET_PARTECIPAZIONI = `query($email: String) {
     contattos(where: { email: $email }) {
       id
+      slug
       email
       nome
       cognome
@@ -30,12 +31,14 @@ exports.handler = async (event) => {
       }
       eventi (sort: "data:desc"){
         id
+        slug
         data
         online_offline
         titolo
         descrizione
         partecipanti {
           id
+          slug
           nome
           cognome
           professione
