@@ -7,7 +7,10 @@
           :src="programma.sponsor_serata.foto.url"
         ></g-image>
       </div>
-      <p>{{ programma.nome }} {{ programma.cognome }}</p>
+      <p>
+        {{ programma.sponsor_serata.nome }}
+        {{ programma.sponsor_serata.cognome }}
+      </p>
     </div>
     <div class="episode-preview-details">
       <p class="gradient-subheading">
