@@ -54,7 +54,7 @@ const collections = [
   {
     query: `{
       contatto {
-        contattos {
+        contattos(where: { slug_null: false }) {
           id
           slug
           nome

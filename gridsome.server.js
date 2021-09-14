@@ -177,7 +177,7 @@ module.exports = function(api) {
     const { data } = await graphql(`
       {
         contatto {
-          contattos {
+          contattos(where: { slug_null: false }) {
             id
             slug
             nome
