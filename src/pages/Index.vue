@@ -97,7 +97,9 @@
         </div>
         <div class="aperitivo-links">
           <h3>{{ $page.programmaOffline.eventos[0].location }}</h3>
-          <small>{{ $page.programmaOffline.eventos[0].location }}</small>
+          <small>{{
+            $page.programmaOffline.eventos[0].location_indirizzo
+          }}</small>
           <g-link
             class="button"
             :to="`/programma/${$page.programmaOffline.eventos[0].slug}/`"
