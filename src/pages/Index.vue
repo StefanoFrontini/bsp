@@ -7,11 +7,7 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <!-- <div>
-      <h1>Search</h1>
 
-      <Search />
-    </div> -->
     <section class="block next">
       <h2>
         Il prossimo evento online è il
@@ -278,7 +274,7 @@ query {
         }
 
         programmaOnline: evento {
-          eventos(where: { passato_futuro: "futuro", online_offline: "online" }, limit: 1) {
+          eventos(where: { passato_futuro: "futuro", online_offline: "online" }, limit: 1, sort: "data:asc") {
             id
             data
             titolo
@@ -300,7 +296,7 @@ query {
         }
 
         programmaOffline: evento {
-          eventos(where: { passato_futuro: "futuro", online_offline: "offline" }, limit: 1) {
+          eventos(where: { passato_futuro: "futuro", online_offline: "offline" }, limit: 1, sort: "data:asc") {
             id
             data
             titolo

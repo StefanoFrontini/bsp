@@ -5,7 +5,7 @@
         <div v-if="partecipazioni.length">
           <h1>I tuoi eventi {{ user.username }}</h1>
           <p>
-            Guarda la lista dei partecipanti.
+            Scarica la lista dei partecipanti o cerca un membro.
           </p>
         </div>
         <div v-else>
@@ -35,6 +35,12 @@
         </div>
       </header>
 
+      <section>
+        <LazyHydrate on-interaction>
+          <Search />
+        </LazyHydrate>
+      </section>
+
       <section class="block episodes">
         <EventoPartecipanteCard
           v-for="item in partecipazioni"
@@ -50,11 +56,15 @@
 import axios from "axios";
 import EventoPartecipanteCard from "~/components/EventoPartecipanteCard.vue";
 import Notification from "~/components/Notification.vue";
+import LazyHydrate from "vue-lazy-hydration";
+import Search from "~/components/Search.vue";
 
 export default {
   components: {
     EventoPartecipanteCard,
     Notification,
+    Search,
+    LazyHydrate,
   },
   metaInfo() {
     return {
