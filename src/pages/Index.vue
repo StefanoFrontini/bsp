@@ -252,7 +252,7 @@
 
 query {
       eventi: evento {
-          eventos(where: { passato_futuro: "passato", online_offline: "online" }, sort: "data:desc") {
+          eventos(where: { passato_futuro: "passato", online_offline: "online" }, sort: "data:desc", limit: 4) {
             id
             data
             titolo
