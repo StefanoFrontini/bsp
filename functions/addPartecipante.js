@@ -87,11 +87,11 @@ exports.handler = async (event) => {
     }
   }`;
 
-  const UPDATE_CONTATTO = `mutation($id: ID!, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $slug: String, $eventi: [ID]) {
+  const UPDATE_CONTATTO = `mutation($id: ID!, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $eventi: [ID]) {
     updateContatto(
       input: {
         where: { id: $id }
-        data: { nome: $nome, cognome: $cognome, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, slug:$slug, eventi: $eventi}
+        data: { nome: $nome, cognome: $cognome, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, eventi: $eventi}
       }
     ) {
       contatto {
@@ -123,247 +123,138 @@ exports.handler = async (event) => {
     const { data } = await axios({
       url: STRAPI_ENDPOINT,
       method: "POST",
-
+      // headers: {
+      //   Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
+      // },
       data: {
-        query: CHECK_SLUG,
+        query: GET_ID,
         variables,
       },
     });
+    console.log("Strapi Data:", data);
 
     if (data.data.contattos.length) {
-      let response = true;
-      let i = 2;
-      while (response) {
-        new_slug = `${slug}-${i}`;
-        variables.slug = new_slug;
-        try {
-          const { data } = await axios({
-            url: STRAPI_ENDPOINT,
-            method: "POST",
-
-            data: {
-              query: CHECK_SLUG,
-              variables,
-            },
-          });
-          if (data.data.contattos.length) {
-            response = true;
-            i++;
-          } else {
-            response = false;
-          }
-        } catch (error) {
-          console.log("error", error);
-        }
+      console.log("id = ", data.data.contattos[0].id);
+      variables.id = data.data.contattos[0].id;
+      for (const evento of data.data.contattos[0].eventi) {
+        variables.eventi.push(evento.id);
       }
-
       try {
         const { data } = await axios({
           url: STRAPI_ENDPOINT,
           method: "POST",
-          // headers: {
-          //   Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
-          // },
           data: {
-            query: GET_ID,
+            query: UPDATE_CONTATTO,
             variables,
           },
         });
-        console.log("Strapi Data:", data);
-        // console.log("Strapi Data2:", data.errors);
-        // console.log("Strapi Data3:", data.errors[0].locations);
-        // console.log("Strapi Data4:", data.errors[0].extensions);
-        // console.log("Strapi Data5:", data.errors[0].extensions.exception.output);
-        if (data.data.contattos.length) {
-          console.log("id = ", data.data.contattos[0].id);
-          variables.id = data.data.contattos[0].id;
-          for (const evento of data.data.contattos[0].eventi) {
-            variables.eventi.push(evento.id);
-          }
-          try {
-            const { data } = await axios({
-              url: STRAPI_ENDPOINT,
-              method: "POST",
-              data: {
-                query: UPDATE_CONTATTO,
-                variables,
-              },
-            });
-            console.log("updateContatto", data.data.updateContatto.contatto);
-            const eventoData = data.data.updateContatto.contatto.eventi.find(
-              (item) => item.id === nuovo_evento
-            );
-            console.log("eventoData", eventoData);
-            const datiPerMail = data.data.updateContatto.contatto;
-            datiPerMail.eventi = [eventoData];
-            console.log("DatiperMail", datiPerMail);
+        console.log("updateContatto", data.data.updateContatto.contatto);
+        const eventoData = data.data.updateContatto.contatto.eventi.find(
+          (item) => item.id === nuovo_evento
+        );
+        console.log("eventoData", eventoData);
+        const datiPerMail = data.data.updateContatto.contatto;
+        datiPerMail.eventi = [eventoData];
+        console.log("DatiperMail", datiPerMail);
 
-            const pingReport = await axios.post(
-              `${URL}/api/sendReport`,
-              datiPerMail
-            );
+        const pingReport = await axios.post(
+          `${URL}/api/sendReport`,
+          datiPerMail
+        );
 
-            const pingMail = await axios.post(
-              `${URL}/api/sendMail`,
-              datiPerMail
-            );
+        const pingMail = await axios.post(`${URL}/api/sendMail`, datiPerMail);
 
-            return {
-              statusCode: 200,
-              body: JSON.stringify(data.data.updateContatto.contatto),
-
-              // body: JSON.stringify(
-              //   `Ti sei registrato all’evento ${
-              //     data.data.updateContatto.contatto.nome
-              //   } ${data.data.updateContatto.contatto.cognome}!
-              //   A breve riceverai una mail di conferma all’indirizzo:
-              //   ${data.data.updateContatto.contatto.email}`
-              // ),
-            };
-          } catch (error) {
-            console.log("error", error.message);
-            return {
-              statusCode: 500,
-              body: JSON.stringify(error.response.data),
-
-              // body: JSON.stringify(
-              //   "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-              // ),
-            };
-          }
-        } else {
-          try {
-            const { data } = await axios({
-              url: STRAPI_ENDPOINT,
-              method: "POST",
-              data: {
-                query: CREATE_CONTATTO,
-                variables,
-              },
-            });
-            console.log("anagrafica", data.data.createContatto.contatto);
-            const pingReport = await axios.post(
-              `${URL}/api/sendReport`,
-              data.data.createContatto.contatto
-            );
-
-            const pingMail = await axios.post(
-              `${URL}/api/sendMail`,
-              data.data.createContatto.contatto
-            );
-
-            const pingMailChimp = await axios.post(
-              `${URL}/api/addMailchimp`,
-              data.data.createContatto.contatto
-            );
-
-            return {
-              statusCode: 200,
-              body: JSON.stringify(data.data.createContatto.contatto),
-              // body: JSON.stringify(
-              //   `Ti sei registrato all’evento ${
-              //     data.data.createContatto.contatto.nome
-              //   } ${data.data.createContatto.contatto.cognome}!
-              //   A breve riceverai una mail di conferma all’indirizzo:
-              //   ${data.data.createContatto.contatto.email}`
-              // ),
-            };
-          } catch (error) {
-            console.log("error", error);
-            return {
-              statusCode: 500,
-              body: JSON.stringify(error.response.data),
-            };
-          }
-        }
+        return {
+          statusCode: 200,
+          body: JSON.stringify(data.data.updateContatto.contatto),
+        };
       } catch (error) {
-        console.log("error", error);
+        console.log("error", error.message);
         return {
           statusCode: 500,
           body: JSON.stringify(error.response.data),
         };
       }
-      // else
-      //
-      //
-      //
-      //
-      //
-      //
     } else {
       try {
         const { data } = await axios({
           url: STRAPI_ENDPOINT,
           method: "POST",
-          // headers: {
-          //   Authorization: `Bearer ${process.env.FAUNA_SECRET_KEY}`,
-          // },
+
           data: {
-            query: GET_ID,
+            query: CHECK_SLUG,
             variables,
           },
         });
-        console.log("Strapi Data:", data);
-        // console.log("Strapi Data2:", data.errors);
-        // console.log("Strapi Data3:", data.errors[0].locations);
-        // console.log("Strapi Data4:", data.errors[0].extensions);
-        // console.log("Strapi Data5:", data.errors[0].extensions.exception.output);
+
         if (data.data.contattos.length) {
-          console.log("id = ", data.data.contattos[0].id);
-          variables.id = data.data.contattos[0].id;
-          for (const evento of data.data.contattos[0].eventi) {
-            variables.eventi.push(evento.id);
-          }
-          try {
-            const { data } = await axios({
-              url: STRAPI_ENDPOINT,
-              method: "POST",
-              data: {
-                query: UPDATE_CONTATTO,
-                variables,
-              },
-            });
-            console.log("updateContatto", data.data.updateContatto.contatto);
-            const eventoData = data.data.updateContatto.contatto.eventi.find(
-              (item) => item.id === nuovo_evento
-            );
-            console.log("eventoData", eventoData);
-            const datiPerMail = data.data.updateContatto.contatto;
-            datiPerMail.eventi = [eventoData];
-            console.log("DatiperMail", datiPerMail);
+          let response = true;
+          let i = 2;
+          while (response) {
+            new_slug = `${slug}-${i}`;
+            variables.slug = new_slug;
+            try {
+              const { data } = await axios({
+                url: STRAPI_ENDPOINT,
+                method: "POST",
 
-            const pingReport = await axios.post(
-              `${URL}/api/sendReport`,
-              datiPerMail
-            );
+                data: {
+                  query: CHECK_SLUG,
+                  variables,
+                },
+              });
+              if (data.data.contattos.length) {
+                response = true;
+                i++;
+              } else {
+                response = false;
+                try {
+                  const { data } = await axios({
+                    url: STRAPI_ENDPOINT,
+                    method: "POST",
+                    data: {
+                      query: CREATE_CONTATTO,
+                      variables,
+                    },
+                  });
+                  console.log("anagrafica", data.data.createContatto.contatto);
+                  const pingReport = await axios.post(
+                    `${URL}/api/sendReport`,
+                    data.data.createContatto.contatto
+                  );
 
-            const pingMail = await axios.post(
-              `${URL}/api/sendMail`,
-              datiPerMail
-            );
+                  const pingMail = await axios.post(
+                    `${URL}/api/sendMail`,
+                    data.data.createContatto.contatto
+                  );
 
-            return {
-              statusCode: 200,
-              body: JSON.stringify(data.data.updateContatto.contatto),
+                  const pingMailChimp = await axios.post(
+                    `${URL}/api/addMailchimp`,
+                    data.data.createContatto.contatto
+                  );
 
-              // body: JSON.stringify(
-              //   `Ti sei registrato all’evento ${
-              //     data.data.updateContatto.contatto.nome
-              //   } ${data.data.updateContatto.contatto.cognome}!
-              //   A breve riceverai una mail di conferma all’indirizzo:
-              //   ${data.data.updateContatto.contatto.email}`
-              // ),
-            };
-          } catch (error) {
-            console.log("error", error.message);
-            return {
-              statusCode: 500,
-              body: JSON.stringify(error.response.data),
-
-              // body: JSON.stringify(
-              //   "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-              // ),
-            };
+                  return {
+                    statusCode: 200,
+                    body: JSON.stringify(data.data.createContatto.contatto),
+                    // body: JSON.stringify(
+                    //   `Ti sei registrato all’evento ${
+                    //     data.data.createContatto.contatto.nome
+                    //   } ${data.data.createContatto.contatto.cognome}!
+                    //   A breve riceverai una mail di conferma all’indirizzo:
+                    //   ${data.data.createContatto.contatto.email}`
+                    // ),
+                  };
+                } catch (error) {
+                  console.log("error", error);
+                  return {
+                    statusCode: 500,
+                    body: JSON.stringify(error.response.data),
+                  };
+                }
+              }
+            } catch (error) {
+              console.log("error", error);
+            }
           }
         } else {
           try {
@@ -394,13 +285,6 @@ exports.handler = async (event) => {
             return {
               statusCode: 200,
               body: JSON.stringify(data.data.createContatto.contatto),
-              // body: JSON.stringify(
-              //   `Ti sei registrato all’evento ${
-              //     data.data.createContatto.contatto.nome
-              //   } ${data.data.createContatto.contatto.cognome}!
-              //   A breve riceverai una mail di conferma all’indirizzo:
-              //   ${data.data.createContatto.contatto.email}`
-              // ),
             };
           } catch (error) {
             console.log("error", error);
@@ -411,14 +295,14 @@ exports.handler = async (event) => {
           }
         }
       } catch (error) {
-        console.log("error", error);
-        return {
-          statusCode: 500,
-          body: JSON.stringify(error.response.data),
-        };
+        console.error("error:", error);
       }
     }
   } catch (error) {
     console.log("error", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(error.response.data),
+    };
   }
 };
