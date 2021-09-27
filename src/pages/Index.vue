@@ -45,11 +45,11 @@
           </div>
         </div>
         <div>
-          <a
+          <g-link
             :to="`/programma/${this.$page.programmaOnline.eventos[0].slug}/`"
             class="button"
             rel="noopener"
-            >Iscriviti all’evento</a
+            >Iscriviti all’evento</g-link
           >
           <p>
             <small>
@@ -58,7 +58,7 @@
             >
           </p>
           <div class="links">
-            <a to="/programma/">
+            <g-link to="/programma/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -76,7 +76,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              Programma</a
+              Programma</g-link
             >
           </div>
         </div>
@@ -97,10 +97,10 @@
           <small>{{
             $page.programmaOffline.eventos[0].location_indirizzo
           }}</small>
-          <a
+          <g-link
             class="button"
             :to="`/programma/${$page.programmaOffline.eventos[0].slug}/`"
-            >Iscriviti all’evento</a
+            >Iscriviti all’evento</g-link
           >
         </div>
       </div>
@@ -150,7 +150,7 @@
             </p>
             <p class="episode-description">{{ selectedItem.descrizione }}</p>
             <div class="episode-links">
-              <a :to="`/evento/${selectedItem.slug}`"
+              <g-link :to="`/evento/${selectedItem.slug}`"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -167,7 +167,7 @@
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                Dettagli Evento</a
+                Dettagli Evento</g-link
               >
             </div>
           </div>
@@ -218,7 +218,7 @@
               {{ selectedItemTestimonianza.contatto.professione }}
             </p>
             <div class="episode-links">
-              <a
+              <g-link
                 :to="{
                   path: '/testimonianza/' + selectedItemTestimonianza.slug,
                 }"
@@ -239,7 +239,7 @@
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                Dettagli Testimonianza</a
+                Dettagli Testimonianza</g-link
               >
             </div>
           </div>
