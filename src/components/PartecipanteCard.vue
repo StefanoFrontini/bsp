@@ -1,6 +1,6 @@
 <template>
   <article class="episode-details dark">
-    <g-link :to="`/membro/${partecipante.slug}/`">
+    <a :href="`/membro/${partecipante.slug}/`">
       <div class="episode-preview">
         <div class="episode-preview-sponsor">
           <div class="episode-preview-photo-small">
@@ -41,7 +41,7 @@
           </p>
         </div>
       </div>
-    </g-link>
+    </a>
   </article>
 </template>
 

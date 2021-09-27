@@ -7,7 +7,7 @@
       v-if="!$store.state.loading"
     >
       <h1>Accedi</h1>
-      <h2>Non hai un account? <g-link to="/signup">Registrati</g-link></h2>
+      <h2>Non hai un account? <g-link to="/signup/">Registrati</g-link></h2>
 
       <div class="signup__field">
         <input
