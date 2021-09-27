@@ -37,7 +37,7 @@
 
       <section>
         <!-- <LazyHydrate on-interaction> -->
-        <Search />
+        <!-- <Search /> -->
         <!-- </LazyHydrate> -->
       </section>
 
@@ -57,13 +57,12 @@ import axios from "axios";
 import EventoPartecipanteCard from "~/components/EventoPartecipanteCard.vue";
 import Notification from "~/components/Notification.vue";
 // import LazyHydrate from "vue-lazy-hydration";
-import Search from "~/components/Search.vue";
+// import Search from "~/components/Search.vue";
 
 export default {
   components: {
     EventoPartecipanteCard,
     Notification,
-    Search,
   },
   metaInfo() {
     return {
