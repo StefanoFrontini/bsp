@@ -117,7 +117,7 @@ const collections = [
         professione: item.professione,
         chi_cerca: item.chi_cerca,
         foto: item.foto ? item.foto.url : "",
-        linkedin: item.linkedin ? item.linkedin : "",
+        linkedin: item.linkedin ?? "",
         sito_web: item.sito_web ? item.sito_web : "",
         sponsor: item.sponsor.map(({ data }) => formattedData(data)),
         numero_sponsor: item.sponsor.map(({ data }) => formattedData(data))

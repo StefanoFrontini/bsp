@@ -183,9 +183,9 @@ export default {
         return "apri nav";
       }
     },
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
+    // isLoggedIn() {
+    //   return this.$store.getters.isLoggedIn;
+    // },
     authStatus() {
       return this.$store.getters.authStatus;
     },

@@ -321,13 +321,21 @@ export default {
       }
     },
   },
-  created() {
-    if (process.isClient) {
-      this.user = JSON.parse(localStorage.getItem("user"));
-      this.token = localStorage.getItem("token");
-      this.auth = localStorage.getItem("auth");
+  mounted() {
+    if (this.$store.getters.isLoggedIn) {
+      if (process.isClient) {
+        this.user = JSON.parse(localStorage.getItem("user"));
+        this.auth = localStorage.getItem("auth");
+        this.token = localStorage.getItem("token");
+        if (this.token === null) {
+          this.logout();
+        } else {
+          this.getAnagrafica();
+        }
+      }
+    } else {
+      this.logout();
     }
-    this.getAnagrafica();
   },
 
   // beforeMount() {

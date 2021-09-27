@@ -99,51 +99,56 @@ export default {
         });
     },
     async getPartecipazioni() {
-      if (this.$store.getters.isLoggedIn) {
-        let email = this.user.email;
-        let token = this.token;
-        try {
-          const { data } = await axios.post("/api/getPartecipazioni", {
-            email,
-            token,
-          });
-          if (data.eventi) {
-            for (let item of data.eventi) {
-              const data_evento = new Date(item.data);
-              const converted_data = new Intl.DateTimeFormat("it-IT", {
-                dateStyle: "long",
-              }).format(data_evento);
-              item.data = converted_data;
-            }
-            this.partecipazioni = data.eventi;
-          } else {
-            this.partecipazioni = [];
+      let email = this.user.email;
+      let token = this.token;
+      try {
+        const { data } = await axios.post("/api/getPartecipazioni", {
+          email,
+          token,
+        });
+        if (data.eventi) {
+          for (let item of data.eventi) {
+            const data_evento = new Date(item.data);
+            const converted_data = new Intl.DateTimeFormat("it-IT", {
+              dateStyle: "long",
+            }).format(data_evento);
+            item.data = converted_data;
           }
-        } catch (error) {
-          console.error("Error from server:", error.response.data);
-          if (error.response.data.includes("10.00 seconds")) {
-            let messageA = "Riprova ad accedere tra 10 secondi";
-            this.$store.dispatch("message_alert", messageA);
-            this.$store.dispatch("message_alert_active", true);
-            setTimeout(
-              () => this.$store.dispatch("message_alert_active", false),
-              7000
-            );
-            this.logout();
-          }
+          this.partecipazioni = data.eventi;
+        } else {
+          this.partecipazioni = [];
+        }
+      } catch (error) {
+        console.error("Error from server:", error.response.data);
+        if (error.response.data.includes("10.00 seconds")) {
+          let messageA = "Riprova ad accedere tra 10 secondi";
+          this.$store.dispatch("message_alert", messageA);
+          this.$store.dispatch("message_alert_active", true);
+          setTimeout(
+            () => this.$store.dispatch("message_alert_active", false),
+            7000
+          );
+          this.logout();
         }
       }
-      return;
     },
   },
 
-  created() {
-    if (process.isClient) {
-      this.user = JSON.parse(localStorage.getItem("user"));
-      this.token = localStorage.getItem("token");
-      this.auth = localStorage.getItem("auth");
+  mounted() {
+    if (this.$store.getters.isLoggedIn) {
+      if (process.isClient) {
+        this.user = JSON.parse(localStorage.getItem("user"));
+        this.auth = localStorage.getItem("auth");
+        this.token = localStorage.getItem("token");
+        if (this.token === null) {
+          this.logout();
+        } else {
+          this.getPartecipazioni();
+        }
+      }
+    } else {
+      this.logout();
     }
-    this.getPartecipazioni();
   },
 };
 </script>

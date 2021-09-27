@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div v-if="$store.getters.isLoggedIn">
-      <article class="episode-details dark">
+      <article class="episode-details">
         <div class="episode-preview">
           <div class="episode-preview-sponsor">
             <div class="episode-preview-photo-small">
@@ -51,6 +51,104 @@
             </p>
           </div>
         </div>
+        <!-- <form
+          class="signup"
+          @submit.prevent="sendTestimonial()"
+          autocomplete="off"
+        >
+          <h3>
+            Ringrazia {{ $page.contatto.contatto.nome }} per un affare concluso
+            di €:
+          </h3>
+          <div class="signup__field">
+            <input
+              class="signup__input"
+              type="number"
+              step="1"
+              min="1"
+              v-model="formGac.generosita"
+              name="generosita"
+              id="generosita"
+              required
+            />
+
+            <label class="signup__label" for="generosita">€</label>
+          </div>
+          <div class="signup__field">
+            <textarea
+              class="signup__input"
+              type="text"
+              v-model="formGac.testo"
+              name="testo"
+              id="testo"
+              rows="6"
+            />
+
+            <label class="signup__label review" for="testo">Testo</label>
+          </div>
+
+          <button class="button" type="submit">
+            Invia &nbsp;
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-heart"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              ></path>
+            </svg>
+          </button>
+        </form>
+        <form
+          class="signup"
+          @submit.prevent="sendTestimonial()"
+          autocomplete="off"
+        >
+          <h3>Scrivi una recensione per {{ $page.contatto.contatto.nome }}:</h3>
+
+          <div class="signup__field">
+            <textarea
+              class="signup__input"
+              type="text"
+              v-model="formReview.testo"
+              name="testo"
+              id="testo"
+              rows="6"
+            />
+
+            <label class="signup__label review" for="testo">Testo</label>
+          </div>
+          <star-rating v-model="formReview.rating"></star-rating>
+
+          <button class="button" type="submit">
+            Invia &nbsp;
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-star"
+            >
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+              ></polygon>
+            </svg>
+          </button>
+        </form> -->
       </article>
     </div>
     <div v-else>
@@ -60,7 +158,7 @@
           per vedere il profilo di {{ $page.contatto.contatto.nome }}
           {{ $page.contatto.contatto.cognome }}
         </p>
-        <g-link to="/signup/" class="button">
+        <g-link to="/signup/" class="button dark">
           Iscriviti!
           <!-- <input type="submit" value="Iscriviti!" /> -->
           <svg
@@ -115,12 +213,30 @@ query {
 </static-query>
 
 <script>
+import StarRating from "vue-star-rating";
+// const isNumeric = (num) => (typeof(num) === 'number' || typeof(num) === "string" && num.trim() !== '') && !isNaN(num);
 export default {
+  components: {
+    StarRating,
+  },
   data() {
     return {
       user: {},
       token: "",
       auth: "",
+      formGac: {
+        testo: "Grazie!",
+        generosita: "",
+        daId: "",
+        aId: "",
+      },
+      formReview: {
+        testo: "",
+        stelline: "",
+        daId: "",
+        aId: "",
+        rating: 3,
+      },
     };
   },
   created() {
@@ -136,8 +252,100 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+  margin-bottom: 3rem;
+}
+
+.signup {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  border-radius: 20px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/*  Field */
+.signup__field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.signup__field:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 0px;
+  height: 2px;
+  background: var(--pink-dark);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.4s ease;
+}
+
+.signup__field:hover:before {
+  width: 100%;
+}
+
+/*  Input */
+.signup__input {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
+  padding: 10px 2px 0;
+  border-bottom: 2px solid var(--primary);
+}
+
+/*  Label */
+.signup__label {
+  color: #bdbdbd;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.review {
+  top: 85%;
+}
+
+.signup__input:focus + .signup__label,
+.signup__input:valid + .signup__label {
+  top: 0;
+  font-size: 1rem;
+  background-color: white;
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+}
+
+.signup__input:valid + .signup__label:after {
+  content: "✓";
+  padding-left: 2rem;
+}
+
+.signup__input:invalid + .signup__label:after {
+  content: "✖";
+  padding-left: 2rem;
+}
+
 .button {
-  color: var(--pink);
+  color: var(--pink-dark);
   border: 2px solid;
   border-radius: 0.25rem;
   display: flex;
@@ -152,6 +360,10 @@ export default {
   cursor: pointer;
   margin: 0 auto;
   margin-top: 2rem;
+}
+
+.dark {
+  color: var(--pink);
 }
 
 .block {
