@@ -19,6 +19,7 @@
                 v-else
                 src="~/assets/images/unknown-profile.jpeg"
                 class="round"
+                alt="profilo sconosciuto"
               />
             </div>
             <p class="name">

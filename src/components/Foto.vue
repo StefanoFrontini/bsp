@@ -7,7 +7,12 @@
       :alt="`Foto di ${foto.nome} ${foto.cognome}`"
     />
 
-    <g-image v-else src="~/assets/images/unknown-profile.jpeg" class="round" />
+    <g-image
+      v-else
+      src="~/assets/images/unknown-profile.jpeg"
+      class="round"
+      alt="profilo sconosciuto"
+    />
   </div>
 </template>
 

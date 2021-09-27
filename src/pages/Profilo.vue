@@ -148,7 +148,11 @@
               Carica foto</label
             >
             <div class="episode-preview-photo-small" v-show="showPreview">
-              <g-image :src="imagePreview" class="round" />
+              <g-image
+                :src="imagePreview"
+                class="round"
+                alt="anteprima immagine"
+              />
             </div>
             <button class="button" type="submit" v-show="showPreview">
               Aggiorna foto

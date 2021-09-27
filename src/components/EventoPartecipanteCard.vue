@@ -19,6 +19,7 @@
                 v-else
                 src="~/assets/images/unknown-profile.jpeg"
                 class="round"
+                alt="profilo sconosciuto"
               />
             </div>
             <p>
@@ -70,7 +71,7 @@
                 src="~/assets/images/cheers.jpg"
                 class="round"
                 alt="cheers"
-              ></g-image>
+              />
             </div>
           </div>
           <div class="episode-preview-details">

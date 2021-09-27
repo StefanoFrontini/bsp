@@ -5,7 +5,8 @@
         <g-image
           class="round"
           :src="programma.sponsor_serata.foto.url"
-        ></g-image>
+          alt="sponsor serata"
+        />
       </div>
       <p>
         {{ programma.sponsor_serata.nome }}

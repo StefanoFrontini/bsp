@@ -24,6 +24,7 @@
               v-else
               src="~/assets/images/imagenotavailable.png"
               class="round"
+              alt="immagine non disponibile"
             />
           </div>
           <p>

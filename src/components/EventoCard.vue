@@ -20,7 +20,8 @@
           <g-image
             class="round"
             :src="evento.sponsor_serata.foto.url"
-          ></g-image>
+            alt="sponsor serata"
+          />
         </div>
         <p>
           {{ evento.sponsor_serata.nome }} {{ evento.sponsor_serata.cognome }}

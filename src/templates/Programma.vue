@@ -11,7 +11,8 @@
               <g-image
                 class="round"
                 :src="this.$page.evento.evento.sponsor_serata.foto.url"
-              ></g-image>
+                alt="foto"
+              />
               <p>
                 {{ $page.evento.evento.sponsor_serata.nome }}
                 {{ $page.evento.evento.sponsor_serata.cognome }}
@@ -42,7 +43,7 @@
               class="square"
               src="~/assets/images/cheers.jpg"
               alt="cheers"
-            ></g-image>
+            />
           </div>
           <div class="location">
             <h3>{{ $page.evento.evento.location }}</h3>

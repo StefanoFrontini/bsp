@@ -7,7 +7,8 @@
             <g-image
               class="round"
               :src="this.$page.evento.evento.sponsor_serata.foto.url"
-            ></g-image>
+              alt="sponsor serata"
+            />
           </div>
           <p>
             {{ $page.evento.evento.sponsor_serata.nome }}

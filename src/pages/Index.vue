@@ -21,7 +21,8 @@
               <g-image
                 class="round"
                 :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url"
-              ></g-image>
+                alt="sponsor serata"
+              />
             </div>
             <p>
               {{ $page.programmaOnline.eventos[0].sponsor_serata.nome }}
@@ -89,7 +90,7 @@
             class="square"
             src="~/assets/images/cheers.jpg"
             alt="cheers"
-          ></g-image>
+          />
         </div>
         <div class="aperitivo-links">
           <h3>{{ $page.programmaOffline.eventos[0].location }}</h3>
@@ -118,7 +119,8 @@
               <g-image
                 class="round"
                 :src="edge.sponsor_serata.foto.url"
-              ></g-image>
+                alt="foto"
+              />
             </div>
           </a>
         </div>
@@ -184,7 +186,7 @@
         >
           <a href="#" @click="selectItemTestimonianza(item.id)">
             <div class="episode-preview-photo-small">
-              <g-image class="round" :src="item.contatto.foto.url"></g-image>
+              <g-image class="round" :src="item.contatto.foto.url" alt="foto" />
             </div>
           </a>
         </div>

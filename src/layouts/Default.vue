@@ -38,7 +38,7 @@
           <g-image
             class="round"
             src="~/assets/images/maurizio-mancini.jpg"
-            alt=""
+            alt="maurizio mancini"
           />
         </div>
         <div class="host-details">
@@ -95,7 +95,7 @@
           <g-image
             class="round"
             src="~/assets/images/stefano-frontini.png"
-            alt=""
+            alt="stefano frontini"
           />
         </div>
         <div class="host-details">

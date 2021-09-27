@@ -1,6 +1,10 @@
 <template>
   <div class="episode-preview-photo-small">
-    <g-image src="~/assets/images/unknown-profile.jpeg" class="round" />
+    <g-image
+      src="~/assets/images/unknown-profile.jpeg"
+      class="round"
+      alt="profilo sconosciuto"
+    />
   </div>
 </template>
 
