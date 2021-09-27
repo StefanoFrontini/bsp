@@ -18,7 +18,7 @@
         <div class="episode-preview">
           <div class="episode-preview-sponsor">
             <div class="episode-preview-photo">
-              <img
+              <g-image
                 class="round"
                 :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url"
                 alt="sponsor serata"
@@ -37,7 +37,7 @@
             <p>
               <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small>
             </p>
-            <img
+            <g-image
               src="~/assets/images/zoomus-ar21.svg"
               alt="Zoom meeting logo"
               width="80"
@@ -45,11 +45,11 @@
           </div>
         </div>
         <div>
-          <g-link
+          <a
             :to="`/programma/${this.$page.programmaOnline.eventos[0].slug}/`"
             class="button"
             rel="noopener"
-            >Iscriviti all’evento</g-link
+            >Iscriviti all’evento</a
           >
           <p>
             <small>
@@ -58,7 +58,7 @@
             >
           </p>
           <div class="links">
-            <g-link to="/programma/">
+            <a to="/programma/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -76,7 +76,7 @@
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              Programma</g-link
+              Programma</a
             >
           </div>
         </div>
@@ -86,17 +86,21 @@
       <h2>Il prossimo aperitivo è il {{ formattedDataOffline }}!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster aperitivo">
-          <img class="square" src="~/assets/images/cheers.jpg" alt="cheers" />
+          <g-image
+            class="square"
+            src="~/assets/images/cheers.jpg"
+            alt="cheers"
+          />
         </div>
         <div class="aperitivo-links">
           <h3>{{ $page.programmaOffline.eventos[0].location }}</h3>
           <small>{{
             $page.programmaOffline.eventos[0].location_indirizzo
           }}</small>
-          <g-link
+          <a
             class="button"
             :to="`/programma/${$page.programmaOffline.eventos[0].slug}/`"
-            >Iscriviti all’evento</g-link
+            >Iscriviti all’evento</a
           >
         </div>
       </div>
@@ -112,7 +116,7 @@
         >
           <a href="#" @click="selectItem(edge.id)">
             <div class="episode-preview-photo-small">
-              <img
+              <g-image
                 class="round"
                 :src="edge.sponsor_serata.foto.url"
                 alt="foto"
@@ -146,7 +150,7 @@
             </p>
             <p class="episode-description">{{ selectedItem.descrizione }}</p>
             <div class="episode-links">
-              <g-link :to="`/evento/${selectedItem.slug}`"
+              <a :to="`/evento/${selectedItem.slug}`"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -163,7 +167,7 @@
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                Dettagli Evento</g-link
+                Dettagli Evento</a
               >
             </div>
           </div>
@@ -181,7 +185,7 @@
         >
           <a href="#" @click="selectItemTestimonianza(item.id)">
             <div class="episode-preview-photo-small">
-              <img class="round" :src="item.contatto.foto.url" alt="foto" />
+              <g-image class="round" :src="item.contatto.foto.url" alt="foto" />
             </div>
           </a>
         </div>
@@ -214,7 +218,7 @@
               {{ selectedItemTestimonianza.contatto.professione }}
             </p>
             <div class="episode-links">
-              <g-link
+              <a
                 :to="{
                   path: '/testimonianza/' + selectedItemTestimonianza.slug,
                 }"
@@ -235,7 +239,7 @@
                   <line x1="12" y1="16" x2="12" y2="12"></line>
                   <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                Dettagli Testimonianza</g-link
+                Dettagli Testimonianza</a
               >
             </div>
           </div>
