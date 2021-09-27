@@ -18,7 +18,7 @@
         <div class="episode-preview">
           <div class="episode-preview-sponsor">
             <div class="episode-preview-photo">
-              <g-image
+              <img
                 class="round"
                 :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url"
                 alt="sponsor serata"
@@ -37,7 +37,7 @@
             <p>
               <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small>
             </p>
-            <g-image
+            <img
               src="~/assets/images/zoomus-ar21.svg"
               alt="Zoom meeting logo"
               width="80"
@@ -86,11 +86,7 @@
       <h2>Il prossimo aperitivo è il {{ formattedDataOffline }}!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster aperitivo">
-          <g-image
-            class="square"
-            src="~/assets/images/cheers.jpg"
-            alt="cheers"
-          />
+          <img class="square" src="~/assets/images/cheers.jpg" alt="cheers" />
         </div>
         <div class="aperitivo-links">
           <h3>{{ $page.programmaOffline.eventos[0].location }}</h3>
@@ -116,7 +112,7 @@
         >
           <a href="#" @click="selectItem(edge.id)">
             <div class="episode-preview-photo-small">
-              <g-image
+              <img
                 class="round"
                 :src="edge.sponsor_serata.foto.url"
                 alt="foto"
@@ -185,7 +181,7 @@
         >
           <a href="#" @click="selectItemTestimonianza(item.id)">
             <div class="episode-preview-photo-small">
-              <g-image class="round" :src="item.contatto.foto.url" alt="foto" />
+              <img class="round" :src="item.contatto.foto.url" alt="foto" />
             </div>
           </a>
         </div>
