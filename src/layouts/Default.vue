@@ -186,9 +186,9 @@ export default {
     // isLoggedIn() {
     //   return this.$store.getters.isLoggedIn;
     // },
-    authStatus() {
-      return this.$store.getters.authStatus;
-    },
+    // authStatus() {
+    //   return this.$store.getters.authStatus;
+    // },
     disableNav() {
       if (this.$store.getters.authStatus === "success") {
         return true;

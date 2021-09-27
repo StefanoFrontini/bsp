@@ -36,9 +36,9 @@
       </header>
 
       <section>
-        <LazyHydrate on-interaction>
-          <Search />
-        </LazyHydrate>
+        <!-- <LazyHydrate on-interaction> -->
+        <Search />
+        <!-- </LazyHydrate> -->
       </section>
 
       <section class="block episodes">
@@ -56,7 +56,7 @@
 import axios from "axios";
 import EventoPartecipanteCard from "~/components/EventoPartecipanteCard.vue";
 import Notification from "~/components/Notification.vue";
-import LazyHydrate from "vue-lazy-hydration";
+// import LazyHydrate from "vue-lazy-hydration";
 import Search from "~/components/Search.vue";
 
 export default {
@@ -64,7 +64,6 @@ export default {
     EventoPartecipanteCard,
     Notification,
     Search,
-    LazyHydrate,
   },
   metaInfo() {
     return {
