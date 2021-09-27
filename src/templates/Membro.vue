@@ -213,12 +213,12 @@ query {
 </static-query>
 
 <script>
-import StarRating from "vue-star-rating";
+// import StarRating from "vue-star-rating";
 // const isNumeric = (num) => (typeof(num) === 'number' || typeof(num) === "string" && num.trim() !== '') && !isNaN(num);
 export default {
-  components: {
-    StarRating,
-  },
+  // components: {
+  //   StarRating,
+  // },
   data() {
     return {
       user: {},
