@@ -15,7 +15,7 @@
           </p>
           <g-link to="/programma/" class="button">
             Iscriviti!
-            <!-- <input type="submit" value="Iscriviti!" /> -->
+            <input type="submit" value="Iscriviti!" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -36,9 +36,7 @@
       </header>
 
       <section>
-        <!-- <LazyHydrate on-interaction> -->
         <Search />
-        <!-- </LazyHydrate> -->
       </section>
 
       <section class="block episodes">

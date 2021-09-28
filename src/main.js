@@ -23,7 +23,9 @@ export default function(Vue, { router, head, isClient, appOptions }) {
     state: {
       status: process.isClient ? localStorage.getItem("auth") || "" : false,
       token: process.isClient ? localStorage.getItem("token") || "" : false,
-      user: {},
+      user: process.isClient
+        ? JSON.parse(localStorage.getItem("user")) || {}
+        : false,
       evento: {},
       messageAlert: "",
       messageSuccess: "",
@@ -195,6 +197,7 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       logout({ commit }) {
         process.isClient ? localStorage.removeItem("token") : false;
         process.isClient ? localStorage.removeItem("auth") : false;
+        process.isClient ? localStorage.removeItem("user") : false;
         delete axios.defaults.headers.common["Authorization"];
         commit("LOGOUT");
       },

@@ -3,9 +3,8 @@
     <Notification />
     <header class="header">
       <div class="mobile-buttons">
-        <strong>
-          <g-link to="/">Home</g-link>
-        </strong>
+        <g-link to="/"><strong>Home</strong></g-link>
+
         <button class="nav-toggle" @click="toggleMenu">
           {{ buttonText }}
         </button>
@@ -13,14 +12,12 @@
       <nav class="nav" :class="{ 'nav-active': isOpen }">
         <g-link to="/eventi/">Eventi</g-link>
         <g-link to="/programma/">In programma</g-link>
-        <div v-if="disableNav" class="ul">
-          <g-link to="/partecipazioni/"
-            >I tuoi eventi {{ user.username }}</g-link
-          >
+        <div v-show="$store.getters.isLoggedIn" class="ul">
+          <g-link to="/partecipazioni/">I tuoi eventi</g-link>
           <g-link to="/profilo/">Profilo</g-link>
           <button class="button" @click="logout">Esci</button>
         </div>
-        <div v-else class="ul">
+        <div v-show="!$store.getters.isLoggedIn" class="ul">
           <g-link to="/login/">Accedi</g-link>
           <g-link to="/signup/">Registrati</g-link>
         </div>
@@ -183,9 +180,9 @@ export default {
         return "apri nav";
       }
     },
-    // isLoggedIn() {
-    //   return this.$store.getters.isLoggedIn;
-    // },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
     // authStatus() {
     //   return this.$store.getters.authStatus;
     // },
@@ -198,7 +195,7 @@ export default {
     },
   },
   mounted() {
-    this.user = JSON.parse(localStorage.getItem("user"));
+    // this.user = JSON.parse(localStorage.getItem("user"));
     // if (this.isLoggedIn && this.authStatus === "") {
     //   this.logout();
     // }
