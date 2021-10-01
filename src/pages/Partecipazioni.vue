@@ -112,8 +112,14 @@ export default {
             item.data = converted_data;
           }
           this.partecipazioni = data.eventi;
+          if (process.isClient) {
+            localStorage.setItem("membroId", data.id);
+          }
         } else {
           this.partecipazioni = [];
+          if (process.isClient) {
+            localStorage.setItem("membroId", data.id);
+          }
         }
       } catch (error) {
         console.error("Error from server:", error.response.data);

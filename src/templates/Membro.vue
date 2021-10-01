@@ -52,104 +52,106 @@
             </p>
           </div>
         </div>
-        <!-- <form
-          class="signup"
-          @submit.prevent="sendTestimonial()"
-          autocomplete="off"
-        >
-          <h3>
-            Ringrazia {{ $page.contatto.contatto.nome }} per un affare concluso
-            di €:
-          </h3>
-          <div class="signup__field">
-            <input
-              class="signup__input"
-              type="number"
-              step="1"
-              min="1"
-              v-model="formGac.generosita"
-              name="generosita"
-              id="generosita"
-              required
-            />
+        <!-- <div v-if="!$store.state.loading">
+          <form class="signup" @submit.prevent="sendGac()" autocomplete="off">
+            <h3>
+              Ringrazia {{ $page.contatto.contatto.nome }} per un affare
+              concluso di €:
+            </h3>
+            <div class="signup__field">
+              <input
+                class="signup__input"
+                type="number"
+                step="1"
+                min="1"
+                v-model="formGac.generosita"
+                name="generosita"
+                id="generosita"
+                required
+              />
 
-            <label class="signup__label" for="generosita">€</label>
-          </div>
-          <div class="signup__field">
-            <textarea
-              class="signup__input"
-              type="text"
-              v-model="formGac.testo"
-              name="testo"
-              id="testo"
-              rows="6"
-            />
+              <label class="signup__label" for="generosita">€</label>
+            </div>
+            <div class="signup__field">
+              <textarea
+                class="signup__input"
+                type="text"
+                v-model="formGac.testo"
+                name="testo"
+                id="testo"
+                rows="6"
+              />
 
-            <label class="signup__label review" for="testo">Testo</label>
-          </div>
+              <label class="signup__label review" for="testo">Testo</label>
+            </div>
 
-          <button class="button" type="submit">
-            Invia &nbsp;
+            <button class="button" type="submit">
+              Invia &nbsp;
 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-heart"
-            >
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-              ></path>
-            </svg>
-          </button>
-        </form>
-        <form
-          class="signup"
-          @submit.prevent="sendTestimonial()"
-          autocomplete="off"
-        >
-          <h3>Scrivi una recensione per {{ $page.contatto.contatto.nome }}:</h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-heart"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                ></path>
+              </svg>
+            </button>
+          </form>
+          <form
+            class="signup"
+            @submit.prevent="sendTestimonial()"
+            autocomplete="off"
+          >
+            <h3>
+              Scrivi una recensione per {{ $page.contatto.contatto.nome }}:
+            </h3>
 
-          <div class="signup__field">
-            <textarea
-              class="signup__input"
-              type="text"
-              v-model="formReview.testo"
-              name="testo"
-              id="testo"
-              rows="6"
-            />
+            <div class="signup__field">
+              <textarea
+                class="signup__input"
+                type="text"
+                v-model="formReview.testo"
+                name="testo"
+                id="testo"
+                rows="6"
+              />
 
-            <label class="signup__label review" for="testo">Testo</label>
-          </div>
-          <star-rating v-model="formReview.rating"></star-rating>
+              <label class="signup__label review" for="testo">Testo</label>
+            </div>
+            <ClientOnly>
+              <star-rating v-model="formReview.rating"></star-rating>
+            </ClientOnly>
 
-          <button class="button" type="submit">
-            Invia &nbsp;
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-star"
-            >
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-              ></polygon>
-            </svg>
-          </button>
-        </form> -->
+            <button class="button" type="submit">
+              Invia &nbsp;
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-star"
+              >
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                ></polygon>
+              </svg>
+            </button>
+          </form>
+        </div> -->
       </article>
     </div>
     <div v-else>
@@ -188,6 +190,7 @@
 query ($id: ID!) {
   contatto{
     contatto(id: $id){
+      id
       nome
       cognome
       email
@@ -214,12 +217,16 @@ query {
 </static-query>
 
 <script>
-// import StarRating from "vue-star-rating";
-// const isNumeric = (num) => (typeof(num) === 'number' || typeof(num) === "string" && num.trim() !== '') && !isNaN(num);
+import axios from "axios";
+let StarRating;
+if (process.isClient) {
+  StarRating = require("vue-star-rating");
+}
+
 export default {
-  // components: {
-  //   StarRating,
-  // },
+  components: {
+    StarRating,
+  },
   data() {
     return {
       user: {},
@@ -242,12 +249,53 @@ export default {
   },
   created() {
     if (this.$store.getters.isLoggedIn) {
+      this.formGac.aId = this.$page.contatto.contatto.id.toString();
       if (process.isClient) {
         this.user = JSON.parse(localStorage.getItem("user"));
+        this.formGac.daId = localStorage.getItem("membroId");
         this.token = localStorage.getItem("token");
         this.auth = localStorage.getItem("auth");
       }
     }
+  },
+  methods: {
+    async sendGac() {
+      try {
+        const { data } = await axios.post("/api/addGac", this.formGac);
+        console.log("data:", data);
+
+        this.formGac.testo = "";
+        this.formGac.generosita = "";
+
+        let messageS = `Grazie ${data.da[0].nome}!
+        Hai inviato un affare concluso di ${data.generosita}€ a
+        ${data.a[0].nome}! La pagina si aggiornerà tra qualche ora.
+        `;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
+
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          10000
+        );
+      } catch (error) {
+        let messageA;
+
+        if (error.response.data === "Inserire un numero intero nel campo €") {
+          messageA = "Inserire un numero intero nel campo €";
+        } else {
+          messageA =
+            "Ops..c'è stato un problema, riprova o contatta: stefano.frontini@con.repower.com";
+        }
+        console.log(error.response.data);
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          10000
+        );
+      }
+    },
   },
 };
 </script>

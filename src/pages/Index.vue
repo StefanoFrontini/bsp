@@ -82,7 +82,7 @@
         </div>
       </div>
     </section>
-    <section class="block">
+    <section class="block" v-if="$page.programmaOffline.eventos[0]">
       <h2>Il prossimo aperitivo è il {{ formattedDataOffline }}!</h2>
       <div class="next-episode-wrapper">
         <div class="episode-poster aperitivo">
