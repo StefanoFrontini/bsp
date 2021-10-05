@@ -29,6 +29,29 @@
                   $page.contatto.contatto.cognome
               }}
             </p>
+            <div class="rating">
+              <RMedio v-if="$store.getters.ratMedio" />
+              <span v-if="nRating">{{ nRating }} voti</span>
+            </div>
+            <p class="gac" v-if="gacTot">
+              <span>{{ gacTot }}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="var(--pink-dark)"
+                stroke="currentColor"
+                stroke-width="0"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-heart"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                ></path>
+              </svg>
+            </p>
           </div>
 
           <p class="professione">
@@ -52,106 +75,116 @@
             </p>
           </div>
         </div>
-        <!-- <div v-if="!$store.state.loading">
-          <form class="signup" @submit.prevent="sendGac()" autocomplete="off">
-            <h3>
-              Ringrazia {{ $page.contatto.contatto.nome }} per un affare
-              concluso di €:
-            </h3>
-            <div class="signup__field">
-              <input
-                class="signup__input"
-                type="number"
-                step="1"
-                min="1"
-                v-model="formGac.generosita"
-                name="generosita"
-                id="generosita"
-                required
-              />
-
-              <label class="signup__label" for="generosita">€</label>
-            </div>
-            <div class="signup__field">
-              <textarea
-                class="signup__input"
-                type="text"
-                v-model="formGac.testo"
-                name="testo"
-                id="testo"
-                rows="6"
-              />
-
-              <label class="signup__label review" for="testo">Testo</label>
-            </div>
-
-            <button class="button" type="submit">
-              Invia &nbsp;
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-heart"
-              >
-                <path
-                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                ></path>
-              </svg>
-            </button>
-          </form>
-          <form
+        <div v-if="!$store.state.loading">
+          <div
             class="signup"
-            @submit.prevent="sendTestimonial()"
-            autocomplete="off"
+            v-for="testimonianza in $page.contatto.contatto
+              .testimonianza_ricevuta"
+            :key="testimonianza.id"
           >
-            <h3>
-              Scrivi una recensione per {{ $page.contatto.contatto.nome }}:
-            </h3>
+            <Testimonial :testimonianza="testimonianza" :gac="gacTot" />
+          </div>
+          <div>
+            <form class="signup" @submit.prevent="sendGac()" autocomplete="off">
+              <h3>
+                Ringrazia {{ $page.contatto.contatto.nome }} per un affare
+                concluso di €:
+              </h3>
+              <div class="signup__field">
+                <input
+                  class="signup__input"
+                  type="number"
+                  step="1"
+                  min="1"
+                  v-model="formGac.generosita"
+                  name="generosita"
+                  id="generosita"
+                  required
+                />
 
-            <div class="signup__field">
-              <textarea
-                class="signup__input"
-                type="text"
-                v-model="formReview.testo"
-                name="testo"
-                id="testo"
-                rows="6"
-              />
+                <label class="signup__label" for="generosita">€</label>
+              </div>
+              <div class="signup__field">
+                <textarea
+                  class="signup__input"
+                  type="text"
+                  v-model="formGac.testoGac"
+                  name="testoGac"
+                  id="testoGac"
+                  rows="6"
+                />
 
-              <label class="signup__label review" for="testo">Testo</label>
-            </div>
-            <ClientOnly>
-              <star-rating v-model="formReview.rating"></star-rating>
-            </ClientOnly>
+                <label class="signup__label review" for="testoGac">Testo</label>
+              </div>
 
-            <button class="button" type="submit">
-              Invia &nbsp;
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-star"
-              >
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                ></polygon>
-              </svg>
-            </button>
-          </form>
-        </div> -->
+              <button class="button" type="submit">
+                Invia &nbsp;
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-heart"
+                >
+                  <path
+                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                  ></path>
+                </svg>
+              </button>
+            </form>
+            <form
+              class="signup"
+              @submit.prevent="sendReview()"
+              autocomplete="off"
+            >
+              <h3>
+                Scrivi una recensione per {{ $page.contatto.contatto.nome }}:
+              </h3>
+
+              <div class="signup__field">
+                <textarea
+                  class="signup__input"
+                  type="text"
+                  v-model="formReview.testoReview"
+                  name="testoReview"
+                  id="testoReview"
+                  rows="6"
+                />
+
+                <label class="signup__label review" for="testoReview"
+                  >Testo</label
+                >
+              </div>
+              <Rating />
+
+              <button class="button" type="submit">
+                Invia &nbsp;
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-star"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  ></polygon>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
       </article>
     </div>
     <div v-else>
@@ -200,6 +233,22 @@ query ($id: ID!) {
       foto{
         url
       }
+      testimonianza_ricevuta (sort: "data:desc"){
+        id
+        data
+        generosita
+        stelline
+        testoGac
+        testoReview
+      da{
+        nome
+        cognome
+        foto{
+          url
+        }
+        professione
+      }
+    }
    }
  }
 }
@@ -218,53 +267,112 @@ query {
 
 <script>
 import axios from "axios";
-let StarRating;
-if (process.isClient) {
-  StarRating = require("vue-star-rating");
-}
+import Rating from "~/components/Rating.vue";
+import RMedio from "~/components/RMedio.vue";
+import Testimonial from "~/components/Testimonial.vue";
 
 export default {
   components: {
-    StarRating,
+    Rating,
+    RMedio,
+    Testimonial,
   },
+
   data() {
     return {
+      nRating: null,
+      gacTot: null,
       user: {},
       token: "",
       auth: "",
       formGac: {
-        testo: "Grazie!",
+        testoGac: "Grazie!",
         generosita: "",
         daId: "",
         aId: "",
       },
       formReview: {
-        testo: "",
-        stelline: "",
+        testoReview: "",
         daId: "",
         aId: "",
-        rating: 3,
+        rating: 4,
       },
     };
   },
+
   created() {
     if (this.$store.getters.isLoggedIn) {
       this.formGac.aId = this.$page.contatto.contatto.id.toString();
+      this.formReview.aId = this.$page.contatto.contatto.id.toString();
       if (process.isClient) {
         this.user = JSON.parse(localStorage.getItem("user"));
         this.formGac.daId = localStorage.getItem("membroId");
+        this.formReview.daId = localStorage.getItem("membroId");
         this.token = localStorage.getItem("token");
         this.auth = localStorage.getItem("auth");
       }
     }
   },
+  mounted() {
+    const valutazioni = [];
+    const gac = [];
+    function getSum(total, num) {
+      return total + num;
+    }
+    function valNum(num) {
+      if (num === "uno") {
+        return 1;
+      }
+      if (num === "due") {
+        return 2;
+      }
+      if (num === "tre") {
+        return 3;
+      }
+      if (num === "quattro") {
+        return 4;
+      }
+      if (num === "cinque") {
+        return 5;
+      }
+    }
+    const testimonials = this.$page.contatto.contatto.testimonianza_ricevuta;
+
+    for (let testimonial of testimonials) {
+      if (testimonial.stelline) {
+        valutazioni.push(valNum(testimonial.stelline));
+      }
+      if (testimonial.generosita) {
+        gac.push(testimonial.generosita);
+      }
+    }
+    if (valutazioni.length) {
+      const sum = valutazioni.reduce(getSum, 0);
+      const mean = sum / valutazioni.length;
+      console.log("mean", mean);
+      this.$store.dispatch("message_rating_medio", Math.round(mean));
+      this.nRating = valutazioni.length;
+    } else {
+      this.$store.dispatch("message_rating_medio", null);
+    }
+    if (gac.length) {
+      const sum = gac.reduce(getSum, 0);
+      const formatter = new Intl.NumberFormat("it-IT", {
+        style: "currency",
+        currency: "EUR",
+        minimumFractionDigits: 0,
+      });
+      this.gacTot = formatter.format(sum);
+    }
+  },
+
   methods: {
     async sendGac() {
       try {
         const { data } = await axios.post("/api/addGac", this.formGac);
         console.log("data:", data);
 
-        this.formGac.testo = "";
+        this.formGac.testoGac = "";
         this.formGac.generosita = "";
 
         let messageS = `Grazie ${data.da[0].nome}!
@@ -296,11 +404,71 @@ export default {
         );
       }
     },
+    async sendReview() {
+      try {
+        let formRev = this.formReview;
+        formRev.rating = this.$store.getters.currentRating;
+
+        const { data } = await axios.post("/api/addReview", formRev);
+        console.log("data:", data);
+
+        this.formReview.testoReview = "";
+
+        let messageS = `Grazie ${data.da[0].nome}!
+        Hai inviato una recensione a ${data.a[0].nome} - ${
+          data.stelline
+        } stelline! La pagina si aggiornerà tra qualche ora.
+        `;
+        this.$store.dispatch("message_success", messageS);
+        this.$store.dispatch("message_success_active", true);
+
+        setTimeout(
+          () => this.$store.dispatch("message_success_active", false),
+          10000
+        );
+      } catch (error) {
+        let messageA;
+
+        if (
+          error.response.data === "Inserire un numero intero nel campo rating"
+        ) {
+          messageA = "Inserire un numero intero nel campo rating";
+        } else {
+          messageA =
+            "Ops..c'è stato un problema, riprova o contatta: stefano.frontini@con.repower.com";
+        }
+        console.log(error.response.data);
+        this.$store.dispatch("message_alert", messageA);
+        this.$store.dispatch("message_alert_active", true);
+        setTimeout(
+          () => this.$store.dispatch("message_alert_active", false),
+          10000
+        );
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.gac {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
 h3 {
   margin-bottom: 3rem;
 }
@@ -313,10 +481,15 @@ h3 {
   display: flex;
   flex-direction: column;
   margin: auto;
+  margin-bottom: 2rem;
 
   border-radius: 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.signup:last-child {
+  margin-top: 2rem;
 }
 
 /*  Field */

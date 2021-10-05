@@ -32,6 +32,8 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       messageSuccessActive: false,
       messageAlertActive: false,
       loading: false,
+      rating: 4,
+      ratingMedio: null,
     },
     mutations: {
       ON(state) {
@@ -67,8 +69,20 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       MESSAGE_ALERT_ACTIVE(state, msg) {
         state.messageAlertActive = msg;
       },
+      CURRENT_RATING(state, msg) {
+        state.rating = +msg;
+      },
+      RATING_MEDIO(state, msg) {
+        state.ratingMedio = +msg;
+      },
     },
     actions: {
+      message_rating_medio({ commit }, msg) {
+        commit("RATING_MEDIO", msg);
+      },
+      message_rating({ commit }, msg) {
+        commit("CURRENT_RATING", msg);
+      },
       message_alert({ commit }, msg) {
         commit("CURRENT_MESSAGE_ALERT", msg);
       },
@@ -203,6 +217,8 @@ export default function(Vue, { router, head, isClient, appOptions }) {
       },
     },
     getters: {
+      ratMedio: (state) => +state.ratingMedio,
+      currentRating: (state) => +state.rating,
       isLoggedIn: (state) => !!state.token,
       authStatus: (state) => state.status,
       currentEvent: (state) => state.evento,
