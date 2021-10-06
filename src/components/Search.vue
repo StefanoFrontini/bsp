@@ -285,6 +285,10 @@ ul {
   color: var(--dark);
 }
 
+.episode-preview:hover {
+  color: #c86221;
+}
+
 .episode-preview-sponsor {
   text-align: center;
   font-size: 0.875rem;
@@ -309,6 +313,24 @@ ul {
   margin: 0 auto;
 }
 
+/* .episode-preview-photo-small:hover {
+  animation: rotate 1.5s linear infinite;
+
+} */
+
+/* .episode-preview-photo-small:hover {
+  filter: blur(14px);
+} */
+
+/* @keyframes rotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+} */
+
 .gradient-subheading {
   position: relative;
   color: var(--text-muted);
@@ -329,6 +351,25 @@ ul {
   position: absolute;
   width: 100%;
 }
+/* .gradient-subheading:hover {
+  animation: rotate 1.5s linear infinite;
+} */
+
+/* .episode-preview-photo-small:hover {
+  animation: rotate 1.5s linear infinite;
+}
+
+.episode-preview-photo-small span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  background: inherit;
+  border-radius: 50%;
+  z-index: -1;
+} */
 
 .results {
   display: flex;

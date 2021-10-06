@@ -57,7 +57,9 @@
     </div>
     <div v-if="testimonianza.stelline">
       <blockquote class="blockquote blockquote--quoted">
-        {{ testimonianza.testoReview }}
+        <p class="blockquote__text">
+          {{ testimonianza.testoReview }}
+        </p>
       </blockquote>
       <div class="episode-preview-sponsor">
         <p class="gac">

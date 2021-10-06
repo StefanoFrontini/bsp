@@ -276,6 +276,10 @@ export default {
   color: var(--dark);
 }
 
+.episode-preview:hover {
+  color: #c86221;
+}
+
 .episode-preview-sponsor {
   text-align: center;
   font-size: 0.875rem;
