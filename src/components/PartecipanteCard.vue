@@ -24,6 +24,35 @@
           <p class="name">
             {{ partecipante.nome + " " + partecipante.cognome }}
           </p>
+          <div class="rating">
+            <RLista
+              v-if="nStars"
+              :partecipanteId="partecipante.id"
+              :nStars="nStars"
+            />
+            <span v-if="nRating"
+              >{{ nRating }} {{ nRating > 1 ? "voti" : "voto" }}</span
+            >
+          </div>
+          <p class="gac" v-if="gacTot">
+            <span>{{ gacTot }}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="var(--pink-dark)"
+              stroke="currentColor"
+              stroke-width="0"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-heart"
+            >
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              ></path>
+            </svg>
+          </p>
         </div>
 
         <p class="professione">{{ partecipante.professione }}</p>
@@ -46,20 +75,95 @@
 </template>
 
 <script>
+import RLista from "~/components/RLista.vue";
 export default {
   props: ["partecipante"],
-  // computed: {
-  //   partecipanteSlug() {
-  //     const name = `${this.partecipante.nome
-  //       .trim()
-  //       .toLowerCase()}-${this.partecipante.cognome.trim().toLowerCase()}`;
-  //     return `/membro/${slugify(name)}/`;
-  //   },
-  // },
+  components: {
+    RLista,
+  },
+  data() {
+    return {
+      nRating: null,
+      gacTot: null,
+      nStars: null,
+    };
+  },
+  mounted() {
+    const valutazioni = [];
+    const gac = [];
+    function getSum(total, num) {
+      return total + num;
+    }
+    function valNum(num) {
+      if (num === "uno") {
+        return 1;
+      }
+      if (num === "due") {
+        return 2;
+      }
+      if (num === "tre") {
+        return 3;
+      }
+      if (num === "quattro") {
+        return 4;
+      }
+      if (num === "cinque") {
+        return 5;
+      }
+    }
+    const testimonials = this.partecipante.testimonianza_ricevuta;
+
+    for (let testimonial of testimonials) {
+      if (testimonial.stelline) {
+        valutazioni.push(valNum(testimonial.stelline));
+      }
+      if (testimonial.generosita) {
+        gac.push(testimonial.generosita);
+      }
+    }
+    if (valutazioni.length) {
+      const sum = valutazioni.reduce(getSum, 0);
+      const mean = sum / valutazioni.length;
+
+      this.nStars = Math.round(mean);
+      // this.$store.dispatch("message_rating_medio", Math.round(mean));
+      this.nRating = valutazioni.length;
+    } else {
+      this.nStars = null;
+      // this.$store.dispatch("message_rating_medio", null);
+    }
+    if (gac.length) {
+      const sum = gac.reduce(getSum, 0);
+      const formatter = new Intl.NumberFormat("it-IT", {
+        style: "currency",
+        currency: "EUR",
+        minimumFractionDigits: 0,
+      });
+      this.gacTot = formatter.format(sum);
+    }
+  },
 };
 </script>
 
 <style scoped>
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.gac {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
 .square {
   width: 100%;
   height: 100%;

@@ -48,6 +48,22 @@ exports.handler = async (event) => {
           }
           email
           cellulare
+          testimonianza_ricevuta (sort: "data:desc"){
+            id
+            data
+            generosita
+            stelline
+            testoGac
+            testoReview
+          da{
+            nome
+            cognome
+            foto{
+              url
+            }
+            professione
+          }
+        }
         }
 
         sponsor_serata{

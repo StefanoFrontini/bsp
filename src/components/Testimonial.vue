@@ -154,7 +154,6 @@ export default {
       return this.formatNum(this.testimonianza.generosita);
     },
     numReview() {
-      console.log;
       return this.valNum(this.testimonianza.stelline);
     },
   },

@@ -18,6 +18,35 @@
             </div>
 
             <p>{{ profilo.nome }} {{ profilo.cognome }}</p>
+            <div class="rating">
+              <RProfilo
+                v-if="nStars"
+                :partecipanteId="profilo.id"
+                :nStars="nStars"
+              />
+              <span v-if="nRating"
+                >{{ nRating }} {{ nRating > 1 ? "voti" : "voto" }}</span
+              >
+            </div>
+            <p class="gac" v-if="gacTot">
+              <span>{{ gacTot }}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="var(--pink-dark)"
+                stroke="currentColor"
+                stroke-width="0"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-heart"
+              >
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                ></path>
+              </svg>
+            </p>
           </div>
           <p class="professione">{{ profilo.professione }}</p>
           <div class="contatti">
@@ -177,10 +206,12 @@ query {
 import axios from "axios";
 import Foto from "~/components/Foto.vue";
 import NoFoto from "~/components/NoFoto.vue";
+import RProfilo from "~/components/RProfilo.vue";
 export default {
   components: {
     Foto,
     NoFoto,
+    RProfilo,
   },
   name: "Profilo",
   metaInfo() {
@@ -199,6 +230,9 @@ export default {
       file: "",
       showPreview: false,
       imagePreview: "",
+      nRating: null,
+      gacTot: null,
+      nStars: null,
     };
   },
 
@@ -232,6 +266,57 @@ export default {
             this.update_user.email = this.profilo.email;
             this.update_user.professione = this.profilo.professione;
             this.update_user.chi_cerca = this.profilo.chi_cerca;
+            const valutazioni = [];
+            const gac = [];
+            function getSum(total, num) {
+              return total + num;
+            }
+            function valNum(num) {
+              if (num === "uno") {
+                return 1;
+              }
+              if (num === "due") {
+                return 2;
+              }
+              if (num === "tre") {
+                return 3;
+              }
+              if (num === "quattro") {
+                return 4;
+              }
+              if (num === "cinque") {
+                return 5;
+              }
+            }
+            const testimonials = data.testimonianza_ricevuta;
+
+            for (let testimonial of testimonials) {
+              if (testimonial.stelline) {
+                valutazioni.push(valNum(testimonial.stelline));
+              }
+              if (testimonial.generosita) {
+                gac.push(testimonial.generosita);
+              }
+            }
+            if (valutazioni.length) {
+              const sum = valutazioni.reduce(getSum, 0);
+              const mean = sum / valutazioni.length;
+              console.log("mean", mean);
+
+              this.nStars = Math.round(mean);
+              this.nRating = valutazioni.length;
+            } else {
+              this.nStars = null;
+            }
+            if (gac.length) {
+              const sum = gac.reduce(getSum, 0);
+              const formatter = new Intl.NumberFormat("it-IT", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 0,
+              });
+              this.gacTot = formatter.format(sum);
+            }
           }
         } catch (error) {
           console.error("Error from server:", error.response.data);
@@ -349,6 +434,24 @@ export default {
 </script>
 
 <style scoped>
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.gac {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
 .block {
   align-items: center;
   display: flex;

@@ -31,7 +31,9 @@
             </p>
             <div class="rating">
               <RMedio v-if="$store.getters.ratMedio" />
-              <span v-if="nRating">{{ nRating }} voti</span>
+              <span v-if="nRating"
+                >{{ nRating }} {{ nRating > 1 ? "voti" : "voto" }}</span
+              >
             </div>
             <p class="gac" v-if="gacTot">
               <span>{{ gacTot }}</span>
@@ -349,7 +351,7 @@ export default {
     if (valutazioni.length) {
       const sum = valutazioni.reduce(getSum, 0);
       const mean = sum / valutazioni.length;
-      console.log("mean", mean);
+
       this.$store.dispatch("message_rating_medio", Math.round(mean));
       this.nRating = valutazioni.length;
     } else {

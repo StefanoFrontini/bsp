@@ -31,6 +31,22 @@ exports.handler = async (event) => {
       foto {
         url
       }
+      testimonianza_ricevuta (sort: "data:desc"){
+        id
+        data
+        generosita
+        stelline
+        testoGac
+        testoReview
+      da{
+        nome
+        cognome
+        foto{
+          url
+        }
+        professione
+      }
+    }
     }
   }`;
 
