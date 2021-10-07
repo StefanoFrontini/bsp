@@ -195,6 +195,8 @@ input {
   display: flex;
   flex-direction: column;
   margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
   border-radius: 20px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
