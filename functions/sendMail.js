@@ -63,6 +63,7 @@ exports.handler = async (event) => {
           "it-IT"
         ).format(data_evento)}
         Riceverai una email di conferma con tutti i dettagli per partecipare.
+        Per ricevere il link Zoom è necessario inoltre accettare l'iscrizione alla newsletter.
         Fai iscrivere altri amici!
         A presto!
         Stefano e Maurizio

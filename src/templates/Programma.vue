@@ -111,7 +111,9 @@
               name="professione"
               required
             />
-            <label class="signup__label" for="professione">Professione</label>
+            <label class="signup__label" for="professione"
+              >Professione e specializzazione</label
+            >
           </div>
 
           <div class="signup__field">
