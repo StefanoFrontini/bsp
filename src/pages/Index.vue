@@ -8,7 +8,7 @@
       </p>
     </section>
 
-    <section class="block next">
+    <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
         Il prossimo evento online è il
         {{ formattedData }}!
