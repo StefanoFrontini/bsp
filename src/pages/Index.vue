@@ -7,6 +7,15 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
+    <section class="block next">
+      <div class="episode-poster">
+        <g-image
+          src="~/assets/images/buon-natale.png"
+          alt="Buon Natale e Felice 2022"
+          class="square"
+        />
+      </div>
+    </section>
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
