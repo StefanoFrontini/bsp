@@ -7,7 +7,7 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <section class="block next">
+    <!-- <section class="block next">
       <div class="episode-poster">
         <g-image
           src="~/assets/images/buon-natale.png"
@@ -15,7 +15,7 @@
           class="square"
         />
       </div>
-    </section>
+    </section> -->
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
