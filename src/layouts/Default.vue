@@ -3,7 +3,12 @@
     <Notification />
     <header class="header">
       <div class="mobile-buttons">
-        <g-link to="/"><strong>Home</strong></g-link>
+        <g-link to="/"
+          ><g-image
+            src="~/assets/images/logo_small.svg"
+            alt="Business Speed Dating"
+            width="30"
+        /></g-link>
 
         <button class="nav-toggle" @click="toggleMenu">
           {{ buttonText }}
@@ -11,7 +16,7 @@
       </div>
       <nav class="nav" :class="{ 'nav-active': isOpen }">
         <g-link to="/eventi/">Eventi</g-link>
-        <g-link to="/programma/">In programma</g-link>
+        <g-link to="/programma/">Calendario</g-link>
         <div v-show="$store.getters.isLoggedIn" class="ul">
           <g-link to="/partecipazioni/">I tuoi eventi</g-link>
           <g-link to="/profilo/">Profilo</g-link>

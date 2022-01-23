@@ -1,9 +1,13 @@
 <template>
   <Layout>
     <section class="block hero">
-      <h1>Business Speed Dating</h1>
+      <g-image
+        src="~/assets/images/logo.svg"
+        alt="Business Speed Dating"
+        width="300"
+      />
 
-      <p>
+      <p class="subtitle">
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
@@ -515,6 +519,11 @@ export default {
 
 .block h2 {
   text-align: center;
+}
+
+.subtitle {
+  margin-top: 3rem;
+  margin-bottom: 0;
 }
 
 .hero {
