@@ -23,6 +23,7 @@ exports.handler = async (event) => {
     cellulare,
     professione,
     chi_cerca,
+    sponsorAmico,
     eventoId,
   } = payload;
 
@@ -43,6 +44,7 @@ exports.handler = async (event) => {
     cellulare,
     professione,
     chi_cerca,
+    sponsorAmico,
     eventi,
     slug,
   };
@@ -62,15 +64,16 @@ exports.handler = async (event) => {
     }
   }`;
 
-  const CREATE_CONTATTO = `mutation($email: String, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $slug: String, $eventi: [ID]) {
-    createContatto(input: {data: {cognome:$cognome, nome:$nome, email:$email, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, slug:$slug, eventi:$eventi}}){
+  const CREATE_CONTATTO = `mutation($email: String, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $sponsorAmico: String, $slug: String, $eventi: [ID]) {
+    createContatto(input: {data: {cognome:$cognome, nome:$nome, email:$email, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, sponsorAmico:$sponsorAmico, slug:$slug, eventi:$eventi}}){
       contatto {
         cognome
         nome
         email
         cellulare,
         professione,
-        chi_cerca
+        chi_cerca,
+        sponsorAmico
         slug
       eventi {
         titolo
@@ -87,11 +90,11 @@ exports.handler = async (event) => {
     }
   }`;
 
-  const UPDATE_CONTATTO = `mutation($id: ID!, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $eventi: [ID]) {
+  const UPDATE_CONTATTO = `mutation($id: ID!, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String, $sponsorAmico: String, $eventi: [ID]) {
     updateContatto(
       input: {
         where: { id: $id }
-        data: { nome: $nome, cognome: $cognome, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, eventi: $eventi}
+        data: { nome: $nome, cognome: $cognome, cellulare:$cellulare, professione:$professione, chi_cerca:$chi_cerca, sponsorAmico:$sponsorAmico, eventi: $eventi}
       }
     ) {
       contatto {
@@ -101,6 +104,7 @@ exports.handler = async (event) => {
         cellulare
         professione
         chi_cerca
+        sponsorAmico
         slug
         eventi {
           id

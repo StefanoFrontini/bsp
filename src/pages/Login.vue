@@ -44,7 +44,7 @@
 export default {
   metaInfo() {
     return {
-      title: "Login | Business Speed Dating",
+      title: "Accedi | Business Speed Dating",
       titleTemplate: "%s",
     };
   },

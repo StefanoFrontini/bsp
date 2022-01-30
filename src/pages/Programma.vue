@@ -53,7 +53,7 @@ export default {
 
   metaInfo() {
     return {
-      title: "Eventi in programma | Business Speed Dating",
+      title: "Calendario | Business Speed Dating",
       titleTemplate: "%s",
     };
   },

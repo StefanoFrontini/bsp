@@ -113,6 +113,16 @@
     </div>
   </Layout>
 </template>
+<script>
+export default {
+  metaInfo() {
+    return {
+      title: 'Informativa privacy | Business Speed Dating',
+      titleTemplate: '%s',
+    };
+  },
+};
+</script>
 <style scoped>
 ol > li::marker {
   font-weight: bold;

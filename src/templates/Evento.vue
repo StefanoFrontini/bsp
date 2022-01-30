@@ -111,7 +111,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: `${this.$page.evento.evento.titolo}`,
+      title: `Evento del ${this.formattedData} | Business Speed Dating`,
       titleTemplate: "%s",
       // meta: [
       //   {

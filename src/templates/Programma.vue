@@ -128,6 +128,105 @@
               >Con chi vorresti essere messo in contatto?</label
             >
           </div>
+          <div class="signup__field">
+            <input
+              class="signup__input cerca"
+              type="text"
+              v-model="formData.sponsorAmico"
+              name="sponsorAmico"
+              required
+            />
+            <label class="signup__label" for="sponsorAmico"
+              >Come sei venuto a conoscenza dell’evento?</label
+            >
+          </div>
+          <div>
+            <label class="consenso" for="consenso1">Privacy</label>
+            <p class="privacy-p">
+              In ossequio a quanto disposto dall’art. 7 del Regolamento UE
+              2016/679, il sottoscritto dichiara di aver compreso integralmente
+              <g-link to="/privacy/">l’Informativa</g-link>
+              fornita dal Titolare del trattamento e:
+            </p>
+            <div class="privacy">
+              <input
+                id="consenso1"
+                type="checkbox"
+                name="consenso1"
+                value="true"
+                v-model="formData.consenso1"
+              />
+              <p class="privacy-p">
+                Acconsente all’invio di newsletter e materiale informativo
+                relativamente alla promozione di eventi conoscitivi che
+                coinvolgono i professionisti
+              </p>
+            </div>
+            <div class="privacy">
+              <input
+                id="consenso2"
+                type="checkbox"
+                name="consenso2"
+                value="true"
+                v-model="formData.consenso2"
+              />
+              <p class="privacy-p">
+                Acconsente alla pubblicazione delle foto in cui è ritratto
+              </p>
+            </div>
+            <div class="privacy">
+              <input
+                id="consenso3"
+                type="checkbox"
+                name="consenso3"
+                value="true"
+                v-model="formData.consenso3"
+              />
+              <p class="privacy-p">
+                Acconsente ad andare online sui social (es: Facebook, LinkedIn,
+                YouTube, ecc.)
+              </p>
+            </div>
+            <div class="privacy">
+              <input
+                id="consenso4"
+                type="checkbox"
+                name="consenso4"
+                value="true"
+                v-model="formData.consenso4"
+              />
+              <p class="privacy-p">
+                Acconsente all’iscrizione al canale Telegram
+              </p>
+            </div>
+            <div class="privacy">
+              <input
+                id="consenso5"
+                type="checkbox"
+                name="consenso5"
+                value="true"
+                v-model="formData.consenso5"
+              />
+              <p class="privacy-p">
+                Autorizza la ditta individuale Stefano Frontini con sede in
+                Milano Via B. Eustachi n.50, che può essere contattato mediante
+                mail all'indirizzo stefanofrontini75@gmail.com, ai sensi
+                dell'art.96 della legge in materia di diritto di autore (legge
+                n.633 del 22 aprile 1941) e s.m.i. ad utilizzare il materiale
+                audiovisivo e/o fotografico inerente l’interessato, acquisito
+                durante l’evento per la pubblicazione su siti web o social
+                network, su riviste, brochure e stampa cartacea. Il sottoscritto
+                dichiara: di aver letto e accettato le modalità e le finalità di
+                trattamento dei dati personali dettagliate nell’
+                <g-link to="/privacy/">Informativa Privacy</g-link>; di
+                rinunciare a qualunque corrispettivo per l’acquisizione e
+                l’utilizzo del materiale audiovisivo e/o fotografico; di essere
+                informato e consapevole del fatto che, in caso di pubblicazione
+                su siti web o social network, il materiale audiovisivo e/o
+                fotografico può essere oggetto di download.
+              </p>
+            </div>
+          </div>
 
           <button type="submit" class="button">Iscriviti</button>
           <h3 class="small">
@@ -194,6 +293,7 @@ export default {
         cellulare: "",
         professione: "",
         chi_cerca: "",
+        sponsorAmico: "",
         eventoId: "",
       },
       user: {},
@@ -203,7 +303,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: `${this.$page.evento.evento.titolo}`,
+      title: `Evento del ${this.formattedData} | Business Speed Dating`,
       titleTemplate: "%s",
       // meta: [
       //   {
@@ -282,42 +382,60 @@ export default {
       return;
     },
     async handleSubmit(e) {
-      try {
-        const { data } = await axios.post(
-          "/api/addPartecipante",
-          this.formData
-        );
-        // console.log("data:", data);
-
-        this.formData.email = "";
-        this.formData.nome = "";
-        this.formData.cognome = "";
-        this.formData.cellulare = "";
-        this.formData.professione = "";
-        this.formData.chi_cerca = "";
-        let messageS = `Ti sei registrato all’evento ${data.nome}!
-        A breve riceverai una mail di conferma all’indirizzo:
-        ${data.email}
-        `;
-        this.$store.dispatch("message_success", messageS);
-        this.$store.dispatch("message_success_active", true);
-        this.$router.push("/programma/");
-
-        setTimeout(
-          () => this.$store.dispatch("message_success_active", false),
-          7000
-        );
-      } catch (error) {
-        console.log(error.response.data);
-
+      if (
+        this.formData.consenso1 !== true ||
+        this.formData.consenso2 !== true ||
+        this.formData.consenso3 !== true ||
+        this.formData.consenso4 !== true ||
+        this.formData.consenso5 !== true
+      ) {
         let messageA =
-          "Ops..c'è stato un problema, riprova tra 10 secondi o contatta: stefano.frontini@con.repower.com";
+          "E' necessario dare il consenso a tutti i punti della privacy!";
         this.$store.dispatch("message_alert", messageA);
         this.$store.dispatch("message_alert_active", true);
         setTimeout(
           () => this.$store.dispatch("message_alert_active", false),
           7000
         );
+      } else {
+        try {
+          const { data } = await axios.post(
+            "/api/addPartecipante",
+            this.formData
+          );
+          // console.log("data:", data);
+
+          this.formData.email = "";
+          this.formData.nome = "";
+          this.formData.cognome = "";
+          this.formData.cellulare = "";
+          this.formData.professione = "";
+          this.formData.chi_cerca = "";
+          this.formData.sponsorAmico = "";
+          let messageS = `Ti sei registrato all’evento ${data.nome}!
+          A breve riceverai una mail di conferma all’indirizzo:
+          ${data.email}
+          `;
+          this.$store.dispatch("message_success", messageS);
+          this.$store.dispatch("message_success_active", true);
+          this.$router.push("/programma/");
+
+          setTimeout(
+            () => this.$store.dispatch("message_success_active", false),
+            7000
+          );
+        } catch (error) {
+          console.log(error.response.data);
+
+          let messageA =
+            "Ops..c'è stato un problema, riprova tra 10 secondi o contatta: stefano.frontini@con.repower.com";
+          this.$store.dispatch("message_alert", messageA);
+          this.$store.dispatch("message_alert_active", true);
+          setTimeout(
+            () => this.$store.dispatch("message_alert_active", false),
+            7000
+          );
+        }
       }
     },
   },
@@ -363,6 +481,25 @@ export default {
 </script>
 
 <style scoped>
+input[type="checkbox"] {
+  accent-color: var(--pink-dark);
+}
+
+.consenso {
+  color: var(--gray-medium);
+}
+.privacy {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.privacy-p {
+  font-size: 0.75rem;
+  color: var(--gray-medium);
+}
+
 .small {
   margin-top: 1rem;
   color: var(--gray-text);
