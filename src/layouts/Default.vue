@@ -137,6 +137,11 @@
           </div>
         </div>
       </div>
+      <div>
+        <p>
+          <g-link to="/privacy/" class="privacy">Informativa Privacy</g-link>
+        </p>
+      </div>
     </footer>
   </div>
 </template>
@@ -259,6 +264,10 @@ h2 {
    padding-left: 20px;
   padding-right: 20px;
 } */
+
+.privacy {
+  color: var(--text-muted);
+}
 
 .spin {
   display: flex;
