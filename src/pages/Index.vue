@@ -187,6 +187,32 @@
         </transition>
       </article>
     </section>
+    <section class="section-sponsors">
+      <h2>I nostri sponsor</h2>
+      <div class="sponsors">
+        <div class="episode-preview-photo-small">
+          <a target="_blank" href="https://www.todoe20.it/">
+            <g-image
+              class="round"
+              src="~/assets/images/marianna_mazza_diana_bomba.jpeg"
+              alt="marianna mazza e diana bomba"
+            />
+          </a>
+        </div>
+        <div class="episode-preview-photo-small">
+          <a
+            target="_blank"
+            href="https://www.linkedin.com/in/gabriella-passaro-b32027b4/"
+          >
+            <g-image
+              class="round"
+              src="~/assets/images/gabriella_passaro.jpeg"
+              alt="gabriella passaro"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
 
     <section class="block featured">
       <h2>Testimonianze</h2>
@@ -507,6 +533,17 @@ export default {
   -webkit-transform: translateX(-600px);
   -ms-transform: translateX(-600px);
   transform: translateX(-600px);
+}
+
+.sponsors {
+  display: flex;
+}
+
+.section-sponsors {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .block {
