@@ -483,6 +483,7 @@ export default {
 <style scoped>
 input[type="checkbox"] {
   accent-color: var(--pink-dark);
+  min-width: 2rem;
 }
 
 .consenso {
