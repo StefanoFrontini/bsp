@@ -1,5 +1,5 @@
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-//const md5 = require("md5");
+const md5 = require("md5");
 
 mailchimp.setConfig({
   apiKey: process.env.MAILCHIMP_API_KEY,
@@ -8,15 +8,19 @@ mailchimp.setConfig({
 
 exports.handler = async (event) => {
   const { email, nome, cognome } = JSON.parse(event.body);
-  //const subscriberHash = md5(email.toLowerCase());
-  const response = await mailchimp.lists.addListMember(process.env.LIST_ID, {
-    email_address: email,
-    status: "subscribed",
-    merge_fields: {
-      FNAME: nome || "",
-      LNAME: cognome || "",
-    },
-  });
+  const subscriberHash = md5(email.toLowerCase());
+  const response = await mailchimp.lists.setListMember(
+    process.env.LIST_ID,
+    subscriberHash,
+    {
+      email_address: email,
+      status: "subscribed",
+      merge_fields: {
+        FNAME: nome || "",
+        LNAME: cognome || "",
+      },
+    }
+  );
   console.log("response:", response);
 
   console.log("response_id:", response.id);
