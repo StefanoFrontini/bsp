@@ -23,7 +23,7 @@
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
-        Il prossimo evento online è il
+        Il prossimo evento è il
         {{ formattedData }}!
       </h2>
 
@@ -50,11 +50,18 @@
             <p>
               <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small>
             </p>
-            <g-image
+            <p>
+              <small class="location">
+                {{ $page.programmaOnline.eventos[0].location }} -
+                {{ $page.programmaOnline.eventos[0].location_indirizzo }}
+              </small>
+            </p>
+
+            <!-- <g-image
               src="~/assets/images/zoomus-ar21.svg"
               alt="Zoom meeting logo"
               width="80"
-            />
+            /> -->
           </div>
         </div>
         <div>
@@ -576,6 +583,9 @@ export default {
   font-size: clamp(0.875rem, 2.75vw, 1.25rem);
   color: var(--gray-medium);
   text-align: center;
+}
+.location {
+  color: var(--text-emphasized);
 }
 
 .episode-preview-sponsor {

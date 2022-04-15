@@ -59,12 +59,20 @@ exports.handler = async (event) => {
           "it-IT"
         ).format(data_evento)}  `,
         text: `Ciao ${nome} ${cognome},
-        grazie per aver richiesto di partecipare all’evento del ${new Intl.DateTimeFormat(
+        ti aspettiamo alle ore 20:00 del ${new Intl.DateTimeFormat(
           "it-IT"
-        ).format(data_evento)}
-        Riceverai una email di conferma con tutti i dettagli per partecipare.
-        Fai iscrivere altri amici!
-        A presto!
+        ).format(data_evento)} presso ${eventi[0].location}, ${
+          eventi[0].location_indirizzo
+        }.
+
+        Per finalizzare la tua partecipazione effettua il bonifico di 25,00 euro sul conto corrente intestato a "Stefano Frontini" IT76K0329601601000067417449.
+
+        Al fine di organizzare gli Speed Dating il bonifico deve essere effettuato 7 gg prima l’inizio dell’evento.
+
+        In caso di mancata partecipazione il bonifico non sarà rimborsato.
+
+        Ti aspettiamo!
+
         Stefano e Maurizio
         Business Speed Dating
         `,

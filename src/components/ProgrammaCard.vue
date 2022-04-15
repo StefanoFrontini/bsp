@@ -21,6 +21,12 @@
       <p>
         <small>{{ programma.descrizione }}</small>
       </p>
+      <p>
+        <small class="location">
+          {{ programma.location }} -
+          {{ programma.location_indirizzo }}
+        </small>
+      </p>
       <div class="episode-links">
         <g-link :to="`/programma/${programma.slug}/`"
           ><svg
@@ -115,6 +121,10 @@ export default {
 .episode-preview-details {
   font-weight: 400;
   line-height: 1.45rem;
+}
+
+.location {
+  color: var(--text-emphasized);
 }
 
 .episode-links {

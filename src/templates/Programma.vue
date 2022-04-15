@@ -27,11 +27,17 @@
             <p>
               <small>{{ $page.evento.evento.descrizione }}</small>
             </p>
-            <g-image
+            <p>
+              <small class="location">
+                {{ $page.evento.evento.location }} -
+                {{ $page.evento.evento.location_indirizzo }}
+              </small>
+            </p>
+            <!-- <g-image
               src="~/assets/images/zoomus-ar21.svg"
               alt="Zoom meetings logo"
               width="80"
-            />
+            /> -->
           </div>
         </div>
 
@@ -139,6 +145,13 @@
             <label class="signup__label" for="sponsorAmico"
               >Come sei venuto a conoscenza dell’evento?</label
             >
+          </div>
+          <div>
+            <p class="bonifico">
+              Per finalizzare la tua partecipazione effettua il bonifico di
+              25,00 euro sul conto corrente intestato a "Stefano Frontini"
+              IT76K0329601601000067417449
+            </p>
           </div>
           <div>
             <label class="consenso" for="consenso1">Privacy</label>
@@ -486,6 +499,10 @@ input[type="checkbox"] {
   min-width: 2rem;
 }
 
+.location {
+  color: var(--text-emphasized);
+}
+
 .consenso {
   color: var(--gray-medium);
 }
@@ -499,6 +516,11 @@ input[type="checkbox"] {
 .privacy-p {
   font-size: 0.75rem;
   color: var(--gray-medium);
+}
+.bonifico {
+  font-size: 1rem;
+  color: var(--gray-medium);
+  margin-bottom: 3rem;
 }
 
 .small {
