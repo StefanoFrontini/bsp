@@ -68,7 +68,7 @@
             /></a>
           </p>
           <div class="host-links">
-            <a href="https://www.youtube.com/channel/UCAWp8eukTvsEimrcZTfiztw"
+            <a href="https://www.youtube.com/channel/UCL_IJH3LIFHSXS0I40VEpEw"
               >Seguimi su YouTube
               <svg
                 xmlns="http://www.w3.org/2000/svg"
