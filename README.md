@@ -22,26 +22,7 @@ The app allows the Business Speed Dating organizers to promote events, manage pa
 - Organizers should be autonomous in uploading a new event on the site.
 
 ## Links
-[https://www.bsdating.com/](https://www.bsdating.com/).
-
-## Setup
-
-```bash
-# Clone the following repository - frontend
-$ git clone https://github.com/StefanoFrontini/bsp
-
-# Go into the repository
-$ cd bsp
-
-# Install Gridsome CLI
-$ npm install --global @gridsome/cli
-
-# Install dependencies
-$ npm install
-
-# Run the frontend
-$ gridsome develop
-```
+[https://www.bsdating.com/](https://www.bsdating.com/)
 
 ## Built with
 ### Frontend
@@ -62,6 +43,26 @@ $ gridsome develop
 - Cloudinary
 - Deployed on Heroku
 
+## Setup frontend
+[https://www.bsdating.com/](https://www.bsdating.com/)
+```bash
+# Clone the following repository - frontend
+$ git clone https://github.com/StefanoFrontini/bsp
+
+# Go into the repository
+$ cd bsp
+
+# Install Gridsome CLI
+$ npm install --global @gridsome/cli
+
+# Install dependencies
+$ npm install
+
+# Run the frontend
+$ gridsome develop
+```
+## Setup backend
+[Business Speed Dating backend Github](https://github.com/StefanoFrontini/bsd-backend)
 ## What I learned
 
 ### Serverless Functions and GraphQL mutations
@@ -133,7 +134,7 @@ If you have any suggestions for best practices on this point please let me know.
 ### Mailchimp API
 When a new participant sign up to an event, the email is also added to Mailchimp. I created a serverless function which let you interact with the MailChimp API.
 ### Review system and Telegram API
-The member can visit a profile page of another member and give him a review. As soon as the database is update Strapi send a notification to the Telegram Channel of the Community by making a post request to "https://api.telegram.org/bot". To achieve that I took advantage of the lifecycles of Strapi which let you run some code after a new entry is updated (see: api/testimonial/models/testimonials.js)
+The member can visit a profile page of another member and give him a review. As soon as the database is updated Strapi send a notification to the Telegram Channel of the Community by making a post request to "https://api.telegram.org/bot". To achieve that I took advantage of the lifecycles of Strapi which let you run some code after a new entry is updated (see: api/testimonial/models/testimonials.js)
 
 ### User authentication
 To implement the user authentication I used Vuex, a State Management Pattern. When you have multiple components that share a common state, passing props can be tedious for deeply nested components. Vuex let you extract the shared state out of the components and manage it in a central store. I used Vuex also for managing feedback messages from the API to the user and the review system.
