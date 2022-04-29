@@ -4,6 +4,23 @@ Business Speed Dating is a community created to connect professionals and entrep
 
 The app allows the Business Speed Dating organizers to promote events, manage participant registrations and access a database of all participants/members.
 
+  - [The challenge](#the-challenge)
+  - [Links](#links)
+  - [Built with](#built-with)
+    - [Frontend](#frontend)
+    - [Backend](#backend)
+  - [Setup frontend](#setup-frontend)
+  - [Setup backend](#setup-backend)
+  - [What I learned](#what-i-learned)
+    - [Serverless Functions and GraphQL mutations](#serverless-functions-and-graphql-mutations)
+    - [Unique slug](#unique-slug)
+    - [Mailchimp API](#mailchimp-api)
+    - [Review system and Telegram API](#review-system-and-telegram-api)
+    - [User authentication](#user-authentication)
+    - [Algolia](#algolia)
+  - [References](#references)
+
+
 ## The challenge
 - Participants should be able to register for the event.
 - Participants should be able to receive a confirmation email.
@@ -44,10 +61,10 @@ The app allows the Business Speed Dating organizers to promote events, manage pa
 - Deployed on Heroku
 
 ## Setup frontend
-[https://www.bsdating.com/](https://www.bsdating.com/)
+
 ```bash
 # Clone the following repository - frontend
-$ git clone https://github.com/StefanoFrontini/bsp
+$ git clone https://github.com/StefanoFrontini/bsp.git
 
 # Go into the repository
 $ cd bsp
