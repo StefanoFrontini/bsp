@@ -1,7 +1,15 @@
 <template>
   <article class="episode-details dark">
     <div class="episode-poster">
+      <g-image
+        v-if="evento.link_video.includes('jpg')"
+        :src="evento.link_video"
+        :alt="evento.titolo"
+        class="square"
+      />
+
       <iframe
+        v-else
         class="square"
         :title="evento.titolo"
         :src="evento.link_video"

@@ -11,15 +11,16 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <!-- <section class="block next">
+    <section class="block next">
+      <h2>Presto un nuovo evento!</h2>
       <div class="episode-poster">
         <g-image
-          src="~/assets/images/buon-natale.png"
+          src="~/assets/images/bsd-9-maggio.jpeg"
           alt="Buon Natale e Felice 2022"
           class="square"
         />
       </div>
-    </section> -->
+    </section>
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
@@ -148,17 +149,26 @@
       <article class="episode-details dark">
         <transition appear name="slide" mode="out-in">
           <div class="episode-poster" :key="selectedItem.id">
-            <iframe
-              class="square"
-              :title="selectedItem.titolo"
-              :src="selectedItem.link_video"
-              width="560"
-              height="314"
-              style="border:none;overflow:hidden"
-              frameborder="0"
-              allowfullscreen="true"
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture;"
-            ></iframe>
+            <div v-if="selectedItem.link_video">
+              <g-image
+                v-if="selectedItem.link_video.includes('jpg')"
+                :src="selectedItem.link_video"
+                :alt="selectedItem.titolo"
+                class="square"
+              />
+              <iframe
+                v-else
+                class="square"
+                :title="selectedItem.titolo"
+                :src="selectedItem.link_video"
+                width="560"
+                height="314"
+                style="border:none;overflow:hidden"
+                frameborder="0"
+                allowfullscreen="true"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture;"
+              ></iframe>
+            </div>
           </div>
         </transition>
         <transition appear name="slide" mode="out-in">
