@@ -146,13 +146,13 @@
               >Come sei venuto a conoscenza dell’evento?</label
             >
           </div>
-          <div>
+          <!-- <div>
             <p class="bonifico">
               Per finalizzare la tua partecipazione effettua il bonifico di
               25,00 euro sul conto corrente intestato a "Stefano Frontini"
               IT76K0329601601000067417449
             </p>
-          </div>
+          </div> -->
           <div>
             <label class="consenso" for="consenso1">Privacy</label>
             <p class="privacy-p">
@@ -162,7 +162,28 @@
               fornita dal Titolare del trattamento e:
             </p>
             <div class="privacy">
-              <input
+              <p class="privacy-p">
+                <input
+                  id="consenso1"
+                  type="radio"
+                  name="consenso1"
+                  value="acconsente"
+                  v-model="formData.consenso1"
+                />
+                Acconsente
+
+                <input
+                  id="consenso1"
+                  type="radio"
+                  name="consenso1"
+                  value="nonAcconsente"
+                  v-model="formData.consenso1"
+                />
+                Non acconsente all’invio di newsletter e materiale informativo
+                relativamente alla promozione di eventi conoscitivi che
+                coinvolgono i professionisti
+              </p>
+              <!-- <input
                 id="consenso1"
                 type="checkbox"
                 name="consenso1"
@@ -173,55 +194,87 @@
                 Acconsente all’invio di newsletter e materiale informativo
                 relativamente alla promozione di eventi conoscitivi che
                 coinvolgono i professionisti
+              </p> -->
+            </div>
+            <div class="privacy">
+              <p class="privacy-p">
+                <input
+                  id="consenso2"
+                  type="radio"
+                  name="consenso2"
+                  value="acconsente"
+                  v-model="formData.consenso2"
+                />
+                Acconsente
+                <input
+                  id="consenso2"
+                  type="radio"
+                  name="consenso2"
+                  value="nonAcconsente"
+                  v-model="formData.consenso2"
+                />
+                Non acconsente alla pubblicazione delle foto in cui è ritratto
               </p>
             </div>
             <div class="privacy">
-              <input
-                id="consenso2"
-                type="checkbox"
-                name="consenso2"
-                value="true"
-                v-model="formData.consenso2"
-              />
               <p class="privacy-p">
-                Acconsente alla pubblicazione delle foto in cui è ritratto
+                <input
+                  id="consenso3"
+                  type="radio"
+                  name="consenso3"
+                  value="acconsente"
+                  v-model="formData.consenso3"
+                />
+                Acconsente
+                <input
+                  id="consenso3"
+                  type="radio"
+                  name="consenso3"
+                  value="nonAcconsente"
+                  v-model="formData.consenso3"
+                />
+                Non acconsente ad andare online sui social (es: Facebook,
+                LinkedIn, YouTube, ecc.)
               </p>
             </div>
             <div class="privacy">
-              <input
-                id="consenso3"
-                type="checkbox"
-                name="consenso3"
-                value="true"
-                v-model="formData.consenso3"
-              />
               <p class="privacy-p">
-                Acconsente ad andare online sui social (es: Facebook, LinkedIn,
-                YouTube, ecc.)
+                <input
+                  id="consenso4"
+                  type="radio"
+                  name="consenso4"
+                  value="acconsente"
+                  v-model="formData.consenso4"
+                />
+                Acconsente
+                <input
+                  id="consenso4"
+                  type="radio"
+                  name="consenso4"
+                  value="nonAcconsente"
+                  v-model="formData.consenso4"
+                />
+                Non acconsente all’iscrizione al canale Telegram
               </p>
             </div>
             <div class="privacy">
-              <input
-                id="consenso4"
-                type="checkbox"
-                name="consenso4"
-                value="true"
-                v-model="formData.consenso4"
-              />
               <p class="privacy-p">
-                Acconsente all’iscrizione al canale Telegram
-              </p>
-            </div>
-            <div class="privacy">
-              <input
-                id="consenso5"
-                type="checkbox"
-                name="consenso5"
-                value="true"
-                v-model="formData.consenso5"
-              />
-              <p class="privacy-p">
-                Autorizza la ditta individuale Stefano Frontini con sede in
+                <input
+                  id="consenso5"
+                  type="radio"
+                  name="consenso5"
+                  value="acconsente"
+                  v-model="formData.consenso5"
+                />
+                Autorizza
+                <input
+                  id="consenso5"
+                  type="radio"
+                  name="consenso5"
+                  value="nonAcconsente"
+                  v-model="formData.consenso5"
+                />
+                Non autorizza la ditta individuale Stefano Frontini con sede in
                 Milano Via B. Eustachi n.50, che può essere contattato mediante
                 mail all'indirizzo stefanofrontini75@gmail.com, ai sensi
                 dell'art.96 della legge in materia di diritto di autore (legge
@@ -237,6 +290,12 @@
                 informato e consapevole del fatto che, in caso di pubblicazione
                 su siti web o social network, il materiale audiovisivo e/o
                 fotografico può essere oggetto di download.
+              </p>
+            </div>
+            <div class="privacy">
+              <p class="privacy-p">
+                In caso di mancato consenso ad uno o più punti non sarà
+                possibile procedere con l’iscrizione.
               </p>
             </div>
           </div>
@@ -395,12 +454,13 @@ export default {
       return;
     },
     async handleSubmit(e) {
+      console.log(this.formData.consenso1);
       if (
-        this.formData.consenso1 !== true ||
-        this.formData.consenso2 !== true ||
-        this.formData.consenso3 !== true ||
-        this.formData.consenso4 !== true ||
-        this.formData.consenso5 !== true
+        this.formData.consenso1 !== "acconsente" ||
+        this.formData.consenso2 !== "acconsente" ||
+        this.formData.consenso3 !== "acconsente" ||
+        this.formData.consenso4 !== "acconsente" ||
+        this.formData.consenso5 !== "acconsente"
       ) {
         let messageA =
           "E' necessario dare il consenso a tutti i punti della privacy!";
@@ -517,6 +577,7 @@ input[type="checkbox"] {
   font-size: 0.75rem;
   color: var(--gray-medium);
 }
+
 .bonifico {
   font-size: 1rem;
   color: var(--gray-medium);
