@@ -146,13 +146,17 @@
               >Come sei venuto a conoscenza dell’evento?</label
             >
           </div>
-          <!-- <div>
+          <div>
             <p class="bonifico">
               Per finalizzare la tua partecipazione effettua il bonifico di
               25,00 euro sul conto corrente intestato a "Stefano Frontini"
               IT76K0329601601000067417449
             </p>
-          </div> -->
+            <p class="bonifico">
+              Le iscrizioni chiuderanno il 06/10/2022 oppure al raggiungimento
+              dei 30 posti.
+            </p>
+          </div>
           <div>
             <label class="consenso" for="consenso1">Privacy</label>
             <p class="privacy-p">
