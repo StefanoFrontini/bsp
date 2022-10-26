@@ -521,7 +521,7 @@ export default {
     formattedData() {
       const data_evento = new Date(this.$page.evento.evento.data);
       const options = {
-        month: "long",
+        month: "numeric",
         day: "numeric",
         year: "numeric",
         hour: "numeric",
