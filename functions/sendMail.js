@@ -24,7 +24,7 @@ exports.handler = async (event) => {
           "it-IT"
         ).format(data_evento)}  `,
         text: `Ciao ${nome} ${cognome},
-        ti aspettiamo alle ore 19:00 del ${new Intl.DateTimeFormat(
+        ti aspettiamo alle ore 20:00 del ${new Intl.DateTimeFormat(
           "it-IT"
         ).format(data_evento)} presso il ${eventi[0].location}, ${
           eventi[0].location_indirizzo
@@ -59,13 +59,13 @@ exports.handler = async (event) => {
           "it-IT"
         ).format(data_evento)}  `,
         text: `Ciao ${nome} ${cognome},
-        ti aspettiamo alle ore 19:00 del ${new Intl.DateTimeFormat(
+        ti aspettiamo alle ore 20:00 del ${new Intl.DateTimeFormat(
           "it-IT"
         ).format(data_evento)} presso ${eventi[0].location}, ${
           eventi[0].location_indirizzo
         }.
 
-        Per finalizzare la tua partecipazione effettua il bonifico di 25,00 euro sul conto corrente intestato a "Stefano Frontini" IT76K0329601601000067417449 entro il 6/10/2022.
+        Per finalizzare la tua partecipazione effettua il bonifico di 20,00 euro sul conto corrente intestato a "Stefano Frontini" IT76K0329601601000067417449 entro il 13/11/2022.
 
         In caso di mancata partecipazione il bonifico non sarà rimborsato.
 

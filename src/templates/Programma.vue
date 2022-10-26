@@ -149,7 +149,7 @@
           <div>
             <p class="bonifico">
               Per finalizzare la tua partecipazione effettua il bonifico di
-              25,00 euro sul conto corrente intestato a "Stefano Frontini"
+              20,00 euro sul conto corrente intestato a "Stefano Frontini"
               IT76K0329601601000067417449
             </p>
             <p class="bonifico">
