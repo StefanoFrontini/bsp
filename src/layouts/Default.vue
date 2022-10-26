@@ -44,19 +44,17 @@
           />
         </div>
         <div class="host-details">
-          <p>
-            <strong>Maurizio Mancini</strong> è un consulente immobiliare Remax
-          </p>
+          <p><strong>Maurizio Mancini</strong> è un consulente immobiliare</p>
           <p>
             <a
               target="_blank"
               rel="noopener"
               class="sito"
-              href="https://www.remax.it/trova/agenti-agenzie/agente/maurizio-mancini-1"
+              href="https://www.suggerimenti-immobiliari.com/"
               >sito web</a
             >
           </p>
-          <p>
+          <!-- <p>
             <a
               target="_blank"
               rel="noopener"
@@ -66,7 +64,7 @@
                 src="~/assets/images/freedhome-logo.png"
                 alt="freedhome"
             /></a>
-          </p>
+          </p> -->
           <div class="host-links">
             <a href="https://www.youtube.com/channel/UCL_IJH3LIFHSXS0I40VEpEw"
               >Seguimi su YouTube
@@ -101,18 +99,15 @@
           />
         </div>
         <div class="host-details">
-          <p>
-            <strong>Stefano Frontini</strong> è un consulente energetico Repower
-            e Utility Manager certificato.
-          </p>
-          <a
+          <p><strong>Stefano Frontini</strong> è un web developer.</p>
+          <!-- <a
             class="sito"
             href="https://www.pilloledienergia.com/"
             target="_blank"
             rel="noopener"
             >www.pilloledienergia.com</a
-          >
-          <div class="host-links">
+          > -->
+          <!-- <div class="host-links">
             <a href="https://www.youtube.com/channel/UCR-O1aNnCvdtANr8Yf7h_RQ"
               >Seguimi su YouTube
               <svg
@@ -134,7 +129,7 @@
                   points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"
                 ></polygon></svg
             ></a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div>
