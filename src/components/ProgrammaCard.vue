@@ -74,7 +74,7 @@ export default {
     formattedData() {
       const data_evento = new Date(this.programma.data);
       const options = {
-        month: "long",
+        month: "numeric",
         day: "numeric",
         year: "numeric",
         hour: "numeric",

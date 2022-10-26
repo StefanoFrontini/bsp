@@ -11,7 +11,7 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <section class="block next">
+    <!-- <section class="block next">
       <h2>Presto un nuovo evento!</h2>
       <div class="episode-poster">
         <g-image
@@ -20,7 +20,7 @@
           class="square"
         />
       </div>
-    </section>
+    </section> -->
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
@@ -469,7 +469,7 @@ export default {
     formattedData() {
       const data_evento = new Date(this.$page.programmaOnline.eventos[0].data);
       const options = {
-        month: "long",
+        month: "numeric",
         day: "numeric",
         year: "numeric",
         hour: "numeric",
