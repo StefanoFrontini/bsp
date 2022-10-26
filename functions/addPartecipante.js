@@ -161,12 +161,14 @@ exports.handler = async (event) => {
         datiPerMail.eventi = [eventoData];
         console.log("DatiperMail", datiPerMail);
 
-        const pingReport = await axios.post(
-          `${URL}/api/sendReport`,
-          datiPerMail
-        );
+        const pingReport = () => {
+          axios.post(`${URL}/api/sendReport`, datiPerMail);
+        };
 
-        const pingMail = await axios.post(`${URL}/api/sendMail`, datiPerMail);
+        const pingMail = () => {
+          axios.post(`${URL}/api/sendMail`, datiPerMail);
+        };
+        await Promise.all([pingReport(), pingMail()]);
 
         return {
           statusCode: 200,
@@ -222,20 +224,31 @@ exports.handler = async (event) => {
                     },
                   });
                   console.log("anagrafica", data.data.createContatto.contatto);
-                  const pingReport = await axios.post(
-                    `${URL}/api/sendReport`,
-                    data.data.createContatto.contatto
-                  );
+                  const pingReport = () => {
+                    axios.post(
+                      `${URL}/api/sendReport`,
+                      data.data.createContatto.contatto
+                    );
+                  };
 
-                  const pingMail = await axios.post(
-                    `${URL}/api/sendMail`,
-                    data.data.createContatto.contatto
-                  );
+                  const pingMail = () => {
+                    axios.post(
+                      `${URL}/api/sendMail`,
+                      data.data.createContatto.contatto
+                    );
+                  };
 
-                  const pingMailChimp = await axios.post(
-                    `${URL}/api/addMailchimp`,
-                    data.data.createContatto.contatto
-                  );
+                  const pingMailChimp = () => {
+                    axios.post(
+                      `${URL}/api/addMailchimp`,
+                      data.data.createContatto.contatto
+                    );
+                  };
+                  await Promise.all([
+                    pingReport(),
+                    pingMail(),
+                    pingMailChimp(),
+                  ]);
 
                   return {
                     statusCode: 200,
@@ -270,21 +283,28 @@ exports.handler = async (event) => {
                 variables,
               },
             });
-            console.log("anagrafica", data.data.createContatto.contatto);
-            const pingReport = await axios.post(
-              `${URL}/api/sendReport`,
-              data.data.createContatto.contatto
-            );
+            // console.log("anagrafica", data.data.createContatto.contatto);
+            const pingReport = () => {
+              axios.post(
+                `${URL}/api/sendReport`,
+                data.data.createContatto.contatto
+              );
+            };
 
-            const pingMail = await axios.post(
-              `${URL}/api/sendMail`,
-              data.data.createContatto.contatto
-            );
+            const pingMail = () => {
+              axios.post(
+                `${URL}/api/sendMail`,
+                data.data.createContatto.contatto
+              );
+            };
 
-            const pingMailChimp = await axios.post(
-              `${URL}/api/addMailchimp`,
-              data.data.createContatto.contatto
-            );
+            const pingMailChimp = () => {
+              axios.post(
+                `${URL}/api/addMailchimp`,
+                data.data.createContatto.contatto
+              );
+            };
+            await Promise.all([pingReport(), pingMail(), pingMailChimp()]);
 
             return {
               statusCode: 200,
