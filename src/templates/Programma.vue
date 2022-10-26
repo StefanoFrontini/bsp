@@ -153,7 +153,7 @@
               IT76K0329601601000067417449
             </p>
             <p class="bonifico">
-              Le iscrizioni chiuderanno il 06/10/2022 oppure al raggiungimento
+              Le iscrizioni chiuderanno il 13/11/2022 oppure al raggiungimento
               dei 30 posti.
             </p>
           </div>
