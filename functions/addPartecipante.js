@@ -11,7 +11,7 @@ if (context === "dev") {
 
 console.log("context:", context);
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
 
   console.log(`Payload: ${JSON.stringify(payload)}`);
@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     professione,
     chi_cerca,
     sponsorAmico,
-    eventoId,
+    eventoId
   } = payload;
 
   const eventi = [];
@@ -46,7 +46,7 @@ exports.handler = async (event) => {
     chi_cerca,
     sponsorAmico,
     eventi,
-    slug,
+    slug
   };
 
   const CHECK_SLUG = `query($slug: String) {
@@ -132,8 +132,8 @@ exports.handler = async (event) => {
       // },
       data: {
         query: GET_ID,
-        variables,
-      },
+        variables
+      }
     });
     console.log("Strapi Data:", data);
 
@@ -149,36 +149,36 @@ exports.handler = async (event) => {
           method: "POST",
           data: {
             query: UPDATE_CONTATTO,
-            variables,
-          },
+            variables
+          }
         });
         console.log("updateContatto", data.data.updateContatto.contatto);
         const eventoData = data.data.updateContatto.contatto.eventi.find(
-          (item) => item.id === nuovo_evento
+          item => item.id === nuovo_evento
         );
         console.log("eventoData", eventoData);
         const datiPerMail = data.data.updateContatto.contatto;
         datiPerMail.eventi = [eventoData];
         console.log("DatiperMail", datiPerMail);
 
-        const pingReport = () => {
-          axios.post(`${URL}/api/sendReport`, datiPerMail);
+        const pingReport = async () => {
+          await axios.post(`${URL}/api/sendReport`, datiPerMail);
         };
 
-        const pingMail = () => {
-          axios.post(`${URL}/api/sendMail`, datiPerMail);
+        const pingMail = async () => {
+          await axios.post(`${URL}/api/sendMail`, datiPerMail);
         };
         await Promise.all([pingReport(), pingMail()]);
 
         return {
           statusCode: 200,
-          body: JSON.stringify(data.data.updateContatto.contatto),
+          body: JSON.stringify(data.data.updateContatto.contatto)
         };
       } catch (error) {
         console.log("error", error.message);
         return {
           statusCode: 500,
-          body: JSON.stringify(error.response.data),
+          body: JSON.stringify(error.response.data)
         };
       }
     } else {
@@ -189,8 +189,8 @@ exports.handler = async (event) => {
 
           data: {
             query: CHECK_SLUG,
-            variables,
-          },
+            variables
+          }
         });
 
         if (data.data.contattos.length) {
@@ -206,8 +206,8 @@ exports.handler = async (event) => {
 
                 data: {
                   query: CHECK_SLUG,
-                  variables,
-                },
+                  variables
+                }
               });
               if (data.data.contattos.length) {
                 response = true;
@@ -220,26 +220,26 @@ exports.handler = async (event) => {
                     method: "POST",
                     data: {
                       query: CREATE_CONTATTO,
-                      variables,
-                    },
+                      variables
+                    }
                   });
                   console.log("anagrafica", data.data.createContatto.contatto);
-                  const pingReport = () => {
-                    axios.post(
+                  const pingReport = async () => {
+                    await axios.post(
                       `${URL}/api/sendReport`,
                       data.data.createContatto.contatto
                     );
                   };
 
-                  const pingMail = () => {
-                    axios.post(
+                  const pingMail = async () => {
+                    await axios.post(
                       `${URL}/api/sendMail`,
                       data.data.createContatto.contatto
                     );
                   };
 
-                  const pingMailChimp = () => {
-                    axios.post(
+                  const pingMailChimp = async () => {
+                    await axios.post(
                       `${URL}/api/addMailchimp`,
                       data.data.createContatto.contatto
                     );
@@ -247,12 +247,12 @@ exports.handler = async (event) => {
                   await Promise.all([
                     pingReport(),
                     pingMail(),
-                    pingMailChimp(),
+                    pingMailChimp()
                   ]);
 
                   return {
                     statusCode: 200,
-                    body: JSON.stringify(data.data.createContatto.contatto),
+                    body: JSON.stringify(data.data.createContatto.contatto)
                     // body: JSON.stringify(
                     //   `Ti sei registrato all’evento ${
                     //     data.data.createContatto.contatto.nome
@@ -265,7 +265,7 @@ exports.handler = async (event) => {
                   console.log("error", error);
                   return {
                     statusCode: 500,
-                    body: JSON.stringify(error.response.data),
+                    body: JSON.stringify(error.response.data)
                   };
                 }
               }
@@ -280,26 +280,26 @@ exports.handler = async (event) => {
               method: "POST",
               data: {
                 query: CREATE_CONTATTO,
-                variables,
-              },
+                variables
+              }
             });
             // console.log("anagrafica", data.data.createContatto.contatto);
-            const pingReport = () => {
-              axios.post(
+            const pingReport = async () => {
+              await axios.post(
                 `${URL}/api/sendReport`,
                 data.data.createContatto.contatto
               );
             };
 
-            const pingMail = () => {
-              axios.post(
+            const pingMail = async () => {
+              await axios.post(
                 `${URL}/api/sendMail`,
                 data.data.createContatto.contatto
               );
             };
 
-            const pingMailChimp = () => {
-              axios.post(
+            const pingMailChimp = async () => {
+              await axios.post(
                 `${URL}/api/addMailchimp`,
                 data.data.createContatto.contatto
               );
@@ -308,13 +308,13 @@ exports.handler = async (event) => {
 
             return {
               statusCode: 200,
-              body: JSON.stringify(data.data.createContatto.contatto),
+              body: JSON.stringify(data.data.createContatto.contatto)
             };
           } catch (error) {
             console.log("error", error);
             return {
               statusCode: 500,
-              body: JSON.stringify(error.response.data),
+              body: JSON.stringify(error.response.data)
             };
           }
         }
@@ -326,7 +326,7 @@ exports.handler = async (event) => {
     console.log("error", error);
     return {
       statusCode: 500,
-      body: JSON.stringify(error.response.data),
+      body: JSON.stringify(error.response.data)
     };
   }
 };
