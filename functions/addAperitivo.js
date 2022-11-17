@@ -5,12 +5,12 @@ let STRAPI_ENDPOINT;
 if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
 } else {
-  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
+  STRAPI_ENDPOINT = "https://bsdating.stefanofrontini.dev/graphql";
 }
 
 console.log("context:", context);
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
 
   console.log(`Payload: ${JSON.stringify(payload)}`);
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     cellulare,
     professione,
     chi_cerca,
-    eventi,
+    eventi
   };
 
   const GET_ID = `query($email: String) {
@@ -107,8 +107,8 @@ exports.handler = async (event) => {
       // },
       data: {
         query: GET_ID,
-        variables,
-      },
+        variables
+      }
     });
     if (data.data.contattos.length) {
       console.log("id = ", data.data.contattos[0].id);
@@ -122,12 +122,12 @@ exports.handler = async (event) => {
           method: "POST",
           data: {
             query: UPDATE_CONTATTO,
-            variables,
-          },
+            variables
+          }
         });
 
         const eventoData = data.data.updateContatto.contatto.eventi.find(
-          (item) => item.id === nuovo_evento
+          item => item.id === nuovo_evento
         );
         const datiPerMail = data.data.updateContatto.contatto;
         datiPerMail.eventi = [eventoData];
@@ -141,13 +141,13 @@ exports.handler = async (event) => {
 
         return {
           statusCode: 200,
-          body: JSON.stringify(data.data.updateContatto.contatto),
+          body: JSON.stringify(data.data.updateContatto.contatto)
         };
       } catch (error) {
         console.log("error", error.message);
         return {
           statusCode: 500,
-          body: JSON.stringify(error.response.data),
+          body: JSON.stringify(error.response.data)
         };
       }
     } else {
@@ -157,8 +157,8 @@ exports.handler = async (event) => {
           method: "POST",
           data: {
             query: CREATE_CONTATTO,
-            variables,
-          },
+            variables
+          }
         });
         console.log("anagrafica", data.data.createContatto.contatto);
         const pingReport = await axios.post(
@@ -178,7 +178,7 @@ exports.handler = async (event) => {
 
         return {
           statusCode: 200,
-          body: JSON.stringify(data.data.createContatto.contatto),
+          body: JSON.stringify(data.data.createContatto.contatto)
           // body: JSON.stringify(
           //   `Ti sei registrato all’evento ${
           //     data.data.createContatto.contatto.nome
@@ -191,7 +191,7 @@ exports.handler = async (event) => {
         console.log("error", error);
         return {
           statusCode: 500,
-          body: JSON.stringify(error.response.data),
+          body: JSON.stringify(error.response.data)
           // body: JSON.stringify(
           //   "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
           // ),
@@ -202,7 +202,7 @@ exports.handler = async (event) => {
     console.log("error", error);
     return {
       statusCode: 500,
-      body: JSON.stringify(error.response.data),
+      body: JSON.stringify(error.response.data)
     };
   }
 };

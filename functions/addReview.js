@@ -4,10 +4,10 @@ let STRAPI_ENDPOINT;
 if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
 } else {
-  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
+  STRAPI_ENDPOINT = "https://bsdating.stefanofrontini.dev/graphql";
 }
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
 
   console.log(`Payload: ${JSON.stringify(payload)}`);
@@ -43,7 +43,7 @@ exports.handler = async (event) => {
     aId,
     stelline,
     testoReview,
-    data,
+    data
   };
 
   const CREATE_TESTIMONIAL = `
@@ -75,19 +75,19 @@ exports.handler = async (event) => {
       method: "POST",
       data: {
         query: CREATE_TESTIMONIAL,
-        variables,
-      },
+        variables
+      }
     });
     console.log("testimonial", data.data.createTestimonial.testimonial);
     return {
       statusCode: 200,
-      body: JSON.stringify(data.data.createTestimonial.testimonial),
+      body: JSON.stringify(data.data.createTestimonial.testimonial)
     };
   } catch (err) {
     console.log(err);
     return {
       statusCode: 500,
-      body: JSON.stringify(err.response.data),
+      body: JSON.stringify(err.response.data)
     };
   }
 };

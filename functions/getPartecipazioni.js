@@ -5,10 +5,10 @@ let STRAPI_ENDPOINT;
 if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
 } else {
-  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
+  STRAPI_ENDPOINT = "https://bsdating.stefanofrontini.dev/graphql";
 }
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
 
   console.log(`Payload: ${JSON.stringify(payload)}`);
@@ -16,7 +16,7 @@ exports.handler = async (event) => {
   const { email, token } = payload;
 
   const variables = {
-    email,
+    email
   };
 
   const GET_PARTECIPAZIONI = `query($email: String) {
@@ -83,30 +83,30 @@ exports.handler = async (event) => {
       url: STRAPI_ENDPOINT,
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
       data: {
         query: GET_PARTECIPAZIONI,
-        variables,
-      },
+        variables
+      }
     });
     if (data.data.contattos[0]) {
       console.log("data", data.data.contattos[0].eventi);
       return {
         statusCode: 200,
-        body: JSON.stringify(data.data.contattos[0]),
+        body: JSON.stringify(data.data.contattos[0])
       };
     } else {
       return {
         statusCode: 200,
-        body: JSON.stringify("nessun evento"),
+        body: JSON.stringify("nessun evento")
       };
     }
   } catch (error) {
     console.log("error", error.message);
     return {
       statusCode: 500,
-      body: JSON.stringify(error.message),
+      body: JSON.stringify(error.message)
     };
   }
 };

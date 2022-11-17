@@ -5,12 +5,12 @@ let STRAPI_ENDPOINT;
 if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
 } else {
-  STRAPI_ENDPOINT = "https://bsdating.herokuapp.com/graphql";
+  STRAPI_ENDPOINT = "https://bsdating.stefanofrontini.dev/graphql";
 }
 
 console.log("context:", context);
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
 
   console.log(`Payload: ${JSON.stringify(payload)}`);
@@ -23,7 +23,7 @@ exports.handler = async (event) => {
     cellulare,
     professione,
     chi_cerca,
-    token,
+    token
   } = payload;
 
   const variables = {
@@ -33,7 +33,7 @@ exports.handler = async (event) => {
     id,
     cellulare,
     professione,
-    chi_cerca,
+    chi_cerca
   };
 
   const CREATE_CONTATTO = `mutation($email: String, $nome: String, $cognome: String, $cellulare: String, $professione: String, $chi_cerca: String) {
@@ -83,23 +83,23 @@ exports.handler = async (event) => {
           url: STRAPI_ENDPOINT,
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
           data: {
             query: UPDATE_CONTATTO,
-            variables,
-          },
+            variables
+          }
         });
 
         return {
           statusCode: 200,
-          body: JSON.stringify(data.data.updateContatto.contatto),
+          body: JSON.stringify(data.data.updateContatto.contatto)
         };
       } catch (error) {
         console.log("error", error.response.data);
         return {
           statusCode: 500,
-          body: JSON.stringify(error.response.data),
+          body: JSON.stringify(error.response.data)
         };
       }
     } else {
@@ -108,18 +108,18 @@ exports.handler = async (event) => {
           url: STRAPI_ENDPOINT,
           method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
           data: {
             query: CREATE_CONTATTO,
-            variables,
-          },
+            variables
+          }
         });
         console.log("anagrafica", data.data.createContatto.contatto);
 
         return {
           statusCode: 200,
-          body: JSON.stringify(data.data.createContatto.contatto),
+          body: JSON.stringify(data.data.createContatto.contatto)
         };
       } catch (error) {
         console.log("error", error.response.data);
@@ -127,7 +127,7 @@ exports.handler = async (event) => {
           statusCode: 500,
           body: JSON.stringify(
             "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-          ),
+          )
         };
       }
     }
@@ -137,7 +137,7 @@ exports.handler = async (event) => {
       statusCode: 500,
       body: JSON.stringify(
         "Ops..c'è stato un problema tecnico al server di registrazione, riprova più tardi"
-      ),
+      )
     };
   }
 };
