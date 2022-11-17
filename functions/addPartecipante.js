@@ -6,7 +6,7 @@ let STRAPI_ENDPOINT;
 if (context === "dev") {
   STRAPI_ENDPOINT = "http://localhost:1337/graphql";
 } else {
-  STRAPI_ENDPOINT = "bsdating.stefanofrontini.dev/graphql";
+  STRAPI_ENDPOINT = "https://bsdating.stefanofrontini.dev/graphql";
 }
 
 console.log("context:", context);
