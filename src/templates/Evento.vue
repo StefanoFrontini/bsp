@@ -26,7 +26,15 @@
         </div>
       </div>
       <div class="episode-poster">
+        <g-image
+          v-if="this.$page.evento.evento.link_video.includes('jpg')"
+          :src="this.$page.evento.evento.link_video"
+          :alt="this.$page.evento.evento.titolo"
+          class="square"
+        />
+
         <iframe
+          v-else
           class="square"
           :title="this.$page.evento.evento.titolo"
           :src="this.$page.evento.evento.link_video"
@@ -106,13 +114,13 @@ export default {
   components: {},
   data() {
     return {
-      formData: {},
+      formData: {}
     };
   },
   metaInfo() {
     return {
       title: `Evento del ${this.formattedData} | Business Speed Dating`,
-      titleTemplate: "%s",
+      titleTemplate: "%s"
       // meta: [
       //   {
       //     key: "description",
@@ -153,13 +161,13 @@ export default {
         day: "numeric",
         year: "numeric",
         hour: "numeric",
-        minute: "numeric",
+        minute: "numeric"
       };
       const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
         data_evento
       );
       return converted_data;
-    },
+    }
     // ogImageUrl() {
     //   return `${this.$static.metadata.siteUrl}/logo-pillole-di-energia.png`;
     // },
@@ -168,7 +176,7 @@ export default {
     //   let postPath = this.$page.episode.path;
     //   return `${siteUrl}${postPath}`;
     // },
-  },
+  }
 };
 </script>
 

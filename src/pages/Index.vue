@@ -11,98 +11,99 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <!-- <section class="block next">
+    <section class="block next">
       <h2>Presto un nuovo evento!</h2>
       <div class="episode-poster">
         <g-image
-          src="~/assets/images/bsd-9-maggio.jpeg"
-          alt="Buon Natale e Felice 2022"
+          src="~/assets/images/bsd-16-11.jpeg"
+          alt="Evento del 16 novembre 2022 - Premiazione"
           class="square"
         />
       </div>
-    </section> -->
-
-    <section class="block next" v-if="$page.programmaOnline.eventos[0]">
-      <h2>
-        Il prossimo evento è il
-        {{ formattedData }}!
-      </h2>
-
-      <div class="next-episode-wrapper">
-        <div class="episode-preview">
-          <div class="episode-preview-sponsor">
-            <div class="episode-preview-photo">
-              <g-image
-                class="round"
-                :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url"
-                alt="sponsor serata"
-              />
-            </div>
-            <p>
-              {{ $page.programmaOnline.eventos[0].sponsor_serata.nome }}
-              {{ $page.programmaOnline.eventos[0].sponsor_serata.cognome }}
-            </p>
-          </div>
-          <div class="episode-preview-details">
-            <p class="gradient-subheading">
-              {{ formattedData }}
-            </p>
-            <h3>{{ $page.programmaOnline.eventos[0].titolo }}</h3>
-            <p>
-              <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small>
-            </p>
-            <p>
-              <small class="location">
-                {{ $page.programmaOnline.eventos[0].location }} -
-                {{ $page.programmaOnline.eventos[0].location_indirizzo }}
-              </small>
-            </p>
-
-            <!-- <g-image
-              src="~/assets/images/zoomus-ar21.svg"
-              alt="Zoom meeting logo"
-              width="80"
-            /> -->
-          </div>
-        </div>
-        <div>
-          <g-link
-            :to="`/programma/${this.$page.programmaOnline.eventos[0].slug}/`"
-            class="button"
-            rel="noopener"
-            >Iscriviti all’evento</g-link
-          >
-          <p>
-            <small>
-              Vedi tutti i prossimi eventi di
-              <em>Business Speed Dating</em>:</small
-            >
-          </p>
-          <div class="links">
-            <g-link to="/programma/">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="3"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-calendar"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              Programma</g-link
-            >
-          </div>
-        </div>
-      </div>
     </section>
+
+    <!-- <section class="block next" v-if="$page.programmaOnline.eventos[0]"> -->
+    <!--   <h2> -->
+    <!--     Il prossimo evento è il -->
+    <!--     {{ formattedData }}! -->
+    <!--   </h2> -->
+    <!---->
+    <!--   <div class="next-episode-wrapper"> -->
+    <!--     <div class="episode-preview"> -->
+    <!--       <div class="episode-preview-sponsor"> -->
+    <!--         <div class="episode-preview-photo"> -->
+    <!--           <g-image -->
+    <!--             class="round" -->
+    <!--             :src="$page.programmaOnline.eventos[0].sponsor_serata.foto.url" -->
+    <!--             alt="sponsor serata" -->
+    <!--           /> -->
+    <!--         </div> -->
+    <!--         <p> -->
+    <!--           {{ $page.programmaOnline.eventos[0].sponsor_serata.nome }} -->
+    <!--           {{ $page.programmaOnline.eventos[0].sponsor_serata.cognome }} -->
+    <!--         </p> -->
+    <!--       </div> -->
+    <!--       <div class="episode-preview-details"> -->
+    <!--         <p class="gradient-subheading"> -->
+    <!--           {{ formattedData }} -->
+    <!--         </p> -->
+    <!--         <h3>{{ $page.programmaOnline.eventos[0].titolo }}</h3> -->
+    <!--         <p> -->
+    <!--           <small>{{ $page.programmaOnline.eventos[0].descrizione }}</small> -->
+    <!--         </p> -->
+    <!--         <p> -->
+    <!--           <small class="location"> -->
+    <!--             {{ $page.programmaOnline.eventos[0].location }} - -->
+    <!--             {{ $page.programmaOnline.eventos[0].location_indirizzo }} -->
+    <!--           </small> -->
+    <!--         </p> -->
+    <!---->
+    <!--         <!-- <g-image -->
+    <!--           src="~/assets/images/zoomus-ar21.svg" -->
+    <!--           alt="Zoom meeting logo" -->
+    <!--           width="80" -->
+    <!--         /> -->
+    -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--     <div> -->
+    <!--       <g-link -->
+    <!--         :to="`/programma/${this.$page.programmaOnline.eventos[0].slug}/`" -->
+    <!--         class="button" -->
+    <!--         rel="noopener" -->
+    <!--         >Iscriviti all’evento</g-link -->
+    <!--       > -->
+    <!--       <p> -->
+    <!--         <small> -->
+    <!--           Vedi tutti i prossimi eventi di -->
+    <!--           <em>Business Speed Dating</em>:</small -->
+    <!--         > -->
+    <!--       </p> -->
+    <!--       <div class="links"> -->
+    <!--         <g-link to="/programma/"> -->
+    <!--           <svg -->
+    <!--             xmlns="http://www.w3.org/2000/svg" -->
+    <!--             width="18" -->
+    <!--             height="18" -->
+    <!--             viewBox="0 0 24 24" -->
+    <!--             fill="none" -->
+    <!--             stroke="currentColor" -->
+    <!--             stroke-width="3" -->
+    <!--             stroke-linecap="round" -->
+    <!--             stroke-linejoin="round" -->
+    <!--             class="feather feather-calendar" -->
+    <!--           > -->
+    <!--             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect> -->
+    <!--             <line x1="16" y1="2" x2="16" y2="6"></line> -->
+    <!--             <line x1="8" y1="2" x2="8" y2="6"></line> -->
+    <!--             <line x1="3" y1="10" x2="21" y2="10"></line> -->
+    <!--           </svg> -->
+    <!--           Programma</g-link -->
+    <!--         > -->
+    <!--       </div> -->
+    <!--     </div> -->
+    <!--   </div> -->
+    <!-- </section> -->
     <section class="block" v-if="$page.programmaOffline.eventos[0]">
       <h2>Il prossimo aperitivo è il {{ formattedDataOffline }}!</h2>
       <div class="next-episode-wrapper">
@@ -280,7 +281,7 @@
             <div class="episode-links">
               <g-link
                 :to="{
-                  path: '/testimonianza/' + selectedItemTestimonianza.slug,
+                  path: '/testimonianza/' + selectedItemTestimonianza.slug
                 }"
               >
                 <svg
@@ -421,7 +422,7 @@ export default {
   metaInfo() {
     return {
       title: `${this.$static.metadata.siteName}`,
-      titleTemplate: "%s",
+      titleTemplate: "%s"
     };
   },
   data() {
@@ -429,14 +430,14 @@ export default {
       activeIndex: null,
       items: [],
       selectedItem: {
-        sponsor_serata: { nome: "", cognome: "" },
+        sponsor_serata: { nome: "", cognome: "" }
       },
       activeIndexTestimonianza: null,
       itemsTestimonianza: [],
       selectedItemTestimonianza: {
         contatto: { nome: "", cognome: "" },
-        video: { url: "" },
-      },
+        video: { url: "" }
+      }
     };
   },
   methods: {
@@ -449,7 +450,7 @@ export default {
       // function checkId(el) {
       //   return el.id === b;
       // }
-      const found = this.items.find((el) => el.id === b);
+      const found = this.items.find(el => el.id === b);
       return found;
     },
     selectItemTestimonianza(i) {
@@ -461,9 +462,9 @@ export default {
       // function checkId(el) {
       //   return el.id === b;
       // }
-      const found = this.itemsTestimonianza.find((el) => el.id === b);
+      const found = this.itemsTestimonianza.find(el => el.id === b);
       return found;
-    },
+    }
   },
   computed: {
     formattedData() {
@@ -473,7 +474,7 @@ export default {
         day: "numeric",
         year: "numeric",
         hour: "numeric",
-        minute: "numeric",
+        minute: "numeric"
       };
       const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
         data_evento
@@ -487,13 +488,13 @@ export default {
         day: "numeric",
         year: "numeric",
         hour: "numeric",
-        minute: "numeric",
+        minute: "numeric"
       };
       const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
         data_evento
       );
       return converted_data;
-    },
+    }
   },
   mounted() {
     for (let edge of this.$page.eventi.eventos) {
@@ -506,7 +507,7 @@ export default {
     }
     this.activeIndexTestimonianza = this.itemsTestimonianza[0].id;
     this.selectedItemTestimonianza = this.itemsTestimonianza[0];
-  },
+  }
 };
 </script>
 
