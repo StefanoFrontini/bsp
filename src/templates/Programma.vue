@@ -148,9 +148,13 @@
           </div>
           <div>
             <p class="bonifico">
-              Per finalizzare la tua partecipazione effettua il bonifico di
-              20,00 euro sul conto corrente intestato a "Stefano Frontini"
-              IT76K0329601601000067417449
+              Per finalizzare la tua partecipazione acquista il biglietto
+              <a
+                target="_blank"
+                href="https://www.eventbrite.it/e/biglietti-business-speed-dating-evento-del-16032023-545299113327 
+ "
+                >qui.</a
+              >
             </p>
             <p class="bonifico">
               Le iscrizioni chiuderanno il 13/11/2022 oppure al raggiungimento
@@ -370,17 +374,17 @@ export default {
         professione: "",
         chi_cerca: "",
         sponsorAmico: "",
-        eventoId: "",
+        eventoId: ""
       },
       user: {},
       token: "",
-      auth: "",
+      auth: ""
     };
   },
   metaInfo() {
     return {
       title: `Evento del ${this.formattedData} | Business Speed Dating`,
-      titleTemplate: "%s",
+      titleTemplate: "%s"
       // meta: [
       //   {
       //     key: "description",
@@ -419,7 +423,7 @@ export default {
         .then(() => {
           this.$router.push("/login/");
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -429,7 +433,7 @@ export default {
       try {
         const { data } = await axios.post("/api/getAnagrafica", {
           email,
-          token,
+          token
         });
 
         if (data) {
@@ -514,7 +518,7 @@ export default {
           );
         }
       }
-    },
+    }
   },
 
   computed: {
@@ -525,13 +529,13 @@ export default {
         day: "numeric",
         year: "numeric",
         hour: "numeric",
-        minute: "numeric",
+        minute: "numeric"
       };
       const converted_data = new Intl.DateTimeFormat("it-IT", options).format(
         data_evento
       );
       return converted_data;
-    },
+    }
     // ogImageUrl() {
     //   return `${this.$static.metadata.siteUrl}/logo-pillole-di-energia.png`;
     // },
@@ -553,7 +557,7 @@ export default {
   },
   mounted() {
     this.formData.eventoId = this.$page.evento.evento.id.toString();
-  },
+  }
 };
 </script>
 

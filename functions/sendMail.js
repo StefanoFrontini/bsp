@@ -5,11 +5,11 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.ZOHO_USER,
-    pass: process.env.ZOHO_PSW,
-  },
+    pass: process.env.ZOHO_PSW
+  }
 });
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
   console.log(`Payload sendReport: ${JSON.stringify(payload)}`);
   const { nome, cognome, eventi, email } = payload;
@@ -33,7 +33,7 @@ exports.handler = async (event) => {
         A presto!
         Stefano e Maurizio
         Business Speed Dating
-        `,
+        `
       });
       console.log(
         `Report with Id: ${info.messageId} sent to: stefanofrontini75@gmail.com`
@@ -41,13 +41,13 @@ exports.handler = async (event) => {
 
       return {
         statusCode: 200,
-        body: JSON.stringify("ok"),
+        body: JSON.stringify("ok")
       };
     } catch (err) {
       console.error(err);
       return {
         statusCode: 500,
-        body: JSON.stringify("ko"),
+        body: JSON.stringify("ko")
       };
     }
   } else {
@@ -58,22 +58,19 @@ exports.handler = async (event) => {
         subject: `Grazie per esserti iscritta/o all’evento del ${new Intl.DateTimeFormat(
           "it-IT"
         ).format(data_evento)}  `,
-        text: `Ciao ${nome} ${cognome},
-        ti aspettiamo alle ore 20:00 del ${new Intl.DateTimeFormat(
+        html: `Ciao ${nome} ${cognome},
+        ti aspettiamo alle ore 19:00 del ${new Intl.DateTimeFormat(
           "it-IT"
         ).format(data_evento)} presso ${eventi[0].location}, ${
           eventi[0].location_indirizzo
         }.
 
-        Per finalizzare la tua partecipazione effettua il bonifico di 20,00 euro sul conto corrente intestato a "Stefano Frontini" IT76K0329601601000067417449 entro il 13/11/2022.
-
-        In caso di mancata partecipazione il bonifico non sarà rimborsato.
-
-        Ti aspettiamo!
+        Per finalizzare la tua partecipazione acquista il biglietto <a target="_blank" href="https://www.eventbrite.it/e/biglietti-business-speed-dating-evento-del-16032023-545299113327 
+ ">qui</a>
 
         Stefano e Maurizio
         Business Speed Dating
-        `,
+        `
       });
       console.log(
         `Report with Id: ${info.messageId} sent to: stefanofrontini75@gmail.com`
@@ -81,13 +78,13 @@ exports.handler = async (event) => {
 
       return {
         statusCode: 200,
-        body: JSON.stringify("ok"),
+        body: JSON.stringify("ok")
       };
     } catch (err) {
       console.error(err);
       return {
         statusCode: 500,
-        body: JSON.stringify("ko"),
+        body: JSON.stringify("ko")
       };
     }
   }

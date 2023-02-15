@@ -5,11 +5,11 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.ZOHO_USER,
-    pass: process.env.ZOHO_PSW,
-  },
+    pass: process.env.ZOHO_PSW
+  }
 });
 
-exports.handler = async (event) => {
+exports.handler = async event => {
   const payload = JSON.parse(event.body);
   console.log(`Payload sendReport: ${JSON.stringify(payload)}`);
   const { nome, cognome, eventi } = payload;
@@ -18,7 +18,7 @@ exports.handler = async (event) => {
   try {
     const info = await transporter.sendMail({
       from: '"Stefano e Maurizio" <info@bsdating.com>',
-      to: "stefanofrontini75@gmail.com, info@suggerimenti-immobiliari.com",
+      to: "stefanofrontini75@gmail.com ", //info@suggerimenti-immobiliari.com
       subject: `Iscrizione di ${nome} ${cognome} all’evento del ${new Intl.DateTimeFormat(
         "it-IT"
       ).format(data_evento)}  `,
@@ -29,7 +29,7 @@ exports.handler = async (event) => {
       )}:
       ${JSON.stringify(eventi[0].partecipanti)}
 
-      `,
+      `
     });
     console.log(
       `Report with Id: ${info.messageId} sent to: stefanofrontini75@gmail.com`
@@ -37,13 +37,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify("ok"),
+      body: JSON.stringify("ok")
     };
   } catch (err) {
     console.error(err);
     return {
       statusCode: 500,
-      body: JSON.stringify("ko"),
+      body: JSON.stringify("ko")
     };
   }
 };
