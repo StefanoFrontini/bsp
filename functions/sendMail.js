@@ -59,17 +59,17 @@ exports.handler = async event => {
           "it-IT"
         ).format(data_evento)}  `,
         html: `Ciao ${nome} ${cognome},
-        ti aspettiamo alle ore 19:00 del ${new Intl.DateTimeFormat(
+        <p>ti aspettiamo alle ore 19:00 del ${new Intl.DateTimeFormat(
           "it-IT"
         ).format(data_evento)} presso ${eventi[0].location}, ${
           eventi[0].location_indirizzo
-        }.
+        }.</p>
 
-        Per finalizzare la tua partecipazione acquista il biglietto <a target="_blank" href="https://www.eventbrite.it/e/biglietti-business-speed-dating-evento-del-16032023-545299113327 
- ">qui</a>
+        <p>Per finalizzare la tua partecipazione acquista il biglietto <a target="_blank" href="https://www.eventbrite.it/e/biglietti-business-speed-dating-evento-del-16032023-545299113327 
+ ">qui</a></p>
 
-        Stefano e Maurizio
-        Business Speed Dating
+        <p>Stefano e Maurizio</p>
+        <p>Business Speed Dating</p>
         `
       });
       console.log(

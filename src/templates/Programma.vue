@@ -156,10 +156,10 @@
                 >qui.</a
               >
             </p>
-            <p class="bonifico">
-              Le iscrizioni chiuderanno il 13/11/2022 oppure al raggiungimento
-              dei 30 posti.
-            </p>
+            <!-- <p class="bonifico"> -->
+            <!--   Le iscrizioni chiuderanno il 13/11/2022 oppure al raggiungimento -->
+            <!--   dei 30 posti. -->
+            <!-- </p> -->
           </div>
           <div>
             <label class="consenso" for="consenso1">Privacy</label>
