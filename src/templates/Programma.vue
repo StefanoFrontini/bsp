@@ -245,26 +245,26 @@
                 LinkedIn, YouTube, ecc.)
               </p>
             </div>
-            <div class="privacy">
-              <p class="privacy-p">
-                <input
-                  id="consenso4"
-                  type="radio"
-                  name="consenso4"
-                  value="acconsente"
-                  v-model="formData.consenso4"
-                />
-                Acconsente
-                <input
-                  id="consenso4"
-                  type="radio"
-                  name="consenso4"
-                  value="nonAcconsente"
-                  v-model="formData.consenso4"
-                />
-                Non acconsente all’iscrizione al canale Telegram
-              </p>
-            </div>
+            <!-- <div class="privacy"> -->
+            <!--   <p class="privacy-p"> -->
+            <!--     <input -->
+            <!--       id="consenso4" -->
+            <!--       type="radio" -->
+            <!--       name="consenso4" -->
+            <!--       value="acconsente" -->
+            <!--       v-model="formData.consenso4" -->
+            <!--     /> -->
+            <!--     Acconsente -->
+            <!--     <input -->
+            <!--       id="consenso4" -->
+            <!--       type="radio" -->
+            <!--       name="consenso4" -->
+            <!--       value="nonAcconsente" -->
+            <!--       v-model="formData.consenso4" -->
+            <!--     /> -->
+            <!--     Non acconsente all’iscrizione al canale Telegram -->
+            <!--   </p> -->
+            <!-- </div> -->
             <div class="privacy">
               <p class="privacy-p">
                 <input
@@ -467,7 +467,7 @@ export default {
         this.formData.consenso1 !== "acconsente" ||
         this.formData.consenso2 !== "acconsente" ||
         this.formData.consenso3 !== "acconsente" ||
-        this.formData.consenso4 !== "acconsente" ||
+        // this.formData.consenso4 !== "acconsente" ||
         this.formData.consenso5 !== "acconsente"
       ) {
         let messageA =
