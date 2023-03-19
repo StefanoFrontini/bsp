@@ -11,16 +11,16 @@
         Conosci altri professionisti e imprenditori divertendoti!
       </p>
     </section>
-    <!-- <section class="block next"> -->
-    <!--   <h2>Presto un nuovo evento!</h2> -->
-    <!--   <div class="episode-poster"> -->
-    <!--     <g-image -->
-    <!--       src="~/assets/images/bsd-16-11.jpeg" -->
-    <!--       alt="Evento del 16 novembre 2022 - Premiazione" -->
-    <!--       class="square" -->
-    <!--     /> -->
-    <!--   </div> -->
-    <!-- </section> -->
+    <section class="block next">
+      <h2>Presto un nuovo evento!</h2>
+      <div class="episode-poster">
+        <g-image
+          src="~/assets/images/bsd-16-11.jpeg"
+          alt="Evento del 16 novembre 2022 - Premiazione"
+          class="square"
+        />
+      </div>
+    </section>
 
     <section class="block next" v-if="$page.programmaOnline.eventos[0]">
       <h2>
